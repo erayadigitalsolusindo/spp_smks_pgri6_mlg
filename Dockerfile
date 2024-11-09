@@ -1,18 +1,12 @@
-# Set Alpine version as a build argument
 ARG ALPINE_VERSION=3.20
 FROM alpine:${ALPINE_VERSION}
-
-# Label untuk pemeliharaan dan deskripsi
 LABEL Maintainer="Mochmad Aries Setyawan <seira@erayadigital.co.id>"
 LABEL Description="Container for Laravel Octane SPP PGRI 6 Malang"
-
-# Install Composer from official composer image
-FROM composer:latest AS composer
 
 # Setup document root
 WORKDIR /var/www/html
 
-# Install required packages and PHP extensions
+# Install packages and PHP extensions
 RUN apk add --no-cache \
   curl \
   php83 \
@@ -95,5 +89,5 @@ EXPOSE 8080
 # Let supervisord start nginx & php-fpm
 CMD ["/usr/bin/supervisord", "-c", "/etc/supervisor/conf.d/supervisord.conf"]
 
-# Configure a healthcheck to validate that everything is up&running
+# Configure a healthcheck to validate that everything is up & running
 HEALTHCHECK --timeout=10s CMD curl --silent --fail http://127.0.0.1:8080/up || exit 1
