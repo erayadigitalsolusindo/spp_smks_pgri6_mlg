@@ -18,7 +18,6 @@ services:
         mode: non-blocking
   nginx:
     image: nginx:alpine
-    container_name: spp_smks_pgri6_mlg-nginx
     restart: unless-stopped
     ports:
       - "8102:80"  # Exposing port 80 inside the container to port 8102 on host
