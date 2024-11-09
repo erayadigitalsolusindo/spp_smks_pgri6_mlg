@@ -15,4 +15,3 @@ services:
         max-size: "100k"
         max-file: "10"
         mode: non-blocking
-    restart: no  # Menonaktifkan restart otomatis
