@@ -9,10 +9,10 @@ services:
         mode: ingress
     environment:
       - ./source/storage/:/var/www/html/storage/
-    # Limit default logging container
     logging:
       driver: "json-file"
       options:
         max-size: "100k"
         max-file: "10"
         mode: non-blocking
+    restart: no  # Menonaktifkan restart otomatis
