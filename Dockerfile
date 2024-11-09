@@ -84,10 +84,10 @@ RUN composer install --optimize-autoloader --no-interaction
 USER nobody
 
 # Expose the port nginx is reachable on
-EXPOSE 8082
+EXPOSE 8080
 
 # Let supervisord start nginx & php-fpm
 CMD ["/usr/bin/supervisord", "-c", "/etc/supervisor/conf.d/supervisord.conf"]
 
 # Configure a healthcheck to validate that everything is up & running
-HEALTHCHECK --timeout=10s CMD curl --silent --fail http://127.0.0.1:8082/up || exit 1
+HEALTHCHECK --timeout=10s CMD curl --silent --fail http://127.0.0.1:8080/up || exit 1
