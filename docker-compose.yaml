@@ -18,7 +18,7 @@ services:
         mode: non-blocking
   nginx:
       image: nginx:alpine
-      container_name: laravel-nginx
+      container_name: spp_smks_pgri6_mlg-nginx
       restart: unless-stopped
       ports:
         - "8000:80"
