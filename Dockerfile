@@ -72,6 +72,7 @@ COPY --chown=nobody:nobody source/artisan /var/www/html/artisan
 COPY --chown=nobody:nobody source/bootstrap/ /var/www/html/bootstrap/
 COPY --chown=nobody:nobody source/routes/ /var/www/html/routes/
 COPY --chown=nobody:nobody source/config/ /var/www/html/config/
+COPY --chown=nobody:nobody source/storage/ /var/www/html/storage/
 
 # Add application code
 COPY --chown=nobody:nobody source/ /var/www/html/
