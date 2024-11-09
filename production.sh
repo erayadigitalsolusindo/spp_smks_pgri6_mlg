@@ -9,9 +9,9 @@ CURRENT_GROUP=$(eval "id -gn")
 sudo chown -R $CURRENT_USER:$CURRENT_GROUP source/app
 sudo chown -R $CURRENT_USER:$CURRENT_GROUP source/bootstrap
 sudo chown -R $CURRENT_USER:$CURRENT_GROUP source/config
-sudo chown -R $CURRENT_USER:$CURRENT_GROUP source/lang
 sudo chown -R $CURRENT_USER:$CURRENT_GROUP source/public
 sudo chown -R $CURRENT_USER:$CURRENT_GROUP source/resources
+sudo chown -R $CURRENT_USER:$CURRENT_GROUP source/resources/lang
 sudo chown -R $CURRENT_USER:$CURRENT_GROUP source/routes
 
 # Database migrations
@@ -20,8 +20,8 @@ sudo chown -R $CURRENT_USER:$CURRENT_GROUP source/database/factories
 
 # Change ownership of the entire .git directory
 sudo chown -R $CURRENT_USER:$CURRENT_GROUP .git
-sudo chown -R $CURRENT_USER:$CURRENT_GROUP /var/www/html/storage
-sudo chmod -R 775 /var/www/html/storage
+sudo chown -R $CURRENT_USER:$CURRENT_GROUP source/storage
+sudo chmod -R 775 source/storage
 
 # Pull from the repository
 ######################################
