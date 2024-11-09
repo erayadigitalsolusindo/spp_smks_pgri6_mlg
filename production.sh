@@ -25,7 +25,7 @@ sudo chown -R $CURRENT_USER:$CURRENT_GROUP .git
 ######################################
 eval $(ssh-agent)
 
-#ssh-add /home/rozikin/.ssh/id_ed25519
+ssh-add /home/veldora/.ssh/github_eraya_digital
 
 ######################################
 # Build Image

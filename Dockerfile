@@ -1,7 +1,7 @@
 ARG ALPINE_VERSION=3.20
 FROM alpine:${ALPINE_VERSION}
 LABEL Maintainer="Mochmad Aries Setyawan <seira@erayadigital.co.id>"
-LABEL Description="Container for Laravel Octane Artha Medica MCU"
+LABEL Description="Container for Laravel Octane SPP PGRI 6 Malang"
 # Setup document root
 WORKDIR /var/www/html
 
