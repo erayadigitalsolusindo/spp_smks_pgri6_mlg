@@ -20,7 +20,7 @@ sudo chown -R $CURRENT_USER:$CURRENT_GROUP source/database/factories
 
 # Change ownership of the entire .git directory
 sudo chown -R $CURRENT_USER:$CURRENT_GROUP .git
-sudo chown -R $CURRENT_USER:$CURRENT_GROUP source/storage
+sudo chown -R nobody:nogroup source/storage
 sudo chmod -R 775 source/storage
 
 # Pull from the repository
