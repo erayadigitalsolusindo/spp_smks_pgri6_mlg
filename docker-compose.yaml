@@ -5,7 +5,7 @@ services:
     image: spp_smks_pgri6_mlg:1.0.0
     ports:
       - target: 8082
-        published: 9002
+        published: 8080
         mode: ingress
     volumes:
       - ./source/storage:/var/www/html/storage  # Bind mount directory storage
