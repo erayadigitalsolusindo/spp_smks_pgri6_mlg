@@ -7,8 +7,8 @@ services:
       - target: 8082
         published: 10612
         mode: ingress
-    environment:
-      - ./source/storage/:/var/www/html/storage/
+    volumes:
+      - ./source/storage:/var/www/html/storage  # Bind mount directory storage
     # Limit default logging container
     logging:
       driver: "json-file"
