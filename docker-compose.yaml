@@ -5,7 +5,7 @@ services:
     image: spp_smks_pgri6_mlg:1.0.0
     ports:
       - target: 8080
-        published: 10610
+        published: 10102
         mode: ingress
     environment:
       - ./source/storage/:/var/www/html/storage/
