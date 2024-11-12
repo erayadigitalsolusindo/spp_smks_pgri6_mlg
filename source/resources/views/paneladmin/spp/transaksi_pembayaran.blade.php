@@ -99,7 +99,7 @@
                     <div class="card-wrapper border rounded-3 h-100 checkbox-checked">
                         <h6 class="sub-title text-center">Pilih Bulan Pembayaran</h6>
                         <div class="form-check checkbox checkbox-primary ps-0 main-icon-checkbox">
-                            <ul class="checkbox-wrapper">
+                            <ul class="checkbox-wrapper" id="list_bulan_pembayaran">
                                 <li> 
                                     <input class="form-check-input checkbox-shadow" id="juli" type="checkbox">
                                     <label class="form-check-label" for="juli"><span>Juli</span></label>
@@ -251,6 +251,9 @@
 @section('js_load')
 @component('komponen.js.datatables')
 @endcomponent
+<script>
+    let transaksi_detail = {{isset($data['id_transaksi']) ? $data['id_transaksi'] : "-1"}};
+</script>
 <script src="{{ asset('mofi/assets/js/flat-pickr/flatpickr.js') }}"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/autonumeric/4.8.1/autoNumeric.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>

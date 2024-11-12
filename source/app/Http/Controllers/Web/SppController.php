@@ -22,7 +22,6 @@ class SppController extends Controller
             'Transaksi Pembayaran' => route('spp.transaksi_pembayaran'),
         ]);
         if ($id_transaksi != null) {
-            $data['transaksi_detail'] = TransaksiDetail::listTransaksiTabel($req, 1, 0);
             $data['id_transaksi'] = $id_transaksi;
         }
         return view('paneladmin.spp.transaksi_pembayaran', ['data' => $data]);

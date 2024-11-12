@@ -88,4 +88,15 @@ class SppController extends Controller
             return ResponseHelper::error($th);
         }
     }
+    public function detailtransaksiid(Request $req) {
+        try {
+            $data = TransaksiDetail::getDetailTransaksi($req->id_transaksi);
+            $dynamicAttributes = [  
+                'data' => $data,
+            ];
+            return ResponseHelper::data(__('common.data_ready', ['namadata' => 'Informasi Pembayaran Siswa SMK PGRI 6 Malang']), $dynamicAttributes);
+        } catch (\Throwable $th) {
+            return ResponseHelper::error($th);
+        }
+    }
 }

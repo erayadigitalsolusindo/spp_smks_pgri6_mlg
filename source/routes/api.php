@@ -43,6 +43,7 @@ Route::prefix('v1')->group(function () {
             Route::post('transaksispp', [SppController::class,"transaksispp"]);
             Route::get('daftar_pembayaran', [SppController::class,"getpembayaran"]);
             Route::get('detail_transaksi', [SppController::class,"detailtransaksi"]);
+            Route::get('detail_transaksi_id', [SppController::class,"detailtransaksiid"]);
             Route::get('hapus_pembayaran', [SppController::class,"hapuspembayaran"]);
         });
     });

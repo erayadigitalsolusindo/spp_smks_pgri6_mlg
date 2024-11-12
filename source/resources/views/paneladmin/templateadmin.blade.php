@@ -38,7 +38,7 @@
             <div class="container-fluid">
               <div class="row">
                 <div class="col-md-12 footer-copyright d-flex flex-wrap align-items-center justify-content-between">
-                  <p class="mb-0 f-w-600">Copyright 2024 - <?=date('Y');?> © Artha Medical Clinic  </p>
+                  <p class="mb-0 f-w-600">Copyright 2024 - <?=date('Y');?> © SMKS PGRI 6 MALANG  </p>
                   <p class="mb-0 f-w-600">Hand crafted & made with <svg class="footer-icon">
                       <use href="{{ asset('mofi/assets/svg/icon-sprite.svg#footer-heart')}}"> </use>
                     </svg>

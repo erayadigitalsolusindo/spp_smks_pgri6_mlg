@@ -39,4 +39,16 @@ class TransaksiDetail extends Model
             'total' => $jumlahdata
         ];
     }
+    public static function getDetailTransaksi($id_transaksi) {
+        $tablePrefix = config('database.connections.mysql.prefix');
+        $query = DB::table((new self())->getTable())
+            ->join('transaksi', 'transaksi.id', '=', 'transaksi_spp.id_transaksi')
+            ->join('transaksi_jenis_trx', 'transaksi_jenis_trx.kode', '=', 'transaksi_spp.kode_jenis_transaksi')
+            ->join('siswa_buku_induk', 'siswa_buku_induk.id', '=', 'transaksi.nis')
+            ->join('users_pegawai', 'users_pegawai.id', '=', 'transaksi.petugas')
+            ->join('atr_kelas', 'atr_kelas.id', '=', 'siswa_buku_induk.id_kelas')
+            ->select('siswa_buku_induk.id as id_siswa','transaksi.*','transaksi.id as id_transaksi','transaksi_spp.*','transaksi.no_transaksi as no_transaksi','siswa_buku_induk.*','siswa_buku_induk.nis as nis_siswa','users_pegawai.*','atr_kelas.*','transaksi_jenis_trx.jenis_transaksi', DB::raw('DATE_FORMAT(tanggal, "%d-%m-%Y %H:%i:%s") as tanggal_transaksi'));
+        $query->where('transaksi.id', $id_transaksi);   
+        return $query->get();
+    }
 }

@@ -1,21 +1,87 @@
 let table_datatables_transaksi_spp;
+let isedit = false;
 let nominal_pembayaran_per_baris = [];
 const nominal_pembayaran_transaksi_spp = new AutoNumeric('#nominal_pembayaran_transaksi_spp', {
     digitGroupSeparator: '.',
     decimalCharacter: ',',
-    decimalPlaces: 2,
+    decimalPlaces: 0,
 });
 const nominal_bayar_konfirmasi= new AutoNumeric('#nominal_bayar_konfirmasi', {
     digitGroupSeparator: '.',
     decimalCharacter: ',',
-    decimalPlaces: 2,
+    decimalPlaces: 0,
 });
 $(document).ready(function() {
-    onloadselect2();
     onloaddatatables();
     getSelectedMonths();
+    onloadselect2();
+    isedit = false;
+    if (transaksi_detail > -1) {
+        isedit = true;
+        loadDetailTransaksi(transaksi_detail);
+    }
 });
-
+function loadDetailTransaksi(id_transaksi) {
+    $.get('/generate-csrf-token', function(response) {
+        $.ajax({
+            url: baseurlapi + '/spp/detail_transaksi_id',
+            headers: { 'Authorization': 'Bearer ' + localStorage.getItem('token_ajax') },
+            type: 'GET',
+            data: {
+                _token: response.csrf_token,
+                id_transaksi: id_transaksi
+            },
+            success: function(response) {
+                let nominalPembayaran = {
+                    digitGroupSeparator: ',',
+                    decimalCharacter: '.',
+                    decimalPlaces: 0
+                };
+                /* select2 */
+                let newOption = new Option(
+                    "[" + response.data[0].nis + "] - " + response.data[0].nama_siswa, 
+                    response.data[0].nis,
+                    true, 
+                    true 
+                );
+                $(newOption).attr('data-id_siswa', response.data[0].id_siswa)
+                            .attr('data-nama_siswa', response.data[0].nama_siswa)
+                            .attr('data-nis', response.data[0].nis)
+                            .attr('data-jenis_kelamin', response.data[0].jenis_kelamin)
+                            .attr('data-alamat_siswa', response.data[0].alamat_siswa)
+                            .attr('data-no_telepon', response.data[0].no_telepon)
+                            .attr('data-email', response.data[0].email)
+                            .attr('data-tingkat_kelas', response.data[0].tingkat_kelas)
+                            .attr('data-tahun_ajaran', response.data[0].tahun_ajaran);
+                
+                $('#select_siswa_transaksi_spp').append(newOption);
+                $("#select_siswa_transaksi_spp").val(response.data[0].nis).trigger('change');
+                /* Bulan dipilih */
+                 /* tabel */
+                nominal_bayar_konfirmasi.set(response.data[0].total_transaksi_bayar);
+                for (let i = 0; i < response.data.length; i++) {
+                    let id_kode_bulan = convertNumericToBulan([response.data[i].kode_bulan])[0].toLowerCase();
+                    $("#" + id_kode_bulan).prop("checked", true); 
+                    let uniqueId = `nominal_pembayaran_${id_kode_bulan}_${Date.now()}`;
+                    table_datatables_transaksi_spp.row.add([
+                        i+1,
+                        `<input readonly style="background-color: transparent;border: none;" type="text" class="form-control" value="${response.data[i].kode_jenis_transaksi}">`,
+                        `<input readonly style="background-color: transparent;border: none;" type="text" class="form-control" value="${response.data[i].jenis_transaksi}">`,
+                        `${id_kode_bulan.toLowerCase()}`,
+                        `<input id="${uniqueId}" style="background-color: transparent;border: none;" type="text" class="form-control nominal_pembayaran" value="${response.data[i].nominal}" placeholder="0.00">`,
+                        `<input type="text" class="form-control" value="${!response.data[i].keterangan ? "" : response.data[i].keterangan}" placeholder="Isikan keterangan pembayaran">`,
+                        `<button class="hapus_baris btn btn-danger w-100"><i class="fa fa-trash"></i> Hapus</button>`,
+                    ]).draw();
+                    new AutoNumeric(`#${uniqueId}`, response.data[i].nominal, nominalPembayaran);
+                }
+                
+            },
+            error: function(xhr, status, error) {
+                return createToast('Kesalahan Penggunaan', 'top-right', xhr.responseJSON.message, 'error', 3000);
+            }
+        });
+    });
+}
 function onloaddatatables(){
     flatpickr("#tanggal_transaksi_spp", {
         dateFormat: "d-m-Y",
@@ -117,24 +183,54 @@ function onloadselect2(){
     });
 }
 function getSelectedMonths() {
-    const monthNames = ["januari", "februari", "maret", "april", "mei", "juni", "juli", "agustus", "september", "oktober", "november", "desember"];
-    const currentMonthIndex = new Date().getMonth();
-    const currentMonthId = monthNames[currentMonthIndex];
-    $("#" + currentMonthId).prop("checked", true);
+    if (transaksi_detail < 0) {
+        const monthNames = ["januari", "februari", "maret", "april", "mei", "juni", "juli", "agustus", "september", "oktober", "november", "desember"];
+        const currentMonthIndex = new Date().getMonth();
+        const currentMonthId = monthNames[currentMonthIndex];
+        $("#" + currentMonthId).prop("checked", true);
+    }
 }
-$('#select_siswa_transaksi_spp').on('select2:select', function(e) {
-    let data = e.params.data.data;
-    $('#id_temp').text(data.id_siswa);
-    $('#nama_peserta_temp').text(data.nama_siswa);
-    $('#nomor_induk_siswa_temp').text(data.nis);
-    $('#nama_siswa_temp').text(data.nama_siswa); 
-    $('#jenis_kelamin_temp').text(data.jenis_kelamin == "L" ? "Laki-laki" : "Perempuan");
-    $('#alamat_temp').text(data.alamat_siswa);
-    $('#no_telepon_temp').text(data.no_telepon);
-    $('#email_temp').text(data.email);
-    $('#kelas_temp').text(data.tingkat_kelas);
-    $('#tahun_ajaran_temp').text(data.tahun_ajaran);
+$('#select_siswa_transaksi_spp').on('select2:select change', function(e) {
+    let data;
+    
+    // Menangani event select2:select
+    if (e.type === 'select2:select') {
+        data = e.params.data.data;
+    }
+    // Menangani event change
+    else if (e.type === 'change') {
+        let selectedOption = $('#select_siswa_transaksi_spp option:selected');
+        
+        // Jika opsi yang dipilih memiliki data terkait
+        data = {
+            id_siswa: selectedOption.data('id_siswa'),
+            nama_siswa: selectedOption.data('nama_siswa'),
+            nis: selectedOption.data('nis'),
+            jenis_kelamin: selectedOption.data('jenis_kelamin'),
+            alamat_siswa: selectedOption.data('alamat_siswa'),
+            no_telepon: selectedOption.data('no_telepon'),
+            email: selectedOption.data('email'),
+            tingkat_kelas: selectedOption.data('tingkat_kelas'),
+            tahun_ajaran: selectedOption.data('tahun_ajaran')
+        };
+    }
+
+    // Jika data ditemukan, update elemen di halaman
+    if (data) {
+        $('#id_temp').text(data.id_siswa);
+        $('#nama_peserta_temp').text(data.nama_siswa);
+        $('#nomor_induk_siswa_temp').text(data.nis);
+        $('#nama_siswa_temp').text(data.nama_siswa); 
+        $('#jenis_kelamin_temp').text(data.jenis_kelamin == "L" ? "Laki-laki" : "Perempuan");
+        $('#alamat_temp').text(data.alamat_siswa);
+        $('#no_telepon_temp').text(data.no_telepon);
+        $('#email_temp').text(data.email);
+        $('#kelas_temp').text(data.tingkat_kelas);
+        $('#tahun_ajaran_temp').text(data.tahun_ajaran);
+    }
 });
+
+
 $('#select_jenis_pembayaran_transaksi_spp').on('select2:select', function(e) {
     nominal_pembayaran_transaksi_spp.set(0);
     $('#nominal_pembayaran_transaksi_spp').focus();
@@ -188,7 +284,6 @@ function tambah_baris_transaksi_spp() {
         if (!found) {
             // Generate a unique ID for the nominal pembayaran field
             let uniqueId = `nominal_pembayaran_${bulan}_${Date.now()}`;
-
             table_datatables_transaksi_spp.row.add([
                 '',
                 `<input readonly style="background-color: transparent;border: none;" type="text" class="form-control" value="${jenisPembayaranValue}">`,
@@ -203,7 +298,7 @@ function tambah_baris_transaksi_spp() {
             new AutoNumeric(`#${uniqueId}`, nominalPembayaran, {
                 digitGroupSeparator: ',',
                 decimalCharacter: '.',
-                decimalPlaces: 2
+                decimalPlaces: 0
             });
         }
     });
@@ -328,6 +423,8 @@ $("#btnKonfirmasiTransaksiSPP").on("click", function(event) {
                     },
                     data: {
                         _token: response.csrf_token,
+                        isedit: isedit,
+                        id_transaksi_edit: transaksi_detail,
                         totalbaris: table_datatables_transaksi_spp.rows().count(),
                         id_siswa: $("#id_temp").html(),
                         nis: $("#nomor_induk_siswa_temp").html(),
@@ -343,6 +440,7 @@ $("#btnKonfirmasiTransaksiSPP").on("click", function(event) {
                     success: function(response){
                         if (response.rc == 200) {
                             createToast('Informasi', 'top-right', response.message, 'success', 3000);
+                            isedit = false;
                             Swal.fire({
                                 title: 'Konfirmasi Aksi Selanjutnya',
                                 text: 'Transaksi sebelumnya berhasil disimpan, Apakah anda ingin melakukan transaksi pembayaran SPP untuk siswa yang lainnya?',
@@ -371,4 +469,9 @@ $("#btnKonfirmasiTransaksiSPP").on("click", function(event) {
 });
 $("#btnLihatInformasiSiswa").on("click", function(event) {
     $("#kartu_informasi_peserta").toggle();
+});
+$(document).on('keyup', '.nominal_pembayaran', function () {
+    let inputElement = $(this);
+    let currentValue = inputElement.val();
+    updateGrandTotal();
 });

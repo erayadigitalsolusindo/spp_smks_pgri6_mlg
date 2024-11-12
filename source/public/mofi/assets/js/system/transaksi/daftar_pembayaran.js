@@ -119,13 +119,8 @@ function datatables_daftar_pembayaran() {
                     render: function(data, type, row, meta) {
                         if (type === 'display') {
                             return `<div class="d-flex justify-content-between gap-2 background_fixed_right_row">
-                                <a href="${baseurl}/spp/transaksi_pembayaran/${row.id_transaksi}">
-                                    <button class="btn btn-success w-100"><i class="fa fa-edit"></i></button>
-                                </a>
-                                <button onclick="hapusdaftarpembayaran('${row.id_transaksi}','${row.no_transaksi}')" class="btn btn-danger w-100">
-                                    <i class="fa fa-trash-o"></i>
-                                </button>
-                            </div>`;
+                                <a href="${baseurl}/spp/transaksi_pembayaran/${row.id_transaksi}" class="btn btn-success w-100"><i class="fa fa-edit"></i></a>
+                                <a href="javascript:void(0)" onclick="hapusdaftarpembayaran('${row.id_transaksi}','${row.no_transaksi}')" class="btn btn-danger w-100"><i class="fa fa-trash-o"></i></a></div>`;
                         }       
                         return data;
                     }
