@@ -4,6 +4,18 @@
 ######################################
 CURRENT_USER=$(eval "whoami")
 CURRENT_GROUP=$(eval "id -gn")
+# Clear Laravel cache
+echo "Clearing Laravel cache in Docker container: $LARAVEL_CONTAINER_NAME"
+
+docker exec -it $LARAVEL_CONTAINER_NAME php artisan optimize:clear
+
+# Membersihkan cache khusus jika diperlukan
+docker exec -it $LARAVEL_CONTAINER_NAME php artisan config:clear
+docker exec -it $LARAVEL_CONTAINER_NAME php artisan route:clear
+docker exec -it $LARAVEL_CONTAINER_NAME php artisan view:clear
+docker exec -it $LARAVEL_CONTAINER_NAME php artisan event:clear
+
+echo "Laravel cache cleared"
 
 # Source code location
 sudo chown -R $CURRENT_USER:$CURRENT_GROUP source/app
@@ -69,3 +81,7 @@ sudo docker image ls
 # Deploy to swarm
 sudo docker stack deploy -c docker-compose.yaml $DOCKER_SWARM_STACK_NAME --with-registry-auth --detach=false
 #sudo docker stack remove artha_medica
+
+# Remove dangling images to free up space
+echo "Cleaning up dangling images..."
+sudo docker image prune -f

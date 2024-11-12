@@ -2,7 +2,7 @@
     <div>
       <div class="logo-wrapper">
         <a href="{{ url('/admin/beranda') }}">
-          <img class="img-fluid" src="{{asset('mofi/assets/images/logo/Logo_AMC_Full_WH.png')}}" alt="Logo MCU Artha Medical Center" style="height: 100%;width: 75%;">
+          <img class="img-fluid" src="{{asset('mofi/assets/images/logo/Logo_AMC_Full_WH.png')}}" alt="Logo SMKPGRI 6 Malang" style="height: 100%;width: 75%;">
         </a>
         <div class="back-btn"><i class="fa fa-angle-left"></i></div>
         <div class="toggle-sidebar">
