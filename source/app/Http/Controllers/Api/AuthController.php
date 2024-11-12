@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\{Hash,Cookie,Validator};
 use App\Models\{User};
 use App\Helpers\{ResponseHelper,GlobalHelper};
 use Tymon\JWTAuth\Facades\JWTAuth;
-
+use Illuminate\Support\Facades\Log;
 
 class AuthController extends Controller
 {
@@ -30,6 +30,7 @@ class AuthController extends Controller
             $user = JWTAuth::user();
             $dynamicAttributes = [
                 'user_information' => $user,
+                'user_id' => $user->id,
                 'token_akses' => $token,
             ];
             $cookie_jwt = Cookie::make('token_device', $token, env('COOKIE_TIME_EXPIRE'), env('COOKIE_PATH'), env('COOKIE_DOMAIN_ALLOWED'), env('COOKIE_IS_SECURE'), env('COOKIE_IS_HTTP_ONLY'));

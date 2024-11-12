@@ -1,5 +1,5 @@
 <div class="header-logo-wrapper col-auto">
-    <div class="logo-wrapper"><a href="index.html"><img class="img-fluid" src="{{asset('mofi/assets/images/logo/Logo_AMC_Full.png')}}" alt=""/></a></div>
+    <div class="logo-wrapper"><a href="index.html"><img class="img-fluid" src="{{asset('mofi/assets/images/logo/logo_pgri.png')}}" alt=""/></a></div>
   </div>
   <div class="col-4 col-xl-4 page-title">
     <h4 class="f-w-700">{{ $data['title'] }}</h4>
@@ -27,7 +27,7 @@
         </div>
       </form>
       <div class="header-logo-wrapper col-auto p-0">
-        <div class="logo-wrapper"><a href="index.html"><img class="img-fluid" src="{{ asset('mofi/assets/images/logo/logo.png')}}" alt=""></a></div>
+        <div class="logo-wrapper"><a href="index.html"><img class="img-fluid" src="{{ asset('mofi/assets/images/logo/logo_pgri.png')}}" alt=""></a></div>
         <div class="toggle-sidebar">
           <svg class="stroke-icon sidebar-toggle status_toggle middle">
             <use href="{{ asset('mofi/assets/svg/icon-sprite.svg#toggle-icon')}}"></use>

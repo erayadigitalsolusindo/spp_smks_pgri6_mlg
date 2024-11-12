@@ -40,6 +40,10 @@ Route::prefix('v1')->group(function () {
         });
         Route::prefix('spp')->group(function () {
             Route::get('daftar_tagihan', [SppController::class,"gettagihan"]);
+            Route::post('transaksispp', [SppController::class,"transaksispp"]);
+            Route::get('daftar_pembayaran', [SppController::class,"getpembayaran"]);
+            Route::get('detail_transaksi', [SppController::class,"detailtransaksi"]);
+            Route::get('hapus_pembayaran', [SppController::class,"hapuspembayaran"]);
         });
     });
 });

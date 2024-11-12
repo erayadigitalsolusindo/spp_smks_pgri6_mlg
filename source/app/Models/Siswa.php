@@ -20,7 +20,9 @@ class Siswa extends Model
         $parameterpencarian = $req->parameter_pencarian;
         $tablePrefix = config('database.connections.mysql.prefix');
         $query = DB::table((new self())->getTable())
-            ->select('siswa_buku_induk.*');
+            ->join('atr_kelas', 'atr_kelas.id', '=', 'siswa_buku_induk.id_kelas')
+            ->join('siswa_tahun_ajaran', 'siswa_tahun_ajaran.id_tahun_ajaran', '=', 'siswa_buku_induk.id_tahun_ajaran')
+            ->select('siswa_buku_induk.*','siswa_buku_induk.id as id_siswa', 'atr_kelas.*', 'siswa_tahun_ajaran.*');
         if (!empty($parameterpencarian)) {
             $query->where('nis', 'LIKE', '%' . $parameterpencarian . '%')
                   ->orWhere('nama_siswa', 'LIKE', '%' . $parameterpencarian . '%');

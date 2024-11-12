@@ -20,6 +20,7 @@ $("#btn_login" ).on( "click", function() {
                     return createToast('Kesalahan Proses Login '+response.rc,'top-right', response.message, 'error', 3000);
                 }
                 localStorage.setItem('token_ajax', response.token_akses);
+                localStorage.setItem('user_id', response.user_id);
                 window.location.href = baseurl + '/admin/beranda';
             },
             error: function(xhr, status, error) {

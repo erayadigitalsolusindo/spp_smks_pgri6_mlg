@@ -38,6 +38,6 @@
 
 <!-- Global Variables -->
 <script>
-    var baseurlapi = "{{ url(env('APP_VERSI_API')) }}";
-    var baseurl = "{{ url('') }}";
+    var baseurlapi = "{{ url(htmlspecialchars(env('APP_VERSI_API'))) }}";
+    var baseurl = "{{ url(htmlspecialchars('')) }}";
 </script>
