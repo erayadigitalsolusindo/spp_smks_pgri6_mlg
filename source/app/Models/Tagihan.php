@@ -12,28 +12,39 @@ class Tagihan extends Model
     protected $fillable = [
         'nis',
         'juli',
+        'total_tagihan_juli',
         'agustus',
+        'total_tagihan_agustus',
         'september',
+        'total_tagihan_september',
         'oktober',
+        'total_tagihan_oktober',
         'november',
+        'total_tagihan_november',
         'desember',
+        'total_tagihan_desember',
         'januari',
+        'total_tagihan_januari',
         'februari',
+        'total_tagihan_februari',
         'maret',
+        'total_tagihan_maret',
         'april',
+        'total_tagihan_april',
         'mei',
+        'total_tagihan_mei',
         'juni',
+        'total_tagihan_juni',
         'tahun_ajaran',
     ];
     public static function listTagihanTabel($req, $perHalaman, $offset)
     {
         $parameterpencarian = $req->parameter_pencarian;
         $query = DB::table((new self())->getTable())
-        ->join('siswa_buku_induk', 'siswa_buku_induk.nis', '=', 'siswa_tagihan.nis')
-        ->join('atr_kelas', 'atr_kelas.id', '=', 'siswa_buku_induk.id_kelas')
-        ->join('atr_jurusan', 'atr_jurusan.id', '=', 'siswa_buku_induk.id_jurusan');
+        ->join('siswa_buku_induk', 'siswa_buku_induk.id', '=', 'siswa_tagihan.nis')
+        ->join('atr_kelas', 'atr_kelas.id', '=', 'siswa_buku_induk.id_kelas');
         if (!empty($parameterpencarian)) {
-            $query->where('siswa_tagihan.nis', 'LIKE', '%' . $parameterpencarian . '%')
+            $query->where('siswa_buku_induk.nis', 'LIKE', '%' . $parameterpencarian . '%')
                 ->orWhere('siswa_buku_induk.nama_siswa', 'LIKE', '%' . $parameterpencarian . '%');
         }
         $result = $query->take($perHalaman)
