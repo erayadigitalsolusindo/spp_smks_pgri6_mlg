@@ -50,11 +50,6 @@ RUN apk add --no-cache \
   pkgconfig \
   php83-dev \
   php83-gd \
-  libpng \
-  libjpeg-turbo \
-  freetype \
-  libwebp \
-  tiff
 
 # Install OpenSwoole via PECL
 RUN pecl install openswoole
