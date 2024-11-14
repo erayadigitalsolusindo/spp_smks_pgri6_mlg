@@ -211,7 +211,8 @@ $('#select_siswa_transaksi_spp').on('select2:select change', function(e) {
             no_telepon: selectedOption.data('no_telepon'),
             email: selectedOption.data('email'),
             tingkat_kelas: selectedOption.data('tingkat_kelas'),
-            tahun_ajaran: selectedOption.data('tahun_ajaran')
+            tahun_ajaran: selectedOption.data('tahun_ajaran'),
+            kode_tahun_ajaran: selectedOption.data('kode_tahun_ajaran')
         };
     }
 
@@ -227,6 +228,7 @@ $('#select_siswa_transaksi_spp').on('select2:select change', function(e) {
         $('#email_temp').text(data.email);
         $('#kelas_temp').text(data.tingkat_kelas);
         $('#tahun_ajaran_temp').text(data.tahun_ajaran);
+        $('#kode_tahun_ajaran_temp').text(data.kode_tahun_ajaran);
     }
 });
 
@@ -432,7 +434,7 @@ $("#btnKonfirmasiTransaksiSPP").on("click", function(event) {
                         nominal_bayar: nominalBayarArray,
                         petugas_id: localStorage.getItem('user_id'),
                         kodebulan: convertBulanToNumeric(kodebulanArray),
-                        tahun_ajaran: $("#tahun_ajaran_temp").html(),
+                        tahun_ajaran: $("#kode_tahun_ajaran_temp").html(),
                         nama_siswa: $("#nama_peserta_temp").html(),
                         keterangan: keteranganArray,
                         totalbelanja: nominal_bayar_konfirmasi.getNumber(),

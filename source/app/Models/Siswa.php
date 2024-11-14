@@ -22,7 +22,7 @@ class Siswa extends Model
         $query = DB::table((new self())->getTable())
             ->join('atr_kelas', 'atr_kelas.id', '=', 'siswa_buku_induk.id_kelas')
             ->join('siswa_tahun_ajaran', 'siswa_tahun_ajaran.id_tahun_ajaran', '=', 'siswa_buku_induk.id_tahun_ajaran')
-            ->select('siswa_buku_induk.*','siswa_buku_induk.id as id_siswa', 'atr_kelas.*', 'siswa_tahun_ajaran.*');
+            ->select('siswa_buku_induk.*','siswa_buku_induk.id as id_siswa', 'atr_kelas.*', 'siswa_tahun_ajaran.*','siswa_tahun_ajaran.id_tahun_ajaran as kode_tahun_ajaran');
         if (!empty($parameterpencarian)) {
             $query->where('nis', 'LIKE', '%' . $parameterpencarian . '%')
                   ->orWhere('nama_siswa', 'LIKE', '%' . $parameterpencarian . '%');

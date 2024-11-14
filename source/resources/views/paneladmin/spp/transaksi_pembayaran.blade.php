@@ -79,7 +79,7 @@
                                         </tr>
                                         <tr>
                                             <td style="padding: 0;">Tahun Ajaran</td>
-                                            <td style="padding: 0;"><span id="tahun_ajaran_temp"></span></td>
+                                            <td style="padding: 0;"><span id="tahun_ajaran_temp"></span><span style="display: none;" id="kode_tahun_ajaran_temp"></span></td>
                                         </tr>
                                     </tbody>
                                 </table>
