@@ -49,7 +49,8 @@ RUN apk add --no-cache \
   libtool \
   pkgconfig \
   php83-dev \
-  php83-gd
+  php83-gd \
+  php83-iconv
 
 # Install OpenSwoole via PECL
 RUN pecl install openswoole
