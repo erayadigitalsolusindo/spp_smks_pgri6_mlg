@@ -36,7 +36,10 @@ Route::prefix('v1')->group(function () {
         });
         Route::prefix('masterdata')->group(function () {
             Route::get('daftarsiswa', [MasterDataController::class,"getsiswa"]);
+            Route::get('daftarkelas', [MasterDataController::class,"getkelas"]);
             Route::get('jenispembayaran', [MasterDataController::class,"getjenispembayaran"]);
+            Route::post('tambahkeranjangtagihan', [MasterDataController::class,"tambahkeranjangtagihan"]);
+            Route::get('hapustagihanpeserta', [MasterDataController::class,"hapustagihanpeserta"]);
         });
         Route::prefix('spp')->group(function () {
             Route::get('daftar_tagihan', [SppController::class,"gettagihan"]);
@@ -45,6 +48,9 @@ Route::prefix('v1')->group(function () {
             Route::get('detail_transaksi', [SppController::class,"detailtransaksi"]);
             Route::get('detail_transaksi_id', [SppController::class,"detailtransaksiid"]);
             Route::get('hapus_pembayaran', [SppController::class,"hapuspembayaran"]);
+            Route::post('simpantagihan', [SppController::class,"simpantagihan"]);
+            Route::get('editdaftartagihan', [SppController::class,"editdaftartagihan"]);
+            Route::post('updatetagihan', [SppController::class,"updatetagihan"]);
         });
     });
 });

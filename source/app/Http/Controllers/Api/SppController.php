@@ -8,6 +8,7 @@ use App\Models\{Tagihan, Transaksi, TransaksiDetail};
 use App\Helpers\ResponseHelper;
 use Illuminate\Support\Facades\Validator;
 use App\Services\TransaksiServices;
+use Illuminate\Support\Facades\Log;
 
 class SppController extends Controller
 {
@@ -95,6 +96,95 @@ class SppController extends Controller
                 'data' => $data,
             ];
             return ResponseHelper::data(__('common.data_ready', ['namadata' => 'Informasi Pembayaran Siswa SMK PGRI 6 Malang']), $dynamicAttributes);
+        } catch (\Throwable $th) {
+            return ResponseHelper::error($th);
+        }
+    }
+    public function simpantagihan(Request $req) {
+        try {
+            if (empty($req->rowsData)) {
+                return ResponseHelper::error("Data tidak boleh kosong");
+            }
+            $bulkInsertData = [];
+            foreach ($req->rowsData as $row) {
+                $bulkInsertData[] = [
+                    'nis' => $row['nis'],
+                    'juli' => $row['pembayaran']['Juli']['nominal'],
+                    'total_tagihan_juli' => $row['pembayaran']['Juli']['nominal'],
+                    'agustus' => $row['pembayaran']['Agustus']['nominal'],
+                    'total_tagihan_agustus' => $row['pembayaran']['Agustus']['nominal'],
+                    'september' => $row['pembayaran']['September']['nominal'],
+                    'total_tagihan_september' => $row['pembayaran']['September']['nominal'],
+                    'oktober' => $row['pembayaran']['Oktober']['nominal'],
+                    'total_tagihan_oktober' => $row['pembayaran']['Oktober']['nominal'],
+                    'november' => $row['pembayaran']['November']['nominal'],
+                    'total_tagihan_november' => $row['pembayaran']['November']['nominal'],
+                    'desember' => $row['pembayaran']['Desember']['nominal'],
+                    'total_tagihan_desember' => $row['pembayaran']['Desember']['nominal'],
+                    'januari' => $row['pembayaran']['Januari']['nominal'],
+                    'total_tagihan_januari' => $row['pembayaran']['Januari']['nominal'],
+                    'februari' => $row['pembayaran']['Februari']['nominal'],
+                    'total_tagihan_februari' => $row['pembayaran']['Februari']['nominal'],
+                    'maret' => $row['pembayaran']['Maret']['nominal'],
+                    'total_tagihan_maret' => $row['pembayaran']['Maret']['nominal'],
+                    'april' => $row['pembayaran']['April']['nominal'],
+                    'total_tagihan_april' => $row['pembayaran']['April']['nominal'],
+                    'mei' => $row['pembayaran']['Mei']['nominal'],
+                    'total_tagihan_mei' => $row['pembayaran']['Mei']['nominal'],
+                    'juni' => $row['pembayaran']['Juni']['nominal'],
+                    'total_tagihan_juni' => $row['pembayaran']['Juni']['nominal'],
+                    'tahun_ajaran' => $row['tahun_ajaran'],
+                ];
+            }
+            Log::info($bulkInsertData);
+            Tagihan::upsert($bulkInsertData, ['nis', 'tahun_ajaran'], [
+                'juli', 'total_tagihan_juli',
+                'agustus', 'total_tagihan_agustus', 
+                'september', 'total_tagihan_september',
+                'oktober', 'total_tagihan_oktober',
+                'november', 'total_tagihan_november',
+                'desember', 'total_tagihan_desember',
+                'januari', 'total_tagihan_januari',
+                'februari', 'total_tagihan_februari',
+                'maret', 'total_tagihan_maret',
+                'april', 'total_tagihan_april',
+                'mei', 'total_tagihan_mei',
+                'juni', 'total_tagihan_juni'
+            ]);
+            return ResponseHelper::success("Data tagihan siswa sejumlah ".count($bulkInsertData)." Data berhasil ditambahkan");
+        } catch (\Throwable $th) {
+            return ResponseHelper::error($th);
+        }
+    }
+    public function editdaftartagihan(Request $req) {
+        try {
+            $data = Tagihan::join('siswa_buku_induk', 'siswa_buku_induk.id', '=', 'siswa_tagihan.nis')
+            ->where('siswa_buku_induk.id', $req->id_siswa)->first();
+            $dynamicAttributes = [
+                'data' => $data,
+            ];
+            return ResponseHelper::data(__('common.data_ready', ['namadata' => 'Informasi detail tagihan Siswa SMK PGRI 6 Malang']), $dynamicAttributes);
+        } catch (\Throwable $th) {
+            return ResponseHelper::error($th);
+        }
+    }   
+    public function updatetagihan(Request $req) {
+        try {
+           Tagihan::where('nis', $req->id_siswa)->update([
+                'total_tagihan_juli' => $req->tagihan_juli,
+                'total_tagihan_agustus' => $req->tagihan_agustus,
+                'total_tagihan_september' => $req->tagihan_september,
+                'total_tagihan_oktober' => $req->tagihan_oktober,
+                'total_tagihan_november' => $req->tagihan_november,
+                'total_tagihan_desember' => $req->tagihan_desember,
+                'total_tagihan_januari' => $req->tagihan_januari,
+                'total_tagihan_februari' => $req->tagihan_februari,
+                'total_tagihan_maret' => $req->tagihan_maret,
+                'total_tagihan_april' => $req->tagihan_april,
+                'total_tagihan_mei' => $req->tagihan_mei,
+                'total_tagihan_juni' => $req->tagihan_juni,
+            ]);
+            return ResponseHelper::success("Data tagihan siswa berhasil diperbarui");
         } catch (\Throwable $th) {
             return ResponseHelper::error($th);
         }

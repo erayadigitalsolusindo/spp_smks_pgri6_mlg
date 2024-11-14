@@ -406,7 +406,7 @@ $("#btnKonfirmasiTransaksiSPP").on("click", function(event) {
         keteranganArray.push(currentKeterangan ? currentKeterangan : '');
     });
     Swal.fire({
-       html: '<div class="mt-3 text-center"><dotlottie-player src="https://lottie.host/53c357e2-68f2-4954-abff-939a52e6a61a/PB4F7KPq65.json" background="transparent" speed="1" style="width:150px;height:150px;margin:0 auto" direction="1" playMode="normal" loop autoplay></dotlottie-player><div><h4>Konfirmasi Transaksi Pembayaran</h4><p class="text-muted mx-4 mb-0">Transaksi pembayaran akan dicatatakan atas Nama Siswa <strong>'+$("#nama_siswa_temp").html()+'</strong> dengan NIS <strong>'+$("#nomor_induk_siswa_temp").html()+'</strong> dengan Nominal Pembayaran sebesar <strong>Rp '+nominal_bayar_konfirmasi.getNumber().toLocaleString('id-ID')+'</strong> untuk bulan <strong>'+selectedBulan.join(', ').toUpperCase()+'</strong></p></div>',
+        html: '<div class="mt-3 text-center"><dotlottie-player src="https://lottie.host/53c357e2-68f2-4954-abff-939a52e6a61a/PB4F7KPq65.json" background="transparent" speed="1" style="width:150px;height:150px;margin:0 auto" direction="1" playMode="normal" loop autoplay></dotlottie-player><div><h4>Konfirmasi Transaksi Pembayaran</h4><p class="text-muted mx-4 mb-0">Transaksi pembayaran akan dicatatakan atas Nama Siswa <strong>'+$("#nama_siswa_temp").html()+'</strong> dengan NIS <strong>'+$("#nomor_induk_siswa_temp").html()+'</strong> dengan Nominal Pembayaran sebesar <strong>Rp '+nominal_bayar_konfirmasi.getNumber().toLocaleString('id-ID')+'</strong> untuk bulan <strong>'+selectedBulan.join(', ').toUpperCase()+'</strong></p></div>',
         showCancelButton: true,
         confirmButtonColor: '#dc3545',
         cancelButtonColor: 'orange',

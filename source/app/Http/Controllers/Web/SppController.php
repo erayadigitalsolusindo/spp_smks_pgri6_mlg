@@ -41,5 +41,13 @@ class SppController extends Controller
             'Daftar Tagihan' => route('spp.daftar_tagihan'),
         ]);
         return view('paneladmin.spp.daftar_tagihan', ['data' => $data]);
+    }
+    public function form_tagihan(Request $req)
+    {
+        $data = $this->getData($req, 'Formulir Tagihan', [
+            'Beranda' => route('admin.beranda'),
+            'Tambah Tagihan' => route('spp.form_tagihan'),
+        ]);
+        return view('paneladmin.spp.form_tagihan', ['data' => $data]);
     }   
 }
