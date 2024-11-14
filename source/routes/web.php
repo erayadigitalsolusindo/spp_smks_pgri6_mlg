@@ -31,5 +31,6 @@ Route::group(['middleware' => ['jwt.cookie']], function () {
         Route::get('transaksi_pembayaran/{id_transaksi?}', [SppController::class,"transaksi_pembayaran"])->name('spp.transaksi_pembayaran');
         Route::get('daftar_tagihan', [SppController::class,"daftar_tagihan"])->name('spp.daftar_tagihan');
         Route::get('form_tagihan', [SppController::class,"form_tagihan"])->name('spp.form_tagihan');
+        Route::get('cetak_bukti_pembayaran/{id_transaksi}', [SppController::class,"cetakbuktipembayaran"])->name('spp.cetak_bukti_pembayaran');
     });
 });

@@ -4,7 +4,8 @@ namespace App\Http\Controllers\Web;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Models\{TransaksiDetail};
+use App\Models\{TransaksiDetail, Transaksi};
+use PDF;
 
 class SppController extends Controller
 {
@@ -50,4 +51,24 @@ class SppController extends Controller
         ]);
         return view('paneladmin.spp.form_tagihan', ['data' => $data]);
     }   
+    public function cetakbuktipembayaran(Request $req, $id_transaksi) {
+        $informasi_transaksi = Transaksi::join('siswa_buku_induk','siswa_buku_induk.id','=','transaksi.nis')
+        ->join('transaksi_spp','transaksi_spp.id_transaksi','=','transaksi.id')
+        ->join('atr_kelas','atr_kelas.id','=','siswa_buku_induk.id_kelas')
+        ->join('transaksi_jenis_trx','transaksi_jenis_trx.kode','=','transaksi_spp.kode_jenis_transaksi')
+        ->where('transaksi.id', $id_transaksi)->get();
+        $data = [
+            'title' => 'Cetak Bukti Pembayaran',
+            'date' => date('d-m-Y'),
+            'breadcrumb' => [
+                'Beranda' => route('admin.beranda'),
+                'Cetak Bukti Pembayaran' => route('spp.cetak_bukti_pembayaran', ['id_transaksi' => $id_transaksi]),
+            ],
+            'informasi_transaksi' => $informasi_transaksi,
+        ];
+        return PDF::loadView('paneladmin.nota.cetak_bukti_pembayaran', ['data' => $data])
+        ->setPaper('a4', 'portrait')
+        ->setOptions(['isRemoteEnabled' => true])
+        ->stream();
+    }
 }
