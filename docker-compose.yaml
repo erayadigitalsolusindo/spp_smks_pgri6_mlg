@@ -1,10 +1,10 @@
-#version: '3.8'
+version: '3.8'
 
 services:
   web_service:
     image: spp_smks_pgri6_mlg:1.0.0
     networks:
-      - erayadigitalnetwork
+      - erayadigitalnetwork  # Menggunakan jaringan yang sudah ada
     ports:
       - target: 8080
         published: 10102
@@ -13,8 +13,8 @@ services:
       - ./source/storage/:/var/www/html/storage/
     environment:
       DB_CONNECTION: mysql
-      DB_HOST: 192.168.0.34
-      DB_PORT: 8808
+      DB_HOST: 192.168.0.34  # Pastikan IP ini benar atau gunakan hostname
+      DB_PORT: 8808  # Pastikan port ini benar
       DB_DATABASE: eds_smks_pgri6_mlg
       DB_USERNAME: aries
       DB_PASSWORD: Salam1jiwa
@@ -26,6 +26,6 @@ services:
         mode: non-blocking
 
 networks:
-  default:
-    name: erayadigitalnetwork
+  erayadigitalnetwork:
     external: true
+    driver: overlay
