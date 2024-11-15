@@ -26,5 +26,6 @@ services:
         mode: non-blocking
 
 networks:
-  erayadigitalnetwork:
-    external: true  # Use an already created external network
+  default:
+    name: erayadigitalnetwork
+    external: true
