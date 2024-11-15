@@ -4,17 +4,17 @@ services:
   web_service:
     image: spp_smks_pgri6_mlg:1.0.0
     networks:
-      - erayadigitalnetwork  # Network where the container will connect
+      - erayadigitalnetwork
     ports:
       - target: 8080
         published: 10102
         mode: ingress
     volumes:
-      - ./source/storage/:/var/www/html/storage/  # Bind mount for storage directory
+      - ./source/storage/:/var/www/html/storage/
     environment:
       DB_CONNECTION: mysql
-      DB_HOST: 192.168.0.34  # IP or hostname of your external MySQL server
-      DB_PORT: 8808  # Port for MySQL
+      DB_HOST: 192.168.0.34
+      DB_PORT: 8808
       DB_DATABASE: eds_smks_pgri6_mlg
       DB_USERNAME: aries
       DB_PASSWORD: Salam1jiwa
