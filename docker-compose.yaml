@@ -11,8 +11,8 @@ services:
       - ./source/storage/:/var/www/html/storage/  # Bind mount for storage directory
     environment:
       DB_HOST: 192.168.0.34  # Change to your external MySQL host (IP or domain)
-      DB_PORT: 3306  # Default MySQL port, change if necessary
-      DB_DATABASE: spp_smks_pgri6_mlg
+      DB_PORT: 8808  # Default MySQL port, change if necessary
+      DB_DATABASE: eds_smks_pgri6_mlg
       DB_USERNAME: aries
       DB_PASSWORD: Salam1jiwa
     # Limit default logging container
