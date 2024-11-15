@@ -3,6 +3,8 @@
 services:
   web_service:
     image: spp_smks_pgri6_mlg:1.0.0
+    networks:
+      - erayadigitalnetwork
     ports:
       - target: 8080
         published: 10102
