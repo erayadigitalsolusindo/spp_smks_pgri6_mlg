@@ -29,16 +29,7 @@
             <div class="modal-body">
                 <input type="text" class="form-control" id="pencarian_detail_transaksi_daftar_pembayaran" placeholder="Masukan Keterangan Pembayaran">
                 <div class="table">
-                    <table class="display" id="datatables_detail_transaksi_daftar_pembayaran">
-                      <thead>
-                        <tr>
-                          <th>No</th>
-                          <th>Bulan</th>
-                          <th>Nominal</th>
-                          <th>Keterangan</th>
-                        </tr>
-                      </thead>
-                    </table>
+                    <table class="display" id="datatables_detail_transaksi_daftar_pembayaran"></table>
                 </div>
             </div>
             <div class="modal-footer">

@@ -16,6 +16,9 @@ class Transaksi extends Model
         'petugas',
         'total_transaksi_bayar',
         'tahun_ajaran',
+        'metode_pembayaran',
+        'nominal_bayar',
+        'no_transaksi_transfer'
     ];
     public $timestamps = false;
 }

@@ -133,7 +133,7 @@ function datatables_daftar_pembayaran() {
 function lihatDetailTransaksi(id_transaksi) {
     $.get('/generate-csrf-token', function(response) {
         $.ajax({
-            url: baseurlapi + '/spp/detail_transaksi',
+            url: baseurlapi + '/spp/detail_transaksi_id',
             type: 'GET',
             beforeSend: function(xhr) {
                 xhr.setRequestHeader("Authorization", "Bearer " + localStorage.getItem('token_ajax'));
@@ -141,7 +141,6 @@ function lihatDetailTransaksi(id_transaksi) {
             data: {
                 _token: response.csrf_token,
                 id_transaksi: id_transaksi,
-                parameter_pencarian: $("#pencarian_detail_transaksi_daftar_pembayaran").val()
             },
             success: function(response) {
                 if ($.fn.dataTable.isDataTable('#datatables_detail_transaksi_daftar_pembayaran')) {
@@ -156,8 +155,8 @@ function lihatDetailTransaksi(id_transaksi) {
                         {title: "No", render: function(data, type, row, meta) {
                             return meta.row + meta.settings._iDisplayStart + 1;
                         }},
-                        {title: "Bulan", render: function(data, type, row, meta) {
-                            return `${convertNumericToBulan([row.kode_bulan])}`;
+                        {title: "Jenis Pembayaran", render: function(data, type, row, meta) {
+                            return ` ${row.jenis_transaksi} (${convertNumericToBulan([row.kode_bulan])})`;
                         }},
                         {title: "Nominal", render: function(data, type, row, meta) {
                             return `Rp. ${new Intl.NumberFormat('id-ID').format(row.nominal)}`;

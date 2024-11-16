@@ -11,14 +11,45 @@ const nominal_bayar_konfirmasi= new AutoNumeric('#nominal_bayar_konfirmasi', {
     decimalCharacter: ',',
     decimalPlaces: 0,
 });
+const nominal_bayar_konfirmasi_nominal = new AutoNumeric('#nominal_bayar_konfirmasi_nominal', {
+    digitGroupSeparator: '.',
+    decimalCharacter: ',',
+    decimalPlaces: 0,
+});
+const nominal_bayar_kembalian_nominal = new AutoNumeric('#nominal_bayar_kembalian_nominal', {
+    digitGroupSeparator: '.',
+    decimalCharacter: ',',
+    decimalPlaces: 0,
+});
 $(document).ready(function() {
     onloaddatatables();
     getSelectedMonths();
     onloadselect2();
     isedit = false;
+    $('#select_metode_pembayaran_transaksi_spp').trigger('change');
     if (transaksi_detail > -1) {
         isedit = true;
         loadDetailTransaksi(transaksi_detail);
+    }
+});
+// Menyembunyikan atau menampilkan input berdasarkan metode pembayaran yang dipilih
+$('#select_metode_pembayaran_transaksi_spp').change(function() {
+    let metodePembayaran = $(this).val();
+    if (metodePembayaran === 'TRANSFER') {
+        $('#no_transaksi_transfer').prop('readonly', false);    
+        $('#no_transaksi_transfer').show();     
+        $('#no_transaksi_transfer').focus();
+        nominal_bayar_konfirmasi_nominal.set(0);
+        nominal_bayar_kembalian_nominal.set(0);
+        $('.pembayaran_tunai').hide();
+        $('#col_no_transaksi_transfer').removeClass('col-md-12').addClass('col-md-6');  
+    } else {
+        $('#no_transaksi_transfer').val('');
+        $('#no_transaksi_transfer').prop('readonly', true);     
+        $('#no_transaksi_transfer').hide();  
+        $('.pembayaran_tunai').show();   
+        $('#col_no_transaksi_transfer').removeClass('col-md-6').addClass('col-md-12');  
+        $('#nominal_bayar_konfirmasi_nominal').focus();
     }
 });
 function loadDetailTransaksi(id_transaksi) {
@@ -52,7 +83,8 @@ function loadDetailTransaksi(id_transaksi) {
                             .attr('data-no_telepon', response.data[0].no_telepon)
                             .attr('data-email', response.data[0].email)
                             .attr('data-tingkat_kelas', response.data[0].tingkat_kelas)
-                            .attr('data-tahun_ajaran', response.data[0].tahun_ajaran);
+                            .attr('data-tahun_ajaran', response.data[0].tahun_ajaran)
+                            .attr('data-id_tahun_ajaran', response.data[0].id_tahun_ajaran);
                 
                 $('#select_siswa_transaksi_spp').append(newOption);
                 $("#select_siswa_transaksi_spp").val(response.data[0].nis).trigger('change');
@@ -74,7 +106,19 @@ function loadDetailTransaksi(id_transaksi) {
                     ]).draw();
                     new AutoNumeric(`#${uniqueId}`, response.data[i].nominal, nominalPembayaran);
                 }
-                
+                if (response.data[0].metode_pembayaran == "TUNAI") {
+                    $('.pembayaran_tunai').show();
+                    nominal_bayar_konfirmasi_nominal.set(response.data[0].nominal_bayar);
+                    nominal_bayar_kembalian_nominal.set(response.data[0].nominal_bayar - response.data[0].total_transaksi_bayar);
+                    $("#no_transaksi_transfer").val('');
+                    $("#select_metode_pembayaran_transaksi_spp").val('TUNAI').trigger('change');
+                }else{
+                    $('.pembayaran_tunai').hide();
+                    nominal_bayar_konfirmasi_nominal.set(0);
+                    nominal_bayar_kembalian_nominal.set(0);
+                    $("#no_transaksi_transfer").val(response.data[0].no_transaksi_transfer);
+                    $("#select_metode_pembayaran_transaksi_spp").val('TRANSFER').trigger('change');
+                }
             },
             error: function(xhr, status, error) {
                 return createToast('Kesalahan Penggunaan', 'top-right', xhr.responseJSON.message, 'error', 3000);
@@ -192,16 +236,11 @@ function getSelectedMonths() {
 }
 $('#select_siswa_transaksi_spp').on('select2:select change', function(e) {
     let data;
-    
-    // Menangani event select2:select
     if (e.type === 'select2:select') {
         data = e.params.data.data;
     }
-    // Menangani event change
     else if (e.type === 'change') {
         let selectedOption = $('#select_siswa_transaksi_spp option:selected');
-        
-        // Jika opsi yang dipilih memiliki data terkait
         data = {
             id_siswa: selectedOption.data('id_siswa'),
             nama_siswa: selectedOption.data('nama_siswa'),
@@ -212,11 +251,9 @@ $('#select_siswa_transaksi_spp').on('select2:select change', function(e) {
             email: selectedOption.data('email'),
             tingkat_kelas: selectedOption.data('tingkat_kelas'),
             tahun_ajaran: selectedOption.data('tahun_ajaran'),
-            kode_tahun_ajaran: selectedOption.data('kode_tahun_ajaran')
+            kode_tahun_ajaran: selectedOption.data('id_tahun_ajaran')
         };
     }
-
-    // Jika data ditemukan, update elemen di halaman
     if (data) {
         $('#id_temp').text(data.id_siswa);
         $('#nama_peserta_temp').text(data.nama_siswa);
@@ -304,11 +341,11 @@ function tambah_baris_transaksi_spp() {
             });
         }
     });
-
-    // Update row numbers and scroll to the last row
     updateNomorUrut();
     scrollToLastRow();
     updateGrandTotal();
+    nominal_pembayaran_transaksi_spp.set(0);
+    $('#select_jenis_pembayaran_transaksi_spp').val(null).trigger('change');
 }
 
 
@@ -346,22 +383,6 @@ function updateGrandTotal() {
     nominal_bayar_konfirmasi.set(grandTotal);
 }
 
-function initializeAutoNumeric() {
-    $('.nominal_pembayaran').each(function() {
-        if (!AutoNumeric.getAutoNumericElement(this)) {
-            new AutoNumeric(this, {
-                decimalCharacter: ',',
-                digitGroupSeparator: '.',
-                currencySymbol: '',
-                unformatOnSubmit: true
-            });
-        }
-    });
-    nominal_pembayaran_transaksi_spp.set(0);
-    $('#select_jenis_pembayaran_transaksi_spp').val(null).trigger('change');
-    
-}
-
 $("#nominal_pembayaran_transaksi_spp").on("keyup", function(event) {
     if (event.keyCode === 13) {
         tambah_baris_transaksi_spp()
@@ -394,6 +415,9 @@ $("#btnKonfirmasiTransaksiSPP").on("click", function(event) {
     }
     if (table_datatables_transaksi_spp.rows().count() == 0) {
         return createToast('Informasi', 'top-right', 'Silahkan tentukan terlebih dahulu jenis pembayaran dan nominal pembayaran untuk transaksi ini. Minimal jenis pembayaran 1 transaksi dengan nominal pembayaran lebih besar dari 0', 'error', 3000);
+    }
+    if (nominal_bayar_kembalian_nominal.getNumber() < 0) {
+        return createToast('Informasi Transaksi TUNAI', 'top-right', 'Nominal pembayaran yang anda masukan masih kurang <strong>Rp '+(nominal_bayar_kembalian_nominal.getNumber() * -1).toLocaleString('id-ID')+'</strong>', 'error', 3000);
     }
     table_datatables_transaksi_spp.rows().every(function() {
         let rowNode = $(this.node());
@@ -438,6 +462,9 @@ $("#btnKonfirmasiTransaksiSPP").on("click", function(event) {
                         nama_siswa: $("#nama_peserta_temp").html(),
                         keterangan: keteranganArray,
                         totalbelanja: nominal_bayar_konfirmasi.getNumber(),
+                        metode_bayar: $("#select_metode_pembayaran_transaksi_spp").val(),
+                        no_transaksi_transfer: $("#no_transaksi_transfer").val(),
+                        nominal_bayar_konfirmasi: nominal_bayar_konfirmasi_nominal.getNumber(),
                     },
                     success: function(response){
                         if (response.rc == 200) {
@@ -476,4 +503,7 @@ $(document).on('keyup', '.nominal_pembayaran', function () {
     let inputElement = $(this);
     let currentValue = inputElement.val();
     updateGrandTotal();
+});
+$("#nominal_bayar_konfirmasi_nominal").on("keyup", function(event) {
+    nominal_bayar_kembalian_nominal.set(nominal_bayar_konfirmasi_nominal.getNumber() - nominal_bayar_konfirmasi.getNumber());
 });

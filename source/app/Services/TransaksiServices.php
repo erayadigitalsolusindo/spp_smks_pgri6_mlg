@@ -28,7 +28,7 @@ class TransaksiServices
             if (count($tagihanset) == 0) {
                 throw new Exception("Data Tagihan Siswa tidak ditemukan. Silahkan tentukan tagihan pada master tagihan siswa");
             }
-            $nomor_transaksi = 'TRX-SPP/'.$request->nis.'/'.$request->petugas_id.'/'. date('d-m-Y') . '/' . date('His');
+            $nomor_transaksi = 'TRX-SPP/'.$request->nis.'/'.$request->petugas_id.'/'. date('dmY') . '/' . date('His');
             $dataTransaksi = [
                 'no_transaksi' => $nomor_transaksi,
                 'nis' => $request->id_siswa,
@@ -36,6 +36,9 @@ class TransaksiServices
                 'petugas' => $request->petugas_id,
                 'total_transaksi_bayar' => $request->totalbelanja,
                 'tahun_ajaran' => $request->tahun_ajaran,
+                'metode_pembayaran' => $request->metode_bayar,
+                'nominal_bayar' => $request->nominal_bayar_konfirmasi,
+                'no_transaksi_transfer' => $request->no_transaksi_transfer,
 
             ];
             if (filter_var($request->isedit, FILTER_VALIDATE_BOOLEAN)) {

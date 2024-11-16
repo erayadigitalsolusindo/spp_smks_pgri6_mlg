@@ -1,3 +1,4 @@
+#Aktifkan versi 3.8 jika ingin menggunakan versi 3.8 dari docker compose bukan swarm
 #version: '3.8'
 
 services:
@@ -9,7 +10,15 @@ services:
         mode: ingress
     environment:
       - ./source/storage/:/var/www/html/storage/
-    # Limit default logging container
+      - DB_CONNECTION=mysql
+      - DB_HOST=192.168.0.34
+      - DB_PORT=8808
+      - DB_DATABASE=eds_smkpgri6mlg_spp
+      - DB_USERNAME=aries
+      - DB_PASSWORD=Salam1jiwa
+      - DB_TABLE_PREFIX=eds_
+    depends_on:
+      - mysql
     logging:
       driver: "json-file"
       options:

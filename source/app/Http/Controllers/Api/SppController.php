@@ -41,6 +41,8 @@ class SppController extends Controller
                 'kodebulan' => 'required|array',
                 'petugas_id' => 'required|integer',
                 'tahun_ajaran' => 'required|string',
+                'metode_bayar' => 'required|string',
+                'nominal_bayar_konfirmasi' => 'required|integer',
             ]);
             if ($validator->fails()) {
                 $dynamicAttributes = ['errors' => $validator->errors()];

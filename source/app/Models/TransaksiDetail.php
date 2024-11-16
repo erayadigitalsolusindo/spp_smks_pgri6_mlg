@@ -47,7 +47,8 @@ class TransaksiDetail extends Model
             ->join('siswa_buku_induk', 'siswa_buku_induk.id', '=', 'transaksi.nis')
             ->join('users_pegawai', 'users_pegawai.id', '=', 'transaksi.petugas')
             ->join('atr_kelas', 'atr_kelas.id', '=', 'siswa_buku_induk.id_kelas')
-            ->select('siswa_buku_induk.id as id_siswa','transaksi.*','transaksi.id as id_transaksi','transaksi_spp.*','transaksi.no_transaksi as no_transaksi','siswa_buku_induk.*','siswa_buku_induk.nis as nis_siswa','users_pegawai.*','atr_kelas.*','transaksi_jenis_trx.jenis_transaksi', DB::raw('DATE_FORMAT(tanggal, "%d-%m-%Y %H:%i:%s") as tanggal_transaksi'));
+            ->join('siswa_tahun_ajaran', 'siswa_tahun_ajaran.id_tahun_ajaran', '=', 'transaksi.tahun_ajaran')
+            ->select('siswa_tahun_ajaran.id_tahun_ajaran as id_tahun_ajaran','siswa_buku_induk.id as id_siswa','transaksi.*','siswa_tahun_ajaran.tahun_ajaran as tahun_ajaran','transaksi.id as id_transaksi','transaksi_spp.*','transaksi.no_transaksi as no_transaksi','siswa_buku_induk.*','siswa_buku_induk.nis as nis_siswa','users_pegawai.*','atr_kelas.*','transaksi_jenis_trx.jenis_transaksi', DB::raw('DATE_FORMAT(tanggal, "%d-%m-%Y %H:%i:%s") as tanggal_transaksi'));
         $query->where('transaksi.id', $id_transaksi);   
         return $query->get();
     }

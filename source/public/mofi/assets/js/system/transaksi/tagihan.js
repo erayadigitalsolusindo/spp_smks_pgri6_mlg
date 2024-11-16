@@ -15,7 +15,8 @@ $(document).ready(function() {
     setTimeout(function() {
         tabel_datatagihan();
     }, 500);
-});function tabel_datatagihan() {
+});
+function tabel_datatagihan() {
     $.get('/generate-csrf-token', function(response) {
         $("#datatables_tagihan").DataTable({
             dom: 'lfrtip',
@@ -68,14 +69,9 @@ $(document).ready(function() {
                 },
                 ...["juli", "agustus", "september", "oktober", "november", "desember", "januari", "februari", "maret", "april", "mei", "juni"].flatMap(month => [
                     { 
-                        title: month.charAt(0).toUpperCase() + month.slice(1), 
+                        title:`Sisa Tag ${month.charAt(0).toUpperCase() + month.slice(1)}`, 
                         className: "text-center", 
                         render: (data, type, row) => `<div class="text-center">${row[month] === 0 ? '<span class="text-danger">LUNAS</span>' : new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR' }).format(row[month])}</div>`
-                    },
-                    { 
-                        title: `Σ Tagihan ${month.charAt(0).toUpperCase() + month.slice(1)}`, 
-                        className: "text-center", 
-                        render: (data, type, row) => `<div class="text-center">${new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR' }).format(row[`total_tagihan_${month}`])}</div>` 
                     }
                 ]),
                 { 

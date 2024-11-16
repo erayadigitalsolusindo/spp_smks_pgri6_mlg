@@ -56,6 +56,8 @@ class SppController extends Controller
         ->join('transaksi_spp','transaksi_spp.id_transaksi','=','transaksi.id')
         ->join('atr_kelas','atr_kelas.id','=','siswa_buku_induk.id_kelas')
         ->join('transaksi_jenis_trx','transaksi_jenis_trx.kode','=','transaksi_spp.kode_jenis_transaksi')
+        ->join('users','users.id','=','transaksi.petugas')
+        ->join('users_pegawai','users_pegawai.id','=','users.id')
         ->where('transaksi.id', $id_transaksi)->get();
         $data = [
             'title' => 'Cetak Bukti Pembayaran',

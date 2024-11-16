@@ -89,13 +89,12 @@
                 </div>
                 <div class="row" id="keranjang_pembayaran">
                   <div class="d-flex justify-content-between align-items-center">
-                    <span class="text-start" style="font-family: 'DS-Digital', sans-serif; font-size: 5vw; color: red;">
+                    <span class="text-start" style="font-size: 5vw; color: red;">
                         <strong>IDR</strong>
                     </span>
                     <input type="text" value="0" class="form-control text-end" id="nominal_bayar_konfirmasi" name="nominal_bayar_konfirmasi" placeholder="0.00" readonly>
                 </div>
-
-                <div class="col-md-12">
+                <div class="col-md-12 mb-2">
                     <div class="card-wrapper border rounded-3 h-100 checkbox-checked">
                         <h6 class="sub-title text-center">Pilih Bulan Pembayaran</h6>
                         <div class="form-check checkbox checkbox-primary ps-0 main-icon-checkbox">
@@ -152,7 +151,6 @@
                         </div>
                     </div>             
                 </div>
-
                 <div class="col-md-4">
                     <select class="form-control" id="select_jenis_pembayaran_transaksi_spp"></select>
                 </div>
@@ -164,7 +162,6 @@
                         <i class="fa fa-cart-plus"></i> Masukan Keranjang
                     </button>
                 </div>
-
                 <div class="table-responsive theme-scrollbar">
                     <table class="display" id="datatables_transaksi_spp">
                         <thead>
@@ -182,6 +179,33 @@
                         </tbody>
                     </table>
                 </div>
+                </div>
+                <div class="row mt-2 mb-2">
+                    <div class="col-md-6" id="col_no_transaksi_transfer">
+                        <select class="form-control" id="select_metode_pembayaran_transaksi_spp">
+                            <option value="TUNAI">Pembayaran Menggunakan Metode Tunai</option>
+                            <option value="TRANSFER">Pembayaran Menggunakan Metode Transfer</option>
+                        </select>
+                    </div>
+                    <div class="col-md-6">
+                        <input type="text" class="form-control text-end" id="no_transaksi_transfer" name="no_transaksi_transfer" placeholder="Nomor / Kode Transaksi Transfer" readonly>
+                    </div>
+                </div>
+                <div id="keranjang_pembayaran_nominal" class="pembayaran_tunai">
+                    <div class="d-flex justify-content-between align-items-center">
+                    <span class="text-start" style="font-size: 5vw; color: red;">
+                        <strong>BYR</strong>
+                    </span>
+                    <input type="text" value="0" class="form-control text-end" id="nominal_bayar_konfirmasi_nominal" name="nominal_bayar_konfirmasi_nominal" placeholder="0.00">
+                    </div>
+                </div>
+                <div id="keranjang_pembayaran_kembalian" class="pembayaran_tunai">
+                    <div class="d-flex justify-content-between align-items-center">
+                    <span class="text-start" style="font-size: 5vw; color: red;">
+                        <strong>KMB</strong>
+                    </span>
+                    <input type="text" value="0" class="form-control text-end" id="nominal_bayar_kembalian_nominal" name="nominal_bayar_kembalian_nominal" placeholder="0.00" readonly>
+                    </div>
                 </div>
                 <button class="btn btn-success w-100 btn-lg mt-2" id="btnKonfirmasiTransaksiSPP">
                     <i class="fa fa-check"></i> Konfirmasi Transaksi
@@ -207,7 +231,9 @@
     border-top-left-radius:2;
     border-top-right-radius:2;
 }
-#nominal_bayar_konfirmasi{
+#nominal_bayar_konfirmasi,
+#nominal_bayar_konfirmasi_nominal,
+#nominal_bayar_kembalian_nominal{
     text-align: right;
     font-family: 'DS-Digital', sans-serif;
     font-size: 5vw;
@@ -216,25 +242,32 @@
     line-height: 1;
     font-weight: bold;
 }
-#nominal_bayar_konfirmasi::placeholder {
+#nominal_bayar_konfirmasi::placeholder,
+#nominal_bayar_konfirmasi_nominal::placeholder,
+#nominal_bayar_kembalian_nominal::placeholder {
     font-family: 'DS-Digital', sans-serif;
     font-size: 5vw;
     color: red;
 }
-#nominal_pembayaran_transaksi_spp, .nominal_pembayaran{
+#nominal_pembayaran_transaksi_spp,  
+.nominal_pembayaran {
     text-align: right;
-    font-family: 'DS-Digital', sans-serif;
+    font-family: 'DS-Digital', sans-serif; /* Pastikan font ini sudah ada */
     font-size: 45px;
     color: red;
     padding: 0; 
     line-height: 1;
     font-weight: bold;
 }
-#nominal_pembayaran_transaksi_spp::placeholder, .nominal_pembayaran::placeholder {
+
+/* Mengatur gaya placeholder */
+#nominal_pembayaran_transaksi_spp::placeholder,  
+.nominal_pembayaran::placeholder {
     font-family: 'DS-Digital', sans-serif;
     font-size: 45px;
     color: red;
 }
+
 .radio-wrapper, .checkbox-wrapper {
   display: -webkit-box;
   display: -ms-flexbox;
