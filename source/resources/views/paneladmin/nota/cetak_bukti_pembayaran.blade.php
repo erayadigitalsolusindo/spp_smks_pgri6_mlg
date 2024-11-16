@@ -74,6 +74,7 @@
                 $kembalian = $pembayaran - $totalNominal;
             @endphp
             @endforeach
+            @if ($data['informasi_transaksi'][0]->metode_pembayaran == "TUNAI")
             <tr style="background-color: blue; color: white;">
                 <td style="text-align: right; font-weight: bold;">Total</td>
                 <td style="text-align: right; font-weight: bold;">Rp. {{ number_format($totalNominal, 0, ',', '.') }}</td>
@@ -86,6 +87,11 @@
                 <td style="text-align: right; font-weight: bold;">Kembalian</td>
                 <td style="text-align: right; font-weight: bold;">Rp. {{ number_format($kembalian, 0, ',', '.') }}</td>
             </tr>
+            @else
+            <tr style="background-color: blue; color: white;">
+                <td colspan="2" style="text-align: right; font-weight: bold;">{{ $data['informasi_transaksi'][0]->no_transaksi }}</td>
+            </tr>
+            @endif
         </table> 
     </div>
     <div class="right marginnya">
@@ -145,6 +151,7 @@
                 $kembalian = $pembayaran - $totalNominal;
             @endphp
             @endforeach
+            @if ($data['informasi_transaksi'][0]->metode_pembayaran == "TUNAI")
             <tr style="background-color: blue; color: white;">
                 <td style="text-align: right; font-weight: bold;">Total</td>
                 <td style="text-align: right; font-weight: bold;">Rp. {{ number_format($totalNominal, 0, ',', '.') }}</td>
@@ -157,7 +164,12 @@
                 <td style="text-align: right; font-weight: bold;">Kembalian</td>
                 <td style="text-align: right; font-weight: bold;">Rp. {{ number_format($kembalian, 0, ',', '.') }}</td>
             </tr>
-        </table>
+            @else
+            <tr style="background-color: blue; color: white;">
+                <td colspan="2" style="text-align: right; font-weight: bold;">{{ $data['informasi_transaksi'][0]->no_transaksi }}</td>
+            </tr>
+            @endif
+        </table> 
     </div>
 </body>
 </html>
