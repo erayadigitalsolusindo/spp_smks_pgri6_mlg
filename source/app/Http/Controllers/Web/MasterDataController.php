@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Web;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Models\{Kelas, TahunAjaran};
 
 class MasterDataController extends Controller
 {
@@ -28,6 +29,8 @@ class MasterDataController extends Controller
             'Beranda' => route('admin.beranda'),
             'Mini Buku Induk' => route('admin.mini_buku_induk'),
         ]);
+        $data['informasi_kelas'] = Kelas::all();
+        $data['informasi_tahun_ajaran'] = TahunAjaran::all();
         return view('paneladmin.master_data.mini_buku_induk', ['data' => $data]);
     }
 }

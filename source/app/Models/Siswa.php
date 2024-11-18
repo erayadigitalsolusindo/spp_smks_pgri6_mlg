@@ -8,13 +8,16 @@ class Siswa extends Model
 {
     protected $table = 'siswa_buku_induk';
     protected $fillable = [
+        'id',
         'id_kelas',
-        'id_jurusan',
-        'tahun_ajaran',
         'nis',
         'nisn',
         'nama_siswa',
         'alamat_siswa',
+        'no_telepon',
+        'email',
+        'jenis_kelamin',
+        'id_tahun_ajaran',
     ];
     public static function getSiswa($req, $perHalaman, $offset){
         $parameterpencarian = $req->parameter_pencarian;
@@ -36,5 +39,15 @@ class Siswa extends Model
             'data' => $result,
             'total' => $jumlahdata
         ];
+    }
+    public static function getSiswaWhereId($id){
+        $tablePrefix = config('database.connections.mysql.prefix');
+        $query = DB::table((new self())->getTable())
+            ->join('atr_kelas', 'atr_kelas.id', '=', 'siswa_buku_induk.id_kelas')
+            ->join('siswa_tahun_ajaran', 'siswa_tahun_ajaran.id_tahun_ajaran', '=', 'siswa_buku_induk.id_tahun_ajaran')
+            ->select('siswa_buku_induk.*','siswa_buku_induk.id as id_siswa', 'atr_kelas.*', 'siswa_tahun_ajaran.*','siswa_tahun_ajaran.id_tahun_ajaran as kode_tahun_ajaran');
+        $result = $query->where('siswa_buku_induk.id', $id)
+            ->first();
+        return $result;
     }
 }

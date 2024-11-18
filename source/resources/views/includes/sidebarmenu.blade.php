@@ -66,6 +66,7 @@
                 </svg><span>Master Data</span></a>
               <ul class="sidebar-submenu">
                 <li><a href="{{url('masterdata/mini_buku_induk')}}">Mini Buku Induk</a></li>
+                <li><a href="{{url('masterdata/jenispembayaran')}}">Jenis Pembayaran</a></li>
               </ul>
             </li>
             <li class="sidebar-list"><i class="fa fa-thumb-tack"></i><a class="sidebar-link sidebar-title" href="javascript:void(0)">

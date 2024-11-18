@@ -40,6 +40,9 @@ Route::prefix('v1')->group(function () {
             Route::get('jenispembayaran', [MasterDataController::class,"getjenispembayaran"]);
             Route::post('tambahkeranjangtagihan', [MasterDataController::class,"tambahkeranjangtagihan"]);
             Route::get('hapustagihanpeserta', [MasterDataController::class,"hapustagihanpeserta"]);
+            Route::post('simpaninformasisiswa', [MasterDataController::class,"simpaninformasisiswa"]);
+            Route::get('hapusinformasisiswa', [MasterDataController::class,"hapusinformasisiswa"]);
+            Route::get('getinformasisiswa', [MasterDataController::class,"getinformasisiswa"]);
         });
         Route::prefix('spp')->group(function () {
             Route::get('daftar_tagihan', [SppController::class,"gettagihan"]);

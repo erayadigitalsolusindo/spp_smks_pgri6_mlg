@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\{Siswa, JenisPembayaran, Kelas};
 use App\Helpers\ResponseHelper;
+use Illuminate\Support\Facades\Validator;
 
 class MasterDataController extends Controller
 {
@@ -66,6 +67,68 @@ class MasterDataController extends Controller
         try {
             Siswa::where('id', $req->idpeserta)->delete();
             return ResponseHelper::success_delete('Informasi siswa '.$req->nama_peserta.' dengan ID '.$req->idpeserta.' berhasil dihapus. Jikalau ingin melihat data atas siswa ini hubungi Teknisi');
+        } catch (\Throwable $th) {
+            return ResponseHelper::error($th);
+        }
+    }
+    public function simpaninformasisiswa(Request $req){
+        try {
+            $validator = Validator::make($req->all(), [
+                'nis' => 'required',
+                'nama_siswa' => 'required',
+                'kelas' => 'required',
+                'tahun_ajaran' => 'required',
+                'jenis_kelamin' => 'required',
+            ]);
+            if ($validator->fails()) {
+                $dynamicAttributes = ['errors' => $validator->errors()];
+                return ResponseHelper::error_validation(__('auth.eds_required_data'), $dynamicAttributes);
+            }
+            $data = [
+                'id_kelas' => $req->kelas,
+                'nisn' => $req->nisn,
+                'nama_siswa' => $req->nama_siswa,
+                'alamat_siswa' => $req->alamat_siswa,
+                'no_telepon' => $req->no_telepon,
+                'email' => $req->email,
+                'jenis_kelamin' => $req->jenis_kelamin,
+                'id_tahun_ajaran' => $req->tahun_ajaran,
+            ];
+            if (filter_var($req->isedit, FILTER_VALIDATE_BOOLEAN)) {
+                Siswa::where('id', $req->id)->update($data);
+            }else{
+                Siswa::updateOrCreate(
+                    ['nis' => $req->nis],
+                    $data
+                );
+            }
+            return ResponseHelper::success('Informasi siswa berhasil disimpan');
+        } catch (\Throwable $th) {
+            return ResponseHelper::error($th);
+        }
+    }
+    public function hapusinformasisiswa(Request $req){
+        try {
+            $validator = Validator::make($req->all(), [
+                'id' => 'required',
+            ]);
+            if ($validator->fails()) {
+                $dynamicAttributes = ['errors' => $validator->errors()];
+                return ResponseHelper::error_validation(__('auth.eds_required_data'), $dynamicAttributes);
+            }
+            Siswa::where('id', $req->id)->delete();
+            return ResponseHelper::success_delete('Informasi siswa '.$req->nama_siswa.' dengan NIS '.$req->nis.' berhasil dihapus. Semua informasi mengenai transaksi in tidak dihapus, hanya saja tidak bisa ditampilkan secara visual');
+        } catch (\Throwable $th) {
+            return ResponseHelper::error($th);
+        }
+    }
+    public function getinformasisiswa(Request $req){
+        try {
+            $data = Siswa::getSiswaWhereId($req->id);
+            $dynamicAttributes = [
+                'data' => $data,
+            ];
+            return ResponseHelper::data('Informasi siswa dengan ID '.$req->id, $dynamicAttributes);
         } catch (\Throwable $th) {
             return ResponseHelper::error($th);
         }
