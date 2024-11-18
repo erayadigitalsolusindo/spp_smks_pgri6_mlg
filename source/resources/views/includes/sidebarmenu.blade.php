@@ -65,14 +65,7 @@
                   <use href="{{ asset('mofi/assets/svg/icon-sprite.svg#fill-widget')}}"></use>
                 </svg><span>Master Data</span></a>
               <ul class="sidebar-submenu">
-                <li><a href="{{url('masterdata/daftar_perusahaan')}}">Perusahaan</a></li>
-                <li><a class="submenu-title" href="javascript:void(0)">Atribut siswa<div class="according-menu"><i class="fa fa-angle-right"></i></div></a>
-                  <ul class="nav-sub-childmenu submenu-content">
-                    <li><a href="{{url('masterdata/daftar_jurusan_siswa')}}">Jurusan Siswa</a></li>
-                    <li><a href="{{url('masterdata/daftar_kelas_siswa')}}">Kelas Siswa</a></li>
-                    <li><a href="{{url('masterdata/daftar_jenis_pembayaran')}}">Jenis Pembayaran</a></li>
-                  </ul>
-                </li>
+                <li><a href="{{url('masterdata/mini_buku_induk')}}">Mini Buku Induk</a></li>
               </ul>
             </li>
             <li class="sidebar-list"><i class="fa fa-thumb-tack"></i><a class="sidebar-link sidebar-title" href="javascript:void(0)">

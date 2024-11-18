@@ -22,4 +22,12 @@ class MasterDataController extends Controller
         ]);
         return view('paneladmin.master_data.kelas_siswa', ['data' => $data]);
     }
+    public function mini_buku_induk(Request $req)
+    {
+        $data = $this->getData($req, 'Mini Buku Induk', [
+            'Beranda' => route('admin.beranda'),
+            'Mini Buku Induk' => route('admin.mini_buku_induk'),
+        ]);
+        return view('paneladmin.master_data.mini_buku_induk', ['data' => $data]);
+    }
 }

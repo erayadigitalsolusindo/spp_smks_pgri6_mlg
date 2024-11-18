@@ -27,11 +27,11 @@ class Siswa extends Model
             $query->where('nis', 'LIKE', '%' . $parameterpencarian . '%')
                   ->orWhere('nama_siswa', 'LIKE', '%' . $parameterpencarian . '%');
         }
+        $jumlahdata = $query->count();
         $result = $query->take($perHalaman)
             ->skip($offset)
             ->orderBy('nama_siswa', 'ASC')
             ->get();
-        $jumlahdata = $query->count();
         return [
             'data' => $result,
             'total' => $jumlahdata
