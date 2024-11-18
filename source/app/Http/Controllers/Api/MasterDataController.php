@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Models\{Siswa, JenisPembayaran, Kelas};
+use App\Models\{Siswa, JenisPembayaran, Kelas, JenisTransaksi};
 use App\Helpers\ResponseHelper;
 use Illuminate\Support\Facades\Validator;
 
@@ -32,6 +32,26 @@ class MasterDataController extends Controller
             $data = $data->get();
             $dynamicAttributes = [
                 'data' => $data,
+            ];
+            return ResponseHelper::data(__('common.data_ready', ['namadata' => 'Daftar Jenis Pembayaran']), $dynamicAttributes);
+        } catch (\Throwable $th) {
+            return ResponseHelper::error($th);
+        }
+    }
+    public function getjenispembayarantabel(Request $req){
+        try {
+            $perHalaman = (int) $req->length > 0 ? (int) $req->length : 1;
+            $nomorHalaman = (int) $req->start / $perHalaman;
+            $offset = $nomorHalaman * $perHalaman; 
+            $datatabel = JenisPembayaran::getjenispembayarantabel($req, $perHalaman, $offset);
+            $jumlahdata = $datatabel['total'];
+            $dynamicAttributes = [
+                'data' => $datatabel['data'],
+                'recordsFiltered' => $jumlahdata,
+                'pages' => [
+                    'limit' => $perHalaman,
+                    'offset' => $offset,
+                ],
             ];
             return ResponseHelper::data(__('common.data_ready', ['namadata' => 'Daftar Jenis Pembayaran']), $dynamicAttributes);
         } catch (\Throwable $th) {
@@ -129,6 +149,37 @@ class MasterDataController extends Controller
                 'data' => $data,
             ];
             return ResponseHelper::data('Informasi siswa dengan ID '.$req->id, $dynamicAttributes);
+        } catch (\Throwable $th) {
+            return ResponseHelper::error($th);
+        }
+    }
+    public function tambahjenispembayaran(Request $req){
+        try {
+            $validator = Validator::make($req->all(), [
+                'kode' => 'required',
+                'jenis_transaksi' => 'required',
+            ]);
+            if ($validator->fails()) {
+                $dynamicAttributes = ['errors' => $validator->errors()];
+                return ResponseHelper::error_validation(__('auth.eds_required_data'), $dynamicAttributes);
+            }
+            $data = [
+                'kode' => $req->input('kode'),
+                'jenis_transaksi' => $req->input('jenis_transaksi'),
+            ];
+            JenisTransaksi::updateOrCreate(
+                ['kode' => $req->input('kode')],
+                $data
+            );
+            return ResponseHelper::data('Jenis pembayaran berhasil disimpan');
+        } catch (\Throwable $th) {
+            return ResponseHelper::error($th);
+        }
+    }
+    public function hapusjenispembayaran(Request $req){
+        try {
+            JenisTransaksi::where('kode', $req->kode_jenis_transaksi)->delete();
+            return ResponseHelper::success_delete('Jenis pembayaran berhasil dihapus');
         } catch (\Throwable $th) {
             return ResponseHelper::error($th);
         }

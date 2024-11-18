@@ -33,4 +33,12 @@ class MasterDataController extends Controller
         $data['informasi_tahun_ajaran'] = TahunAjaran::all();
         return view('paneladmin.master_data.mini_buku_induk', ['data' => $data]);
     }
+    public function jenis_pembayaran(Request $req)
+    {
+        $data = $this->getData($req, 'Jenis Pembayaran', [
+            'Beranda' => route('admin.beranda'),
+            'Jenis Pembayaran' => route('admin.jenis_pembayaran'),
+        ]);
+        return view('paneladmin.master_data.jenis_pembayaran', ['data' => $data]);
+    }
 }

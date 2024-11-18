@@ -26,6 +26,7 @@ Route::group(['middleware' => ['jwt.cookie']], function () {
         Route::get('daftar_kelas_siswa', [MasterDataController::class,"daftar_kelas_siswa"])->name('admin.daftar_kelas_siswa');
         Route::get('daftar_jenis_pembayaran', [MasterDataController::class,"daftar_jenis_pembayaran"])->name('admin.daftar_jenis_pembayaran');
         Route::get('mini_buku_induk', [MasterDataController::class,"mini_buku_induk"])->name('admin.mini_buku_induk');
+        Route::get('jenis_pembayaran', [MasterDataController::class,"jenis_pembayaran"])->name('admin.jenis_pembayaran');
     });
     Route::prefix('spp')->group(function () {
         Route::get('daftar_pembayaran', [SppController::class,"daftar_pembayaran"])->name('spp.daftar_pembayaran');
