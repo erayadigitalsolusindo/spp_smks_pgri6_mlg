@@ -61,16 +61,10 @@ set +x
 # Build image from Docker file with var $IMAGE_REPO_NAME and tag $IMAGE_TAG
 # You can see it from .env configuration
 sudo docker build --platform=linux/amd64 --pull --rm -f "$DOCKER_FILE" -t $IMAGE_REPO_NAME:$IMAGE_TAG "."
-# Set the stack name
-STACK_NAME=$DOCKER_SWARM_STACK_NAME
-# Remove the existing stack
-sudo docker stack rm $STACK_NAME
-# Wait for stack removal to complete
-sudo docker system prune -a -f
-echo "Waiting usually -+ 10 seconds for stack removal to complete..."
-sleep 10  # Sesuaikan waktu tunggu sesuai kebutuhan
+
 # Show all list of docker iamge
 sudo docker image ls
+
 
 # Deploy to swarm
 sudo docker stack deploy -c docker-compose.yaml $DOCKER_SWARM_STACK_NAME --with-registry-auth --detach=false
