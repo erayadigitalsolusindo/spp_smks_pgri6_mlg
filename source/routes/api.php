@@ -2,7 +2,7 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Api\{AuthController, RoleAndPermissionController, UserController, SppController, MasterDataController};
+use App\Http\Controllers\Api\{AuthController, RoleAndPermissionController, UserController, SppController, MasterDataController, LaporanController};
 
 Route::get('/', function(){return ResponseHelper::error(401);})->name('login');
 Route::prefix('v1')->group(function () {
@@ -57,6 +57,9 @@ Route::prefix('v1')->group(function () {
             Route::post('simpantagihan', [SppController::class,"simpantagihan"]);
             Route::get('editdaftartagihan', [SppController::class,"editdaftartagihan"]);
             Route::post('updatetagihan', [SppController::class,"updatetagihan"]);
+        });
+        Route::prefix('laporan')->group(function () {
+            Route::get('laporanpembayaran', [LaporanController::class,"laporanpembayaran"]);
         });
     });
 });

@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Web\{BerandaController, HakaksesController, AuthController, MasterDataController, SppController};
+use App\Http\Controllers\Web\{BerandaController, HakaksesController, AuthController, MasterDataController, SppController, LaporanController};
 use Illuminate\Http\Request;
 
 Route::get('generate-csrf-token', function () { $token = csrf_token(); return response()->json(['csrf_token' => $token]); });
@@ -34,5 +34,8 @@ Route::group(['middleware' => ['jwt.cookie']], function () {
         Route::get('daftar_tagihan', [SppController::class,"daftar_tagihan"])->name('spp.daftar_tagihan');
         Route::get('form_tagihan', [SppController::class,"form_tagihan"])->name('spp.form_tagihan');
         Route::get('cetak_bukti_pembayaran/{id_transaksi}', [SppController::class,"cetakbuktipembayaran"])->name('spp.cetak_bukti_pembayaran');
+    });
+    Route::prefix('laporan')->group(function () {
+        Route::get('laporan_pembayaran', [LaporanController::class,"laporan_pembayaran"])->name('laporan.laporan_pembayaran');
     });
 });
