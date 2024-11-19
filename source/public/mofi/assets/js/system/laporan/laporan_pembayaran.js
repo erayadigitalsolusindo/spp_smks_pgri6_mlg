@@ -119,7 +119,7 @@ function datatables_laporan_pembayaran(){
                     className: "dtfc-fixed-right_header",
                     render: function(data, type, row, meta) {
                         if (type === 'display') {
-                            return "<div class=\"d-flex justify-content-between gap-2 background_fixed_right_row\"><button class=\"btn btn-success w-100\"><i class=\"fa fa-edit\"></i> Detail Transaksi</button></div>";
+                            return "<div class=\"d-flex justify-content-between gap-2 background_fixed_right_row\"><button onclick=\"detail_transaksi_pembayaran('" + row.id_transaksi + "')\" class=\"btn btn-success w-100\"><i class=\"fa fa-edit\"></i> Detail Transaksi</button></div>";
                         }       
                         return data;
                     }
@@ -128,6 +128,54 @@ function datatables_laporan_pembayaran(){
         });
     });
 }
-$("#proses_laporan_pembayaran").click(function(){
+$("#proses_laporan_pembayaran").click(function(e){
+    e.preventDefault();
     $("#datatables_laporan_pembayaran").DataTable().ajax.reload();
 });
+function detail_transaksi_pembayaran(id_transaksi){
+    $.get('/generate-csrf-token', function(response) {
+        $.ajax({
+            url: baseurlapi + '/spp/detail_transaksi_id',
+            type: 'GET',
+            beforeSend: function(xhr) {
+                xhr.setRequestHeader("Authorization", "Bearer " + localStorage.getItem('token_ajax'));
+            },
+            data: {
+                _token: response.csrf_token,
+                id_transaksi: id_transaksi,
+            },
+            success: function(response) {
+                if ($.fn.dataTable.isDataTable('#datatables_detail_transaksi_daftar_pembayaran')) {
+                    $('#datatables_detail_transaksi_daftar_pembayaran').DataTable().clear().destroy();
+                }
+                $("#datatables_detail_transaksi_daftar_pembayaran").DataTable({
+                    dom: 't',
+                    ordering: false,
+                    paging: false,
+                    data: response.data,
+                    columns: [
+                        {title: "No", render: function(data, type, row, meta) {
+                            return meta.row + meta.settings._iDisplayStart + 1;
+                        }},
+                        {title: "Jenis Pembayaran", render: function(data, type, row, meta) {
+                            return ` ${row.jenis_transaksi} (${convertNumericToBulan([row.kode_bulan])})`;
+                        }},
+                        {title: "Nominal", render: function(data, type, row, meta) {
+                            return `Rp. ${new Intl.NumberFormat('id-ID').format(row.nominal)}`;
+                        }},
+                        {title: "Keterangan", render: function(data, type, row, meta) {
+                            return `${row.keterangan === null ? 'Tidak ada keterangan' : row.keterangan}`;
+                        }},
+                    ],
+                    error: function (xhr, error, thrown) {
+                        console.error('DataTables Error:', error, thrown);
+                    }
+                });
+                $("#modalDetailTransaksi").modal('show');
+            },
+            error: function(xhr, status, error) {
+                return createToast('Kesalahan Cek Data', 'top-right', xhr.responseJSON.message, 'error', 3000);
+            }
+        });
+    });
+}

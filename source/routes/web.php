@@ -37,5 +37,6 @@ Route::group(['middleware' => ['jwt.cookie']], function () {
     });
     Route::prefix('laporan')->group(function () {
         Route::get('laporan_pembayaran', [LaporanController::class,"laporan_pembayaran"])->name('laporan.laporan_pembayaran');
+        Route::post('pdf_laporan_pembayaran', [LaporanController::class,"pdf_laporan_pembayaran"])->name('laporan.pdf_laporan_pembayaran');
     });
 });
