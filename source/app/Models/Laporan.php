@@ -93,7 +93,6 @@ class Laporan extends Model
                 DB::raw('DATE_FORMAT('.$prefix.'transaksi.tanggal, "%d-%m-%Y %H:%i:%s") as tanggal_transaksi')
             )
             ->groupBy('transaksi.no_transaksi');
-        // Tambahkan Filter Jika Parameter Pencarian Ada
         if (!empty($request->parameter_pencarian)) {
             $query->where(function($subQuery) use ($request) {
                 $subQuery->where('transaksi.no_transaksi', 'LIKE', '%' . $request->input('parameter_pencarian') . '%')
@@ -102,12 +101,9 @@ class Laporan extends Model
                         ->orWhere('transaksi.nis', 'LIKE', '%' . $request->input('parameter_pencarian') . '%');
             });
         }
-        // Filter Berdasarkan Tanggal
         $query->whereBetween(DB::raw('DATE('.$prefix.'transaksi.tanggal)'), [$startDate, $endDate]);
-        // Hitung Total Data
         $jumlahdata = $query->count();
-        // Ambil Data dengan Paginasi
-        $result = $query->orderBy('transaksi.tanggal', 'DESC')->get();
+        $result = $query->orderBy('transaksi.tanggal', 'DESC')->groupBy('siswa_buku_induk.nis')->get();
         return [
             'data' => $result,
             'total' => $jumlahdata,
