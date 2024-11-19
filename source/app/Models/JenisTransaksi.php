@@ -10,6 +10,7 @@ class JenisTransaksi extends Model
     protected $fillable = [
         'kode',
         'jenis_transaksi',
+        'jenis'
     ];
     public $timestamps = false; 
 }

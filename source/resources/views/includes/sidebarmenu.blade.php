@@ -49,7 +49,8 @@
                 </svg><span>Pembayaran</span></a>
               <ul class="sidebar-submenu">
                 <li><a href="{{url('spp/daftar_pembayaran')}}">Transaksi Pembayaran</a></li>
-                <li><a href="{{url('spp/daftar_tagihan')}}">Daftar Tagihan</a></li>
+                <li><a href="{{url('spp/daftar_tagihan')}}">Tagihan Bulanan</a></li>
+                <li><a href="{{url('spp/tagihan_non_bulanan')}}">Tagihan Non Bulanan</a></li>
               </ul>
             </li>
             <li class="sidebar-main-title">

@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Models\{Siswa, JenisPembayaran, Kelas, JenisTransaksi};
+use App\Models\{Siswa, JenisPembayaran, Kelas, JenisTransaksi, TagihanNonBulanan};
 use App\Helpers\ResponseHelper;
 use Illuminate\Support\Facades\Validator;
 
@@ -87,6 +87,14 @@ class MasterDataController extends Controller
         try {
             Siswa::where('id', $req->idpeserta)->delete();
             return ResponseHelper::success_delete('Informasi siswa '.$req->nama_peserta.' dengan ID '.$req->idpeserta.' berhasil dihapus. Jikalau ingin melihat data atas siswa ini hubungi Teknisi');
+        } catch (\Throwable $th) {
+            return ResponseHelper::error($th);
+        }
+    }
+    public function hapustagihanpeserta_non_bulanan(Request $req){
+        try {
+            TagihanNonBulanan::where('id_siswa', $req->id_siswa)->delete();
+            return ResponseHelper::success_delete('Informasi siswa '.$req->nama_siswa.' dengan ID '.$req->id_siswa.' berhasil dihapus. Jikalau ingin melihat data atas siswa ini hubungi Teknisi');
         } catch (\Throwable $th) {
             return ResponseHelper::error($th);
         }

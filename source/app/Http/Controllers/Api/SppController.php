@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Models\{Tagihan, Transaksi, TransaksiDetail};
+use App\Models\{Tagihan, Transaksi, TransaksiDetail, TagihanNonBulanan};
 use App\Helpers\ResponseHelper;
 use Illuminate\Support\Facades\Validator;
 use App\Services\TransaksiServices;
@@ -18,6 +18,26 @@ class SppController extends Controller
             $nomorHalaman = (int) $request->start / $perHalaman;
             $offset = $nomorHalaman * $perHalaman;
             $data = Tagihan::listTagihanTabel($request, $perHalaman, $offset);
+            $jumlahdata = $data['total'];
+            $dynamicAttributes = [
+                'data' => $data['data'],
+                'recordsFiltered' => $jumlahdata,
+                'pages' => [
+                    'limit' => $perHalaman,
+                    'offset' => $offset,
+                ],
+            ];
+            return ResponseHelper::data(__('common.data_ready', ['namadata' => 'Informasi Tagihan Siswa SMK PGRI 6 Malang']), $dynamicAttributes);
+        } catch (\Throwable $th) {
+            return ResponseHelper::error($th);
+        }
+    }
+    public function gettagihan_non_bulanan(Request $request){
+        try {
+            $perHalaman = (int) $request->length > 0 ? (int) $request->length : 1;
+            $nomorHalaman = (int) $request->start / $perHalaman;
+            $offset = $nomorHalaman * $perHalaman;
+            $data = TagihanNonBulanan::listTagihanTabel($request, $perHalaman, $offset);
             $jumlahdata = $data['total'];
             $dynamicAttributes = [
                 'data' => $data['data'],
@@ -158,6 +178,29 @@ class SppController extends Controller
             return ResponseHelper::error($th);
         }
     }
+    public function simpantagihan_non_bulanan(Request $req) {
+        try {
+            if (empty($req->rowsData)) {
+                return ResponseHelper::error("Data tidak boleh kosong");
+            }
+            $bulkInsertData = [];
+            foreach ($req->rowsData as $row) {
+                $bulkInsertData[] = [
+                    'id_siswa' => $row['id_siswa'],
+                    'kode_jenis_transaksi' => $row['kode_jenis_transaksi'],
+                    'qty' => $row['qty'],
+                    'nominal' => $row['nominal'],
+                    'id_tahun_ajaran' => $row['id_tahun_ajaran'],
+                ];
+            }
+            TagihanNonBulanan::upsert($bulkInsertData, ['id_siswa', 'kode_jenis_transaksi', 'id_tahun_ajaran'], [
+                'qty', 'nominal',
+            ]);
+            return ResponseHelper::success("Data tagihan siswa sejumlah ".count($bulkInsertData)." Data berhasil ditambahkan");
+        } catch (\Throwable $th) {
+            return ResponseHelper::error($th);
+        }
+    }
     public function editdaftartagihan(Request $req) {
         try {
             $data = Tagihan::join('siswa_buku_induk', 'siswa_buku_induk.id', '=', 'siswa_tagihan.nis')
@@ -170,6 +213,18 @@ class SppController extends Controller
             return ResponseHelper::error($th);
         }
     }   
+    public function editdaftartagihan_non_bulanan(Request $req){
+        try {
+            $data = TagihanNonBulanan::join('siswa_buku_induk', 'siswa_buku_induk.id', '=', 'siswa_tagihan_dinamis.id_siswa')
+            ->where('siswa_buku_induk.id', $req->id_siswa)->first();
+            $dynamicAttributes = [
+                'data' => $data,
+            ];
+            return ResponseHelper::data(__('common.data_ready', ['namadata' => 'Informasi detail tagihan non bulanan Siswa SMK PGRI 6 Malang']), $dynamicAttributes);
+        } catch (\Throwable $th) {
+            return ResponseHelper::error($th);
+        }
+    }
     public function updatetagihan(Request $req) {
         try {
            Tagihan::where('nis', $req->id_siswa)->update([
@@ -188,6 +243,17 @@ class SppController extends Controller
             ]);
             return ResponseHelper::success("Data tagihan siswa berhasil diperbarui");
         } catch (\Throwable $th) {
+            return ResponseHelper::error($th);
+        }
+    }
+    public function updatetagihan_non_bulanan(Request $req) {
+        try {
+            TagihanNonBulanan::where('id_siswa', $req->id_siswa)->update([
+                'qty' => $req->qty,
+                'nominal' => $req->nominal,
+            ]);
+            return ResponseHelper::success("Data tagihan siswa berhasil diperbarui");
+        }catch(\Throwable $th) {
             return ResponseHelper::error($th);
         }
     }

@@ -44,7 +44,7 @@
             @endphp
         @foreach ($data['informasi_transaksi'] as $informasi)
         @php
-            $total_bayar += $informasi->total_transaksi_bayar;
+            $total_bayar += $informasi->sum_nominal;
         @endphp
         @endforeach
         <div style="font-size: 20px; font-weight: bold;">Total Data : {{$data['total_data']}} Data</div>
@@ -64,7 +64,7 @@
                 <td style="text-align: center;">{{$nomor++}}</td>
                 <td>NIS: {{$informasi->nis_siswa}}<br>Nama: {{$informasi->nama_siswa}}</td>
                 <td>{{$informasi->tanggal_transaksi}}</td>
-                <td style="text-align: right;">{{ number_format($informasi->total_transaksi_bayar, 0, ',', '.') }}</td>
+                <td style="text-align: right;">{{ number_format($informasi->sum_nominal, 0, ',', '.') }}</td>
             </tr>
             @endforeach
             <tr>

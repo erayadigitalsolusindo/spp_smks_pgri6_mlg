@@ -30,6 +30,7 @@ class Laporan extends Model
                 'users_pegawai.*',
                 'atr_kelas.*',
                 'transaksi_jenis_trx.jenis_transaksi',
+                
                 DB::raw('count(*) as jumlah_trx'),
                 DB::raw('DATE_FORMAT('.$prefix.'transaksi.tanggal, "%d-%m-%Y %H:%i:%s") as tanggal_transaksi')
             )
@@ -89,10 +90,14 @@ class Laporan extends Model
                 'users_pegawai.*',
                 'atr_kelas.*',
                 'transaksi_jenis_trx.jenis_transaksi',
+                DB::raw('sum('.$prefix.'transaksi_spp.nominal) as sum_nominal'),
                 DB::raw('count(*) as jumlah_trx'),
                 DB::raw('DATE_FORMAT('.$prefix.'transaksi.tanggal, "%d-%m-%Y %H:%i:%s") as tanggal_transaksi')
             )
-            ->groupBy('transaksi.no_transaksi');
+            ->groupBy(
+                'transaksi.nis',
+                DB::raw('DATE('.$prefix.'transaksi.tanggal)')
+            );
         if (!empty($request->parameter_pencarian)) {
             $query->where(function($subQuery) use ($request) {
                 $subQuery->where('transaksi.no_transaksi', 'LIKE', '%' . $request->input('parameter_pencarian') . '%')
@@ -103,7 +108,7 @@ class Laporan extends Model
         }
         $query->whereBetween(DB::raw('DATE('.$prefix.'transaksi.tanggal)'), [$startDate, $endDate]);
         $jumlahdata = $query->count();
-        $result = $query->orderBy('transaksi.tanggal', 'DESC')->groupBy('siswa_buku_induk.nis')->get();
+        $result = $query->orderBy('transaksi.tanggal', 'DESC')->get();
         return [
             'data' => $result,
             'total' => $jumlahdata,

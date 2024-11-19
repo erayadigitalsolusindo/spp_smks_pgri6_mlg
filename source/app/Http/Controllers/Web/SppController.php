@@ -4,8 +4,9 @@ namespace App\Http\Controllers\Web;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Models\{TransaksiDetail, Transaksi};
+use App\Models\{TransaksiDetail, Transaksi, JenisTransaksi};
 use PDF;
+use App\Models\{Kelas, TahunAjaran};
 
 class SppController extends Controller
 {
@@ -41,7 +42,19 @@ class SppController extends Controller
             'Beranda' => route('admin.beranda'),
             'Daftar Tagihan' => route('spp.daftar_tagihan'),
         ]);
+        $data['informasi_kelas'] = Kelas::all();
+        $data['informasi_tahun_ajaran'] = TahunAjaran::all();
         return view('paneladmin.spp.daftar_tagihan', ['data' => $data]);
+    }
+    public function daftar_tagihan_dinamis(Request $req)
+    {
+        $data = $this->getData($req, 'Daftar Tagihan Non Bulanan', [
+            'Beranda' => route('admin.beranda'),
+            'Daftar Tagihan Non Bulanan' => route('spp.daftar_tagihan_dinamis'),
+        ]);
+        $data['informasi_kelas'] = Kelas::all();
+        $data['informasi_tahun_ajaran'] = TahunAjaran::all();
+        return view('paneladmin.spp.daftar_tagihan_dinamis', ['data' => $data]);
     }
     public function form_tagihan(Request $req)
     {
@@ -50,7 +63,16 @@ class SppController extends Controller
             'Tambah Tagihan' => route('spp.form_tagihan'),
         ]);
         return view('paneladmin.spp.form_tagihan', ['data' => $data]);
-    }   
+    }  
+    public function form_tagihan_dinamis(Request $req)
+    {
+        $data = $this->getData($req, 'Formulir Tagihan Non Bulanan', [
+            'Beranda' => route('admin.beranda'),
+            'Tambah Tagihan Non Bulanan' => route('spp.form_tagihan_non_bulanan'),
+        ]);
+        $data['jenis_transaksi'] = JenisTransaksi::where('jenis', 1)->get();
+        return view('paneladmin.spp.form_tagihan_dinamis', ['data' => $data]);
+    }
     public function cetakbuktipembayaran(Request $req, $id_transaksi) {
         $informasi_transaksi = Transaksi::join('siswa_buku_induk','siswa_buku_induk.id','=','transaksi.nis')
         ->join('transaksi_spp','transaksi_spp.id_transaksi','=','transaksi.id')

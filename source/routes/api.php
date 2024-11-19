@@ -41,6 +41,7 @@ Route::prefix('v1')->group(function () {
             Route::get('jenispembayarantabel', [MasterDataController::class,"getjenispembayarantabel"]);
             Route::post('tambahkeranjangtagihan', [MasterDataController::class,"tambahkeranjangtagihan"]);
             Route::get('hapustagihanpeserta', [MasterDataController::class,"hapustagihanpeserta"]);
+            Route::get('hapustagihanpeserta_non_bulanan', [MasterDataController::class,"hapustagihanpeserta_non_bulanan"]);
             Route::post('simpaninformasisiswa', [MasterDataController::class,"simpaninformasisiswa"]);
             Route::get('hapusinformasisiswa', [MasterDataController::class,"hapusinformasisiswa"]);
             Route::get('getinformasisiswa', [MasterDataController::class,"getinformasisiswa"]);
@@ -49,14 +50,18 @@ Route::prefix('v1')->group(function () {
         });
         Route::prefix('spp')->group(function () {
             Route::get('daftar_tagihan', [SppController::class,"gettagihan"]);
+            Route::get('daftar_tagihan_non_bulanan', [SppController::class,"gettagihan_non_bulanan"]);
             Route::post('transaksispp', [SppController::class,"transaksispp"]);
             Route::get('daftar_pembayaran', [SppController::class,"getpembayaran"]);
             Route::get('detail_transaksi', [SppController::class,"detailtransaksi"]);
             Route::get('detail_transaksi_id', [SppController::class,"detailtransaksiid"]);
             Route::get('hapus_pembayaran', [SppController::class,"hapuspembayaran"]);
             Route::post('simpantagihan', [SppController::class,"simpantagihan"]);
+            Route::post('simpantagihan_non_bulanan', [SppController::class,"simpantagihan_non_bulanan"]);
             Route::get('editdaftartagihan', [SppController::class,"editdaftartagihan"]);
+            Route::get('editdaftartagihan_non_bulanan',[SppController::class,"editdaftartagihan_non_bulanan"]);
             Route::post('updatetagihan', [SppController::class,"updatetagihan"]);
+            Route::post('updatetagihan_non_bulanan',[SppController::class,"updatetagihan_non_bulanan"]);
         });
         Route::prefix('laporan')->group(function () {
             Route::get('laporanpembayaran', [LaporanController::class,"laporanpembayaran"]);
