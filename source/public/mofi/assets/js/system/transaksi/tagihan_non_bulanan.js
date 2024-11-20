@@ -61,16 +61,25 @@ function tabel_datatagihan() {
                         }
                         return data;
                     }
-                 },
-                { title: "Nominal",
+                },
+                { title: "Sisa Tagihan",
                      className: "text-end", 
                      render: function(data, type, row, meta) {
                         if (type === 'display') {
-                            return `${new Intl.NumberFormat('id-ID').format(row.nominal)}`;
+                            return `${new Intl.NumberFormat('id-ID').format(row.sisa_nominal)}`;
                         }
                         return data;
                     }
                 },
+                { title: "Tagihan",
+                    className: "text-end", 
+                    render: function(data, type, row, meta) {
+                       if (type === 'display') {
+                           return `${new Intl.NumberFormat('id-ID').format(row.nominal)}`;
+                       }
+                       return data;
+                   }
+               },
                 { 
                     title: "Aksi", 
                     className: "dtfc-fixed-right_header text-center", 

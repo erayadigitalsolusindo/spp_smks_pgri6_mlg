@@ -73,7 +73,6 @@ class TransaksiServices
                 ->select('transaksi.tahun_ajaran', 'transaksi.nis', 'transaksi_spp.kode_bulan', 'transaksi_spp.nominal')
                 ->where('transaksi.id', $data['id_transaksi'])
                 ->get(); 
-
             $bulanMapping = [
                 1 => 'januari',
                 2 => 'februari',
@@ -88,24 +87,33 @@ class TransaksiServices
                 11 => 'november',
                 12 => 'desember',
             ];
-
+            $caseStatements = [];
+            $affectedNIS = [];
+            $affectedTahunAjaran = [];
             foreach ($transactions as $item) {
                 $tahunAjaranNew = $item->tahun_ajaran;
                 $nisNew = $item->nis;
                 $bulanTagihan = $item->kode_bulan;
                 $nominalTransaksi = $item->nominal;
-    
-                // Update kolom bulan sesuai kode bulan
-                DB::table('siswa_tagihan')
-                    ->where('nis', $nisNew)
-                    ->where('tahun_ajaran', $tahunAjaranNew)
-                    ->update([
-                        $bulanMapping[$bulanTagihan] => DB::raw("`$bulanMapping[$bulanTagihan]` + $nominalTransaksi")
-                    ]);
+                $column = $bulanMapping[$bulanTagihan];
+                if (!isset($caseStatements[$column])) {
+                    $caseStatements[$column] = "CASE";
+                }
+                $caseStatements[$column] .= " WHEN nis = '$nisNew' AND tahun_ajaran = '$tahunAjaranNew' THEN `$column` + $nominalTransaksi";
+                $affectedNIS[] = $nisNew;
+                $affectedTahunAjaran[] = $tahunAjaranNew;
             }
-            DB::table('transaksi')->where('id', $data['id_transaksi'])->delete();
+            foreach ($caseStatements as $column => $statement) {
+                $caseStatements[$column] .= " ELSE `$column` END";
+            }
+            DB::table('siswa_tagihan')
+                ->whereIn('nis', $affectedNIS)
+                ->whereIn('tahun_ajaran', $affectedTahunAjaran)
+                ->update(array_map(fn($case) => DB::raw($case), $caseStatements));
             DB::table('transaksi_spp')->where('id_transaksi', $data['id_transaksi'])->delete();
+            DB::table('transaksi')->where('id', $data['id_transaksi'])->delete();
         });
+        
     }
     
 }

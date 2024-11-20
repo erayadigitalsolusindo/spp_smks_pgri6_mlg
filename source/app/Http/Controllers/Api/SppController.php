@@ -158,21 +158,21 @@ class SppController extends Controller
                     'tahun_ajaran' => $row['tahun_ajaran'],
                 ];
             }
-            Log::info($bulkInsertData);
             Tagihan::upsert($bulkInsertData, ['nis', 'tahun_ajaran'], [
-                'juli', 'total_tagihan_juli',
-                'agustus', 'total_tagihan_agustus', 
-                'september', 'total_tagihan_september',
-                'oktober', 'total_tagihan_oktober',
-                'november', 'total_tagihan_november',
-                'desember', 'total_tagihan_desember',
-                'januari', 'total_tagihan_januari',
-                'februari', 'total_tagihan_februari',
-                'maret', 'total_tagihan_maret',
-                'april', 'total_tagihan_april',
-                'mei', 'total_tagihan_mei',
-                'juni', 'total_tagihan_juni'
+                'total_tagihan_juli', 'total_tagihan_agustus', 
+                'total_tagihan_september', 'total_tagihan_oktober',
+                'total_tagihan_november', 'total_tagihan_desember',
+                'total_tagihan_januari', 'total_tagihan_februari',
+                'total_tagihan_maret', 'total_tagihan_april',
+                'total_tagihan_mei', 'total_tagihan_juni',
+                DB::raw('juli = juli'), DB::raw('agustus = agustus'),
+                DB::raw('september = september'), DB::raw('oktober = oktober'),
+                DB::raw('november = november'), DB::raw('desember = desember'),
+                DB::raw('januari = januari'), DB::raw('februari = februari'),
+                DB::raw('maret = maret'), DB::raw('april = april'),
+                DB::raw('mei = mei'), DB::raw('juni = juni'),
             ]);
+            
             return ResponseHelper::success("Data tagihan siswa sejumlah ".count($bulkInsertData)." Data berhasil ditambahkan");
         } catch (\Throwable $th) {
             return ResponseHelper::error($th);
@@ -190,11 +190,13 @@ class SppController extends Controller
                     'kode_jenis_transaksi' => $row['kode_jenis_transaksi'],
                     'qty' => $row['qty'],
                     'nominal' => $row['nominal'],
+                    'sisa_nominal' => $row['nominal'],
                     'id_tahun_ajaran' => $row['id_tahun_ajaran'],
                 ];
             }
             TagihanNonBulanan::upsert($bulkInsertData, ['id_siswa', 'kode_jenis_transaksi', 'id_tahun_ajaran'], [
-                'qty', 'nominal',
+                'qty', 'nominal', 
+                DB::raw('sisa_nominal = sisa_nominal'),
             ]);
             return ResponseHelper::success("Data tagihan siswa sejumlah ".count($bulkInsertData)." Data berhasil ditambahkan");
         } catch (\Throwable $th) {

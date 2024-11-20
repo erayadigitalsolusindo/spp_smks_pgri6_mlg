@@ -12,7 +12,8 @@ class TagihanNonBulanan extends Model
         'id_siswa',
         'kode_jenis_transaksi',
         'qty', 
-        'nominal', 
+        'nominal',
+        'sisa_nominal', 
         'id_tahun_ajaran'
     ];
     public $timestamps = false;
