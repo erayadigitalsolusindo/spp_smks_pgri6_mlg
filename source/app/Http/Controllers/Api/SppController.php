@@ -127,53 +127,8 @@ class SppController extends Controller
             if (empty($req->rowsData)) {
                 return ResponseHelper::error("Data tidak boleh kosong");
             }
-            $bulkInsertData = [];
-            foreach ($req->rowsData as $row) {
-                $bulkInsertData[] = [
-                    'nis' => $row['nis'],
-                    'juli' => $row['pembayaran']['Juli']['nominal'],
-                    'total_tagihan_juli' => $row['pembayaran']['Juli']['nominal'],
-                    'agustus' => $row['pembayaran']['Agustus']['nominal'],
-                    'total_tagihan_agustus' => $row['pembayaran']['Agustus']['nominal'],
-                    'september' => $row['pembayaran']['September']['nominal'],
-                    'total_tagihan_september' => $row['pembayaran']['September']['nominal'],
-                    'oktober' => $row['pembayaran']['Oktober']['nominal'],
-                    'total_tagihan_oktober' => $row['pembayaran']['Oktober']['nominal'],
-                    'november' => $row['pembayaran']['November']['nominal'],
-                    'total_tagihan_november' => $row['pembayaran']['November']['nominal'],
-                    'desember' => $row['pembayaran']['Desember']['nominal'],
-                    'total_tagihan_desember' => $row['pembayaran']['Desember']['nominal'],
-                    'januari' => $row['pembayaran']['Januari']['nominal'],
-                    'total_tagihan_januari' => $row['pembayaran']['Januari']['nominal'],
-                    'februari' => $row['pembayaran']['Februari']['nominal'],
-                    'total_tagihan_februari' => $row['pembayaran']['Februari']['nominal'],
-                    'maret' => $row['pembayaran']['Maret']['nominal'],
-                    'total_tagihan_maret' => $row['pembayaran']['Maret']['nominal'],
-                    'april' => $row['pembayaran']['April']['nominal'],
-                    'total_tagihan_april' => $row['pembayaran']['April']['nominal'],
-                    'mei' => $row['pembayaran']['Mei']['nominal'],
-                    'total_tagihan_mei' => $row['pembayaran']['Mei']['nominal'],
-                    'juni' => $row['pembayaran']['Juni']['nominal'],
-                    'total_tagihan_juni' => $row['pembayaran']['Juni']['nominal'],
-                    'tahun_ajaran' => $row['tahun_ajaran'],
-                ];
-            }
-            Tagihan::upsert($bulkInsertData, ['nis', 'tahun_ajaran'], [
-                'total_tagihan_juli', 'total_tagihan_agustus', 
-                'total_tagihan_september', 'total_tagihan_oktober',
-                'total_tagihan_november', 'total_tagihan_desember',
-                'total_tagihan_januari', 'total_tagihan_februari',
-                'total_tagihan_maret', 'total_tagihan_april',
-                'total_tagihan_mei', 'total_tagihan_juni',
-                DB::raw('juli = juli'), DB::raw('agustus = agustus'),
-                DB::raw('september = september'), DB::raw('oktober = oktober'),
-                DB::raw('november = november'), DB::raw('desember = desember'),
-                DB::raw('januari = januari'), DB::raw('februari = februari'),
-                DB::raw('maret = maret'), DB::raw('april = april'),
-                DB::raw('mei = mei'), DB::raw('juni = juni'),
-            ]);
-            
-            return ResponseHelper::success("Data tagihan siswa sejumlah ".count($bulkInsertData)." Data berhasil ditambahkan");
+            $totaldatainsert = Tagihan::simpanTagihan($req);
+            return ResponseHelper::success("Data tagihan siswa sejumlah ".$totaldatainsert." Data berhasil ditambahkan");
         } catch (\Throwable $th) {
             return ResponseHelper::error($th);
         }
@@ -183,22 +138,8 @@ class SppController extends Controller
             if (empty($req->rowsData)) {
                 return ResponseHelper::error("Data tidak boleh kosong");
             }
-            $bulkInsertData = [];
-            foreach ($req->rowsData as $row) {
-                $bulkInsertData[] = [
-                    'id_siswa' => $row['id_siswa'],
-                    'kode_jenis_transaksi' => $row['kode_jenis_transaksi'],
-                    'qty' => $row['qty'],
-                    'nominal' => $row['nominal'],
-                    'sisa_nominal' => $row['nominal'],
-                    'id_tahun_ajaran' => $row['id_tahun_ajaran'],
-                ];
-            }
-            TagihanNonBulanan::upsert($bulkInsertData, ['id_siswa', 'kode_jenis_transaksi', 'id_tahun_ajaran'], [
-                'qty', 'nominal', 
-                DB::raw('sisa_nominal = sisa_nominal'),
-            ]);
-            return ResponseHelper::success("Data tagihan siswa sejumlah ".count($bulkInsertData)." Data berhasil ditambahkan");
+            $totaldatainsert = TagihanNonBulanan::simpanTagihanNonBulanan($req);
+            return ResponseHelper::success("Data tagihan siswa sejumlah ".$totaldatainsert." Data berhasil ditambahkan");
         } catch (\Throwable $th) {
             return ResponseHelper::error($th);
         }
