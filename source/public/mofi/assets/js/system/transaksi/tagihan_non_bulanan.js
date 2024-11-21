@@ -1,4 +1,5 @@
 let kuantiti = new AutoNumeric('#kuantiti', {decimal: ',', digit: '.', allowDecimalPadding: false, minimumValue: '0',});
+let sisa_nominal = new AutoNumeric('#sisa_nominal', {decimal: ',', digit: '.', allowDecimalPadding: false, minimumValue: '0',});
 let nominal = new AutoNumeric('#nominal', {decimal: ',', digit: '.', allowDecimalPadding: false, minimumValue: '0',});
 
 $(document).ready(function() {
@@ -151,6 +152,7 @@ function editdaftartagihan(id_siswa){
                 $("#nama_siswa_tagihan").html(response.data.nama_siswa);
                 $("#id_siswa_tagihan").html(response.data.id);
                 kuantiti.set(response.data.qty);
+                sisa_nominal.set(response.data.sisa_nominal)
                 nominal.set(response.data.nominal);
                 $("#form_edit_tagihan").modal("show");
                 $("#datatables_tagihan").DataTable().ajax.reload();
@@ -184,6 +186,7 @@ function simpan_tagihan_siswa_update(){
                         id_siswa: $("#id_siswa_tagihan").html(),
                         kode_jenis_transaksi: $("#kode_jenis_transaksi").val(),
                         qty: kuantiti.getNumber(),
+                        sisa_nominal: sisa_nominal.getNumber(),
                         nominal: nominal.getNumber(),
                     },
                     success: function(response) {

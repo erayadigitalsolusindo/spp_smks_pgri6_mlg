@@ -74,9 +74,8 @@ class MasterDataController extends Controller
     public function tambahkeranjangtagihan(Request $req){
         try {
             $data = Siswa::join('siswa_tahun_ajaran', 'siswa_tahun_ajaran.id_tahun_ajaran', '=', 'siswa_buku_induk.id_tahun_ajaran');
-            Log::info($req->input('id_siswa'));
             if ($req->input('id_siswa') != null) {
-                $data = $data->orWhere('siswa_buku_induk.id', $req->input('id_siswa'));
+                $data = $data->where('siswa_buku_induk.id', $req->input('id_siswa'));
             } else {
                 $data = $data->where('siswa_buku_induk.id_kelas', $req->input('id_kelas'));
             }

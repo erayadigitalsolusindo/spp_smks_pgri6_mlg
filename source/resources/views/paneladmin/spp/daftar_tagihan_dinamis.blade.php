@@ -34,7 +34,7 @@
       </div>
     </div>
 </div>
-<div class="modal modal-lg fade" id="form_edit_tagihan" tabindex="-1" aria-labelledby="formulir_edit_tagihanLabel" aria-hidden="true">
+<div class="modal modal-lg fade" id="form_edit_tagihan" tabindex="-1" aria-labelledby="formulir_edit_tagihanLabel" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
   <div class="modal-dialog">
       <div class="modal-content">
           <div class="modal-header">
@@ -52,7 +52,11 @@
                 </thead>
                 <tbody>
                   <tr>
-                    <th class="text-center">Nominal</th>
+                    <th class="text-center">Sisa Tagihan</th>
+                    <td><input type="text" class="form-control" id="sisa_nominal" placeholder="Tagihan"></td>
+                  </tr>
+                  <tr>
+                    <th class="text-center">Tagihan</th>
                     <td><input type="text" class="form-control" id="nominal" placeholder="Tagihan"></td>
                   </tr>
                 </tbody>

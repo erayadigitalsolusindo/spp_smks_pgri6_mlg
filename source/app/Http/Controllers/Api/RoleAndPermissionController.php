@@ -72,7 +72,6 @@ class RoleAndPermissionController extends Controller
             $idHakAkses = $req->idhakakses;
             $namaHakAkses = $req->namahakakses;
             $permission = RouteAndPermission::find($idHakAkses);
-            Log::info($permission);
             if (!$permission) {
                 return ResponseHelper::data_not_found(__('common.data_not_found', ['namadata' => 'Hak Akses']));
             }

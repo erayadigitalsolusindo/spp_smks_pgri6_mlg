@@ -34,11 +34,11 @@
       </div>
     </div>
 </div>
-<div class="modal modal-lg fade" id="form_edit_tagihan" tabindex="-1" aria-labelledby="formulir_edit_tagihanLabel" aria-hidden="true">
+<div class="modal modal-lg fade" id="form_edit_tagihan" tabindex="-1" aria-labelledby="formulir_edit_tagihanLabel" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
   <div class="modal-dialog">
       <div class="modal-content">
           <div class="modal-header">
-              <h5 class="modal-title" id="formulir_edit_tagihanLabel">Edit Tagihan Nama : <span id="nama_siswa_tagihan"></span><span id="id_siswa_tagihan"></span></h5>
+              <h5 class="modal-title" id="formulir_edit_tagihanLabel">Edit Tagihan Nama : <span id="nama_siswa_tagihan"></span><span style="display: none" id="id_siswa_tagihan"></span></h5>
               <button type="button btn-danger" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
           </div>
           <div class="modal-body">
@@ -47,46 +47,68 @@
                 <thead>
                   <tr>
                     <th class="text-center">Bulan</th>
-                    <th class="text-center">Nominal</th>
-                    <th class="text-center">Bulan</th>
-                    <th class="text-center">Nominal</th>
+                    <th class="text-center">Sisa Tagihan</th>
+                    <th class="text-center">Nominal Tagihan</th>
                   </tr>
                 </thead>
                 <tbody>
                   <tr>
                     <td>Tagihan Juli</td>
+                    <td><input type="text" class="form-control" id="juli" placeholder="Juli"></td>
                     <td><input type="text" class="form-control" id="tagihan_juli" placeholder="Tagihan Juli"></td>
-                    <td>Tagihan Januari</td>
-                    <td><input type="text" class="form-control" id="tagihan_januari" placeholder="Tagihan Januari"></td>
-                  </tr>
                   <tr>
                     <td>Tagihan Agustus</td>
+                    <td><input type="text" class="form-control" id="agustus" placeholder="Agustus"></td>
                     <td><input type="text" class="form-control" id="tagihan_agustus" placeholder="Tagihan Agustus"></td>
-                    <td>Tagihan Februari</td>
-                    <td><input type="text" class="form-control" id="tagihan_februari" placeholder="Tagihan Februari"></td>
                   </tr>
                   <tr>
                     <td>Tagihan September</td>
+                    <td><input type="text" class="form-control" id="september" placeholder="September"></td>
                     <td><input type="text" class="form-control" id="tagihan_september" placeholder="Tagihan September"></td>
-                    <td>Tagihan Maret</td>
-                    <td><input type="text" class="form-control" id="tagihan_maret" placeholder="Tagihan Maret"></td>
                   </tr>
                   <tr>
                     <td>Tagihan Oktober</td>
+                    <td><input type="text" class="form-control" id="oktober" placeholder="Oktober"></td>
                     <td><input type="text" class="form-control" id="tagihan_oktober" placeholder="Tagihan Oktober"></td>
-                    <td>Tagihan April</td>
-                    <td><input type="text" class="form-control" id="tagihan_april" placeholder="Tagihan April"></td>
                   </tr>
                   <tr>
                     <td>Tagihan November</td>
+                    <td><input type="text" class="form-control" id="november" placeholder="November"></td>
                     <td><input type="text" class="form-control" id="tagihan_november" placeholder="Tagihan November"></td>
-                    <td>Tagihan Mei</td>
-                    <td><input type="text" class="form-control" id="tagihan_mei" placeholder="Tagihan Mei"></td>
                   </tr>
                   <tr>
                     <td>Tagihan Desember</td>
+                    <td><input type="text" class="form-control" id="desember" placeholder="Desember"></td>
                     <td><input type="text" class="form-control" id="tagihan_desember" placeholder="Tagihan Desember"></td>
+                  </tr>
+                  <tr>
+                    <td>Tagihan Januari</td>
+                    <td><input type="text" class="form-control" id="januari" placeholder="Januari"></td>
+                    <td><input type="text" class="form-control" id="tagihan_januari" placeholder="Tagihan Januari"></td>
+                  </tr>
+                  <tr>
+                    <td>Tagihan Febuari</td>
+                    <td><input type="text" class="form-control" id="febuari" placeholder="Febuari"></td>
+                    <td><input type="text" class="form-control" id="tagihan_febuari" placeholder="Tagihan Febuari"></td>
+                  </tr>
+                  <tr>
+                    <td>Tagihan Maret</td>
+                    <td><input type="text" class="form-control" id="maret" placeholder="Maret"></td>
+                    <td><input type="text" class="form-control" id="tagihan_maret" placeholder="Tagihan Maret"></td>
+                  </tr>
+                  <tr>
+                    <td>Tagihan April</td>
+                    <td><input type="text" class="form-control" id="april" placeholder="April"></td>
+                    <td><input type="text" class="form-control" id="tagihan_april" placeholder="Tagihan April"></td>
+                  </tr>
+                  <tr>
+                    <td>Tagihan Mei</td>
+                    <td><input type="text" class="form-control" id="mei" placeholder="Mei"></td>
+                    <td><input type="text" class="form-control" id="tagihan_mei" placeholder="Tagihan Mei"></td>
+                  </tr>
+                  <tr>
                     <td>Tagihan Juni</td>
+                    <td><input type="text" class="form-control" id="juni" placeholder="Juni"></td>
                     <td><input type="text" class="form-control" id="tagihan_juni" placeholder="Tagihan Juni"></td>
                   </tr>
                 </tbody>

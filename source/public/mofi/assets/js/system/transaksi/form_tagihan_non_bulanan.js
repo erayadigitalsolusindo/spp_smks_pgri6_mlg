@@ -121,13 +121,11 @@ $('#select_siswa_transaksi_spp').on('select2:select', function (e) {
                     dataType: 'json',
                     data: {
                         _token : response.csrf_token,
-                        id_kelas : selectedData.id,
+                        id_siswa : selectedData.id_siswa,
                     },
                     success: function(response) {
                         datatables_form_tagihan.rows().clear().draw();
-                        response.data.forEach(siswa => {
-                            tambah_konfirmasi_tagihan(siswa.nis, siswa.nama_siswa, siswa.id, siswa.id_tahun_ajaran, siswa.tahun_ajaran);
-                        });
+                        tambah_konfirmasi_tagihan(response.data[0].nis, response.data[0].nama_siswa, response.data[0].id, response.data[0].id_tahun_ajaran, response.data[0].tahun_ajaran);
                         scrollToLastRow();
                     },
                     error: function(xhr, status, error) {

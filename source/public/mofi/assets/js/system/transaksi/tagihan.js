@@ -5,11 +5,23 @@ let tagihan_oktober = new AutoNumeric('#tagihan_oktober', {decimal: ',', digit: 
 let tagihan_november = new AutoNumeric('#tagihan_november', {decimal: ',', digit: '.', allowDecimalPadding: false, minimumValue: '0',});
 let tagihan_desember = new AutoNumeric('#tagihan_desember', {decimal: ',', digit: '.', allowDecimalPadding: false, minimumValue: '0',});
 let tagihan_januari = new AutoNumeric('#tagihan_januari', {decimal: ',', digit: '.', allowDecimalPadding: false, minimumValue: '0',});
-let tagihan_februari = new AutoNumeric('#tagihan_februari', {decimal: ',', digit: '.', allowDecimalPadding: false, minimumValue: '0',});
+let tagihan_februari = new AutoNumeric('#tagihan_febuari', {decimal: ',', digit: '.', allowDecimalPadding: false, minimumValue: '0',});
 let tagihan_maret = new AutoNumeric('#tagihan_maret', {decimal: ',', digit: '.', allowDecimalPadding: false, minimumValue: '0',});
 let tagihan_april = new AutoNumeric('#tagihan_april', {decimal: ',', digit: '.', allowDecimalPadding: false, minimumValue: '0',});
 let tagihan_mei = new AutoNumeric('#tagihan_mei', {decimal: ',', digit: '.', allowDecimalPadding: false, minimumValue: '0',});
 let tagihan_juni = new AutoNumeric('#tagihan_juni', {decimal: ',', digit: '.', allowDecimalPadding: false, minimumValue: '0',});
+let juli = new AutoNumeric('#juli', {decimal: ',', digit: '.', allowDecimalPadding: false, minimumValue: '0',});
+let agustus = new AutoNumeric('#agustus', {decimal: ',', digit: '.', allowDecimalPadding: false, minimumValue: '0',});
+let september = new AutoNumeric('#september', {decimal: ',', digit: '.', allowDecimalPadding: false, minimumValue: '0',});
+let oktober = new AutoNumeric('#oktober', {decimal: ',', digit: '.', allowDecimalPadding: false, minimumValue: '0',});
+let november = new AutoNumeric('#november', {decimal: ',', digit: '.', allowDecimalPadding: false, minimumValue: '0',});
+let desember = new AutoNumeric('#desember', {decimal: ',', digit: '.', allowDecimalPadding: false, minimumValue: '0',});
+let januari = new AutoNumeric('#januari', {decimal: ',', digit: '.', allowDecimalPadding: false, minimumValue: '0',});
+let februari = new AutoNumeric('#febuari', {decimal: ',', digit: '.', allowDecimalPadding: false, minimumValue: '0',});
+let maret = new AutoNumeric('#maret', {decimal: ',', digit: '.', allowDecimalPadding: false, minimumValue: '0',});
+let april = new AutoNumeric('#april', {decimal: ',', digit: '.', allowDecimalPadding: false, minimumValue: '0',});
+let mei = new AutoNumeric('#mei', {decimal: ',', digit: '.', allowDecimalPadding: false, minimumValue: '0',});
+let juni = new AutoNumeric('#juni', {decimal: ',', digit: '.', allowDecimalPadding: false, minimumValue: '0',});
 
 $(document).ready(function() {
     setTimeout(function() {
@@ -62,16 +74,18 @@ function tabel_datatagihan() {
             }],
             columns: [
                 { title: "No", className: "text-center", render: (data, type, row, meta) => meta.row + meta.settings._iDisplayStart + 1 },
-                { title: "NIS", className: "text-center", data: "nis" },
-                { title: "Nama Siswa", className: "text-center", data: "nama_siswa" },
                 { 
-                    title: "Informasi Kelas", 
-                    className: "text-center", 
-                    render: (data, type, row) => `${row.tingkat_kelas} - ${row.tahun_ajaran}` 
+                    title: "Informasi Informasi Siswa",  
+                    render: function(data, type, row, meta) {
+                        if (type === 'display') {
+                            return `NIS : ${row.nis}<br>Nama : ${row.nama_siswa}<br>Kelas : ${row.tingkat_kelas} - ${row.tahun_ajaran}`
+                        }       
+                        return data;
+                    } 
                 },
                 ...["juli", "agustus", "september", "oktober", "november", "desember", "januari", "februari", "maret", "april", "mei", "juni"].flatMap(month => [
                     { 
-                        title:`Sisa Tag ${month.charAt(0).toUpperCase() + month.slice(1)}`, 
+                        title:`${month.charAt(0).toUpperCase() + month.slice(1)}`, 
                         className: "text-center", 
                         render: (data, type, row) => `<div class="text-center">${row[month] === 0 ? '<span class="text-danger">LUNAS</span>' : new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR' }).format(row[month])}</div>`
                     }
@@ -82,11 +96,9 @@ function tabel_datatagihan() {
                     render: (data, type, row) => `
                         <div class="d-flex justify-content-between gap-2 background_fixed_right_row">
                             <button class="btn btn-primary w-100" onclick="editdaftartagihan('${row.id_siswa}')">
-                                <i class="fa fa-edit"></i> Detail
-                            </button>
+                                <i class="fa fa-edit"></i></button>
                             <button class="btn btn-danger w-100" onclick="hapustagihanpeserta('${row.id_siswa}', '${row.nama_bank}')">
-                                <i class="fa fa-trash-o"></i> Hapus
-                            </button>
+                                <i class="fa fa-trash-o"></i></button>
                         </div>`
                 }
             ]
@@ -160,6 +172,18 @@ function editdaftartagihan(id_siswa){
                 tagihan_april.set(response.data.total_tagihan_april);
                 tagihan_mei.set(response.data.total_tagihan_mei);
                 tagihan_juni.set(response.data.total_tagihan_juni);
+                juli.set(response.data.juli);
+                agustus.set(response.data.agustus);
+                september.set(response.data.september);
+                oktober.set(response.data.oktober);
+                november.set(response.data.november);
+                desember.set(response.data.desember);
+                januari.set(response.data.januari);
+                februari.set(response.data.februari);
+                maret.set(response.data.maret);
+                april.set(response.data.april);
+                mei.set(response.data.mei);
+                juni.set(response.data.juni);
                 $("#form_edit_tagihan").modal("show");
             },
             error: function(xhr, status, error) {
@@ -201,6 +225,18 @@ function simpan_tagihan_siswa_update(){
                         tagihan_april: tagihan_april.getNumber(),
                         tagihan_mei: tagihan_mei.getNumber(),
                         tagihan_juni: tagihan_juni.getNumber(),
+                        juli: juli.getNumber(),
+                        agustus: agustus.getNumber(),
+                        september: september.getNumber(),
+                        oktober: oktober.getNumber(),
+                        november: november.getNumber(),
+                        desember: desember.getNumber(),
+                        januari: januari.getNumber(),
+                        februari: februari.getNumber(),
+                        maret: maret.getNumber(),
+                        april: april.getNumber(),
+                        mei: mei.getNumber(),
+                        juni: juni.getNumber(),
                     },
                     success: function(response) {
                         createToast('Informasi', 'top-right', response.message, 'success', 3000);

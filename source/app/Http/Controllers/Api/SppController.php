@@ -183,6 +183,18 @@ class SppController extends Controller
                 'total_tagihan_april' => $req->tagihan_april,
                 'total_tagihan_mei' => $req->tagihan_mei,
                 'total_tagihan_juni' => $req->tagihan_juni,
+                'juli' => $req->juli,
+                'agustus' => $req->agustus,
+                'september' => $req->september,
+                'oktober' => $req->oktober,
+                'november' => $req->november,
+                'desember' => $req->desember,
+                'januari' => $req->januari,
+                'februari' => $req->februari,
+                'maret' => $req->maret,
+                'april' => $req->april,
+                'mei' => $req->mei,
+                'juni' => $req->juni,
             ]);
             return ResponseHelper::success("Data tagihan siswa berhasil diperbarui");
         } catch (\Throwable $th) {
@@ -193,6 +205,7 @@ class SppController extends Controller
         try {
             TagihanNonBulanan::where('id_siswa', $req->id_siswa)->update([
                 'qty' => $req->qty,
+                'sisa_nominal' => $req->sisa_nominal,
                 'nominal' => $req->nominal,
             ]);
             return ResponseHelper::success("Data tagihan siswa berhasil diperbarui");

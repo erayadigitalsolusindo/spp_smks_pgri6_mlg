@@ -1,0 +1,4 @@
+[ZoneTransfer]
+ZoneId=3
+ReferrerUrl=https://cloudconvert.com/
+HostUrl=https://eu-central.storage.cloudconvert.com/tasks/85c3b669-67c2-4802-8b19-dbef4a26ed17/logo_yplp.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=cloudconvert-production%2F20241121%2Ffra%2Fs3%2Faws4_request&X-Amz-Date=20241121T070457Z&X-Amz-Expires=86400&X-Amz-Signature=a619a33465d36cbf520c23577ca9a1405bbff31e2f57a6df7656ed3521e46eed&X-Amz-SignedHeaders=host&response-content-disposition=attachment%3B%20filename%3D%22logo_yplp.png%22&response-content-type=image%2Fpng&x-id=GetObject

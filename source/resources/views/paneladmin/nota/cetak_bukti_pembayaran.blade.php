@@ -22,7 +22,7 @@
             <table style="width: 100%;">
                 <tr>
                     <td style="width:20%;">
-                        <img src="{{ asset('mofi/assets/images/logo/Logo_saja.png') }}" alt="Logo SMK PGRI 6 Malang" style="width: 100%;padding-top: 15px;">
+                        <img src="{{ asset('mofi/assets/images/logo/logo_yplp.png') }}" alt="Logo SMK PGRI 6 Malang" style="width: 100%;padding-top: 15px;">
                     </td>
                     <td style="width:70%; text-align: center;">
                         <h3>SMKS PGRI 6 MALANG</h3>
@@ -44,7 +44,7 @@
         <strong>NIS Siswa:</strong> {{ $data['informasi_transaksi'][0]->nis }} ({{ $data['informasi_transaksi'][0]->tingkat_kelas }})<br>
         <strong>Nama Siswa:</strong> {{ $data['informasi_transaksi'][0]->nama_siswa }}<br>
         <table style="width: 100%; border-collapse: collapse;">
-            <tr style="background-color: blue; color: white;">
+            <tr style="background-color: white; color: black;">
                 <td colspan="2">Informasi Pembayaran</td>
             </tr>
             @php $totalNominal = 0; $pembayaran = 0; $kembalian = 0; @endphp
@@ -75,20 +75,20 @@
             @endphp
             @endforeach
             @if ($data['informasi_transaksi'][0]->metode_pembayaran == "TUNAI")
-            <tr style="background-color: blue; color: white;">
+            <tr style="background-color: white; color: black;">
                 <td style="text-align: right; font-weight: bold;">Total</td>
                 <td style="text-align: right; font-weight: bold;">Rp. {{ number_format($totalNominal, 0, ',', '.') }}</td>
             </tr>
-            <tr style="background-color: blue; color: white;">
+            <tr style="background-color: white; color: black;">
                 <td style="text-align: right; font-weight: bold;">Bayar</td>
                 <td style="text-align: right; font-weight: bold;">Rp. {{ number_format($pembayaran, 0, ',', '.') }}</td>
             </tr>
-            <tr style="background-color: blue; color: white;">
+            <tr style="background-color: white; color: black;">
                 <td style="text-align: right; font-weight: bold;">Kembalian</td>
                 <td style="text-align: right; font-weight: bold;">Rp. {{ number_format($kembalian, 0, ',', '.') }}</td>
             </tr>
             @else
-            <tr style="background-color: blue; color: white;">
+            <tr style="background-color: white; color: black;">
                 <td colspan="2" style="text-align: right; font-weight: bold;">{{ $data['informasi_transaksi'][0]->no_transaksi }}</td>
             </tr>
             @endif
@@ -99,7 +99,7 @@
             <table style="width: 100%;">
                 <tr>
                     <td style="width:20%;">
-                        <img src="{{ asset('mofi/assets/images/logo/Logo_saja.png') }}" alt="Logo SMK PGRI 6 Malang" style="width: 100%;padding-top: 15px;">
+                        <img src="{{ asset('mofi/assets/images/logo/logo_yplp.png') }}" alt="Logo SMK PGRI 6 Malang" style="width: 100%;padding-top: 15px;">
                     </td>
                     <td style="width:70%; text-align: center;">
                         <h3>SMKS PGRI 6 MALANG</h3>
@@ -121,7 +121,7 @@
         <strong>NIS Siswa:</strong> {{ $data['informasi_transaksi'][0]->nis }} ({{ $data['informasi_transaksi'][0]->tingkat_kelas }})<br>
         <strong>Nama Siswa:</strong> {{ $data['informasi_transaksi'][0]->nama_siswa }}<br>
         <table style="width: 100%; border-collapse: collapse;">
-            <tr style="background-color: blue; color: white;">
+            <tr style="background-color: white; color: black;">
                 <td colspan="2">Informasi Pembayaran</td>
             </tr>
             @php $totalNominal = 0; $pembayaran = 0; $kembalian = 0; @endphp
@@ -152,20 +152,20 @@
             @endphp
             @endforeach
             @if ($data['informasi_transaksi'][0]->metode_pembayaran == "TUNAI")
-            <tr style="background-color: blue; color: white;">
+            <tr style="background-color: white; color: black;">
                 <td style="text-align: right; font-weight: bold;">Total</td>
                 <td style="text-align: right; font-weight: bold;">Rp. {{ number_format($totalNominal, 0, ',', '.') }}</td>
             </tr>
-            <tr style="background-color: blue; color: white;">
+            <tr style="background-color: white; color: black;">
                 <td style="text-align: right; font-weight: bold;">Bayar</td>
                 <td style="text-align: right; font-weight: bold;">Rp. {{ number_format($pembayaran, 0, ',', '.') }}</td>
             </tr>
-            <tr style="background-color: blue; color: white;">
+            <tr style="background-color: white; color: black;">
                 <td style="text-align: right; font-weight: bold;">Kembalian</td>
                 <td style="text-align: right; font-weight: bold;">Rp. {{ number_format($kembalian, 0, ',', '.') }}</td>
             </tr>
             @else
-            <tr style="background-color: blue; color: white;">
+            <tr style="background-color: white; color: black;">
                 <td colspan="2" style="text-align: right; font-weight: bold;">{{ $data['informasi_transaksi'][0]->no_transaksi }}</td>
             </tr>
             @endif

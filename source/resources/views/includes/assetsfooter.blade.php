@@ -33,7 +33,7 @@
 <!-- External CDN Libraries -->
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script src="https://cdn.lordicon.com/lordicon.js"></script>
-<script src="https://unpkg.com/@dotlottie/player-component@latest/dist/dotlottie-player.mjs" type="module"></script>
+<script src="https://unpkg.com/@dotlottie/player-component@2.7.12/dist/dotlottie-player.mjs" type="module"></script>
 <script src="https://momentjs.com/downloads/moment.js"></script>
 
 <!-- Global Variables -->
