@@ -32,7 +32,7 @@ class TransaksiServices
             $dataTransaksi = [
                 'no_transaksi' => $nomor_transaksi,
                 'nis' => $request->id_siswa,
-                'tanggal' => Carbon::now()->format('Y-m-d')." ".Carbon::now()->format('H:i:s'),
+                'tanggal' => $request->tanggal_transaksi_spp." ".Carbon::now()->format('H:i:s'),
                 'petugas' => $request->petugas_id,
                 'total_transaksi_bayar' => $request->totalbelanja,
                 'tahun_ajaran' => $request->tahun_ajaran,

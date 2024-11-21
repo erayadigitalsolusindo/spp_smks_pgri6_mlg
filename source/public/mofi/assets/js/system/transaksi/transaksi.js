@@ -465,6 +465,7 @@ $("#btnKonfirmasiTransaksiSPP").on("click", function(event) {
                         metode_bayar: $("#select_metode_pembayaran_transaksi_spp").val(),
                         no_transaksi_transfer: $("#no_transaksi_transfer").val(),
                         nominal_bayar_konfirmasi: nominal_bayar_konfirmasi_nominal.getNumber(),
+                        tanggal_transaksi_spp: $("#tanggal_transaksi_spp").val().split('-').reverse().join('-'),
                     },
                     success: function(response){
                         if (response.rc == 200) {

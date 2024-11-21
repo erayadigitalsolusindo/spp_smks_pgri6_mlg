@@ -102,6 +102,42 @@ function onloadselect2(){
         }); 
     });
 }
+$('#select_siswa_transaksi_spp').on('select2:select', function (e) {
+    let selectedData = e.params.data.data;
+    Swal.fire({
+        title: 'Konfirmasi Siswa Ini Masuk Keranjang',
+        text: 'Apakah anda ingin menambahkan tagihan untuk siswa ini dengan info '+selectedData.nis+' - '+selectedData.nama_siswa+' ?',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonText: 'Tambahkan Siswa',
+        cancelButtonText: 'Batal',
+    }).then((result) => {
+        if (result.isConfirmed) {
+            $.get('/generate-csrf-token', function(response) {
+                $.ajax({
+                    url: baseurlapi + '/masterdata/tambahkeranjangtagihan',
+                    headers: { 'Authorization': 'Bearer ' + localStorage.getItem('token_ajax') },
+                    method: 'POST',
+                    dataType: 'json',
+                    data: {
+                        _token : response.csrf_token,
+                        id_kelas : selectedData.id,
+                    },
+                    success: function(response) {
+                        datatables_form_tagihan.rows().clear().draw();
+                        response.data.forEach(siswa => {
+                            tambah_konfirmasi_tagihan(siswa.nis, siswa.nama_siswa, siswa.id, siswa.id_tahun_ajaran, siswa.tahun_ajaran);
+                        });
+                        scrollToLastRow();
+                    },
+                    error: function(xhr, status, error) {
+                        return createToast('Kesalahan Penggunaan', 'top-right', xhr.responseJSON.message, 'error', 3000);
+                    }
+                });
+            });
+        }
+    });
+});
 $('#daftar_kelas_form_tagihan').on('select2:select', function (e) {
     let selectedData = e.params.data.data;
     Swal.fire({

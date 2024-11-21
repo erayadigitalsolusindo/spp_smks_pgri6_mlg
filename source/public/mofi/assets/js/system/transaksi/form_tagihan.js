@@ -116,7 +116,7 @@ $('#daftar_kelas_form_tagihan').on('select2:select', function (e) {
                     dataType: 'json',
                     data: {
                         _token : response.csrf_token,
-                        id_kelas : selectedData.id,
+                        id_siswa : selectedData.id,
                     },
                     success: function(response) {
                         datatables_form_tagihan.rows().clear().draw();

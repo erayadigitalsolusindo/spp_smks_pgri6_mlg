@@ -8,6 +8,12 @@
         </div>
         <div class="card-body">
           <div class="col-md-12">
+            <select class="form-control" id="select_siswa_transaksi_spp"></select>
+            <div class="main-divider" style="margin-top: -15px; margin-bottom: 5px;">
+              <div class="main-divider divider-body divider-body-1 divider-primary"> 
+                <div class="divider-p-primary"><i class="fa fa-modx me-2 txt-primary f-20"></i><span class="txt-primary">Atau Masukkan Berdasarkan</span></div>
+              </div>
+            </div>
             <div class="row mb-3">
               <div class="col-md-6">
                 <input type="text" class="form-control" id="nominal_tagihan" placeholder="Tentukan Nominal">
