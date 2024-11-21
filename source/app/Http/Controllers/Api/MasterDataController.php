@@ -74,6 +74,7 @@ class MasterDataController extends Controller
         try {
             $data = Siswa::join('siswa_tahun_ajaran', 'siswa_tahun_ajaran.id_tahun_ajaran', '=', 'siswa_buku_induk.id_tahun_ajaran')
                         ->where('siswa_buku_induk.id_kelas', $req->id_kelas)
+                        ->orderBy('siswa_buku_induk.nama_siswa', 'ASC')
                         ->get();
             $dynamicAttributes = [
                 'data' => $data,

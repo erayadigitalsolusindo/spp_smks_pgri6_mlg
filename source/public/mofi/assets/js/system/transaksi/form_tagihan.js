@@ -263,10 +263,11 @@ function simpan_tagihan(){
                         rowsData : rowsData,
                     },
                     success: function(response){
+                        ominal_tagihan.set(0);
                         datatables_form_tagihan.rows().clear().draw();
-                        nominal_tagihan.set(0);
+                        $("#nominal_tagihan").val("")
+                        $('#bulan_tagihan_form_tagihan').prop('selectedIndex', 0).trigger('change');
                         $("#daftar_kelas_form_tagihan").val(null).trigger('change');
-                        $('#bulan_tagihan_form_tagihan').val('Semua Bulan').trigger('change');
                         return createToast('Informasi', 'top-right', response.message, 'success', 3000);
                     },
                     error: function(xhr, status, error){
