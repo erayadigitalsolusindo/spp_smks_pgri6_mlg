@@ -40,10 +40,7 @@ class TagihanNonBulanan extends Model
         $newData = [];
         $updateData = [];
         foreach ($bulkInsertData as $data) {
-            Log::info("ADA DATA " . $data['id_siswa']);
-            Log::info("EXISTING DATA " . json_encode($existingData));
             if (array_key_exists($data['id_siswa'], $existingData->toArray())) {
-                Log::info("MATCH FOUND FOR ID_SISWA: " . $data['id_siswa']);
                 $updateData[] = [
                     'id_siswa' => $data['id_siswa'],
                     'kode_jenis_transaksi' => $data['kode_jenis_transaksi'],
@@ -53,7 +50,6 @@ class TagihanNonBulanan extends Model
                     'id_tahun_ajaran' => $data['id_tahun_ajaran'],
                 ];
             } else {
-                Log::info("NEW DATA FOR ID_SISWA: " . $data['id_siswa']);
                 $newData[] = [
                     'id_siswa' => $data['id_siswa'],
                     'kode_jenis_transaksi' => $data['kode_jenis_transaksi'],
@@ -65,11 +61,9 @@ class TagihanNonBulanan extends Model
             }
         }
         if (!empty($newData)) {
-            Log::info("NEW DATA " . json_encode($newData));
             TagihanNonBulanan::insert($newData);
         }
         if (!empty($updateData)) {
-            Log::info("UPDATE DATA " . json_encode($updateData));
             $updateDataSql = [
                 'kode_jenis_transaksi' => [],
                 'qty' => [],

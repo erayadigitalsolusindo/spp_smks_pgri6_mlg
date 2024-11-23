@@ -205,7 +205,6 @@ class SppController extends Controller
         }
     }
     public function updatetagihan_non_bulanan(Request $req) {
-        Log::info($req->input());
         try {
             TagihanNonBulanan::where('id_siswa', $req->input('id_siswa'))
             ->where('kode_jenis_transaksi', $req->input('kode_jenis_transaksi'))
