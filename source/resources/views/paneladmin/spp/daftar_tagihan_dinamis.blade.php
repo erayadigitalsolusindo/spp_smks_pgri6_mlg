@@ -57,7 +57,10 @@
                   </tr>
                   <tr>
                     <th class="text-center">Tagihan</th>
-                    <td><input type="text" class="form-control" id="nominal" placeholder="Tagihan"></td>
+                    <td><input type="text" class="form-control" id="nominal" placeholder="Tagihan">
+                    <input type="hidden" class="form-control" id="kode_jenis_transaksi" placeholder="Jenis Transaksi">
+                    <input type="hidden" class="form-control" id="tahunajaran" placeholder="Tahun Ajaran">
+                  </td>
                   </tr>
                 </tbody>
               </table>

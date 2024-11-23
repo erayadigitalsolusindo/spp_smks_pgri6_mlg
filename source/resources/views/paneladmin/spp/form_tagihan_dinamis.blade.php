@@ -61,6 +61,7 @@
                     <th>Jenis Tagihan</th>
                     <th>Perulangan</th>
                     <th>Nominal</th>
+                    <th>Aksi</th>
                 </tr>
             </thead>
             <tbody></tbody>

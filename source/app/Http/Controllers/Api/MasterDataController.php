@@ -98,7 +98,10 @@ class MasterDataController extends Controller
     }
     public function hapustagihanpeserta_non_bulanan(Request $req){
         try {
-            TagihanNonBulanan::where('id_siswa', $req->id_siswa)->delete();
+            TagihanNonBulanan::where('id_siswa', $req->id_siswa)
+            ->where('kode_jenis_transaksi', $req->kode_jenis_transaksi)
+            ->where('id_tahun_ajaran', $req->id_tahun_ajaran)
+            ->delete();
             return ResponseHelper::success_delete('Informasi siswa '.$req->nama_siswa.' dengan ID '.$req->id_siswa.' berhasil dihapus. Jikalau ingin melihat data atas siswa ini hubungi Teknisi');
         } catch (\Throwable $th) {
             return ResponseHelper::error($th);

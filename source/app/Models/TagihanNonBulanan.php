@@ -3,7 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\{DB,Log};
 
 class TagihanNonBulanan extends Model
 {
@@ -30,47 +30,75 @@ class TagihanNonBulanan extends Model
             ];
         }
         $nisList = array_column($bulkInsertData, 'id_siswa');
+        $kode_jenis_transaksi = array_column($bulkInsertData,'kode_jenis_transaksi');
         $tahunAjaran = $bulkInsertData[0]['id_tahun_ajaran'];
         $existingData = TagihanNonBulanan::whereIn('id_siswa', $nisList)
+            ->whereIn('kode_jenis_transaksi', $kode_jenis_transaksi)
             ->where('id_tahun_ajaran', $tahunAjaran)
             ->get()
             ->keyBy('id_siswa');
         $newData = [];
         $updateData = [];
         foreach ($bulkInsertData as $data) {
-            if (isset($existingData[$data['id_siswa']])) {
+            Log::info("ADA DATA " . $data['id_siswa']);
+            Log::info("EXISTING DATA " . json_encode($existingData));
+            if (array_key_exists($data['id_siswa'], $existingData->toArray())) {
+                Log::info("MATCH FOUND FOR ID_SISWA: " . $data['id_siswa']);
                 $updateData[] = [
                     'id_siswa' => $data['id_siswa'],
-                    'id_tahun_ajaran' => $data['id_tahun_ajaran'],
                     'kode_jenis_transaksi' => $data['kode_jenis_transaksi'],
                     'qty' => $data['qty'],
                     'nominal' => $data['nominal'],
+                    'sisa_nominal' => $data['sisa_nominal'],
+                    'id_tahun_ajaran' => $data['id_tahun_ajaran'],
                 ];
             } else {
-                $newData[] = $data;
+                Log::info("NEW DATA FOR ID_SISWA: " . $data['id_siswa']);
+                $newData[] = [
+                    'id_siswa' => $data['id_siswa'],
+                    'kode_jenis_transaksi' => $data['kode_jenis_transaksi'],
+                    'qty' => $data['qty'],
+                    'nominal' => $data['nominal'],
+                    'sisa_nominal' => $data['sisa_nominal'],
+                    'id_tahun_ajaran' => $data['id_tahun_ajaran'],
+                ];
             }
         }
         if (!empty($newData)) {
-            TagihanNonBulanan::insert($bulkInsertData);
+            Log::info("NEW DATA " . json_encode($newData));
+            TagihanNonBulanan::insert($newData);
         }
         if (!empty($updateData)) {
+            Log::info("UPDATE DATA " . json_encode($updateData));
             $updateDataSql = [
                 'kode_jenis_transaksi' => [],
                 'qty' => [],
+                'sisa_nominal' => [],
                 'nominal' => []
             ];
             foreach ($updateData as $data) {
                 $updateDataSql['kode_jenis_transaksi'][] = "WHEN id_siswa = {$data['id_siswa']} AND id_tahun_ajaran = {$data['id_tahun_ajaran']} THEN '{$data['kode_jenis_transaksi']}'";
                 $updateDataSql['qty'][] = "WHEN id_siswa = {$data['id_siswa']} AND id_tahun_ajaran = {$data['id_tahun_ajaran']} THEN {$data['qty']}";
                 $updateDataSql['nominal'][] = "WHEN id_siswa = {$data['id_siswa']} AND id_tahun_ajaran = {$data['id_tahun_ajaran']} THEN {$data['nominal']}";
+                $updateDataSql['sisa_nominal'][] = "WHEN id_siswa = {$data['id_siswa']} AND id_tahun_ajaran = {$data['id_tahun_ajaran']} THEN {$data['sisa_nominal']}";
             }
-            $updateQuery = "UPDATE eds_siswa_tagihan_dinamis SET 
-                kode_jenis_transaksi = CASE " . implode(' ', $updateDataSql['kode_jenis_transaksi']) . " END,
-                qty = CASE " . implode(' ', $updateDataSql['qty']) . " END,
-                nominal = CASE " . implode(' ', $updateDataSql['nominal']) . " END
+            $kodeJenisTransaksi = implode(',', array_map(function ($item) {
+                return "'{$item}'";
+            }, array_column($updateData, 'kode_jenis_transaksi')));
+            
+            $updateQuery = "
+                UPDATE eds_siswa_tagihan_dinamis 
+                SET 
+                    kode_jenis_transaksi = CASE " . implode(' ', $updateDataSql['kode_jenis_transaksi']) . " END,
+                    qty = CASE " . implode(' ', $updateDataSql['qty']) . " END,
+                    sisa_nominal = CASE " . implode(' ', $updateDataSql['sisa_nominal']) . " END,
+                    nominal = CASE " . implode(' ', $updateDataSql['nominal']) . " END
                 WHERE id_siswa IN (" . implode(',', array_column($updateData, 'id_siswa')) . ") 
-                AND id_tahun_ajaran = {$updateData[0]['id_tahun_ajaran']}";
+                AND kode_jenis_transaksi IN ($kodeJenisTransaksi)
+                AND id_tahun_ajaran = {$updateData[0]['id_tahun_ajaran']}
+            ";
             DB::statement($updateQuery);
+            
         }
     }
     public static function listTagihanTabel($req, $perHalaman, $offset)

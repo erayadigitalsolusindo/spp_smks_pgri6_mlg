@@ -124,7 +124,6 @@ $('#select_siswa_transaksi_spp').on('select2:select', function (e) {
                         id_siswa : selectedData.id_siswa,
                     },
                     success: function(response) {
-                        datatables_form_tagihan.rows().clear().draw();
                         tambah_konfirmasi_tagihan(response.data[0].nis, response.data[0].nama_siswa, response.data[0].id, response.data[0].id_tahun_ajaran, response.data[0].tahun_ajaran);
                         scrollToLastRow();
                     },
@@ -183,6 +182,7 @@ function tambah_konfirmasi_tagihan(nis, nama, id, id_tahun_ajaran, tahun_ajaran)
         `${$("#bulan_tagihan_form_tagihan option:selected").text()}`,
         `<input id="qty_${uniqueId}" type="text" class="perulangan_tagihan form-control" value="${$("#berapa_kali_tagihan").val()}" placeholder="0.00">` ,
         `<input id="nom_${uniqueId}" type="text" class="nominal_tagihan form-control" value="${nominal_tagihan.getNumber()}" placeholder="0.00">`,
+        `<button onclick="hapusbarisini('${uniqueId}')" id="hapus_${uniqueId}" class="btn btn-danger"><i class="fa fa-trash"></i></button>`,
     ];
     datatables_form_tagihan.row.add(row).draw();
     setTimeout(() => {
@@ -197,6 +197,11 @@ function tambah_konfirmasi_tagihan(nis, nama, id, id_tahun_ajaran, tahun_ajaran)
             decimalPlaces: 0,
         });
     }, 0);
+}
+function hapusbarisini(barisii){
+    let uniqueId = barisii;
+    let row = $(`#qty_${uniqueId}`).closest('tr');
+    datatables_form_tagihan.row(row).remove().draw();
 }
 function tentukan_tagihan() {
     let amount = nominal_tagihan.getNumber();   

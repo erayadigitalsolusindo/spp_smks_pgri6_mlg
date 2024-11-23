@@ -86,9 +86,9 @@ function tabel_datatagihan() {
                     className: "dtfc-fixed-right_header text-center", 
                     render: (data, type, row) => `
                         <div class="d-flex justify-content-between gap-2 background_fixed_right_row">
-                            <button class="btn btn-primary w-100" onclick="editdaftartagihan('${row.id_siswa}')">
+                            <button class="btn btn-primary w-100" onclick="editdaftartagihan('${row.id_siswa}','${row.kode_jenis_transaksi}','${row.id_tahun_ajaran}')">
                                 <i class="fa fa-edit"></i></button>
-                            <button class="btn btn-danger w-100" onclick="hapustagihanpeserta('${row.id_siswa}', '${row.nama_siswa}')">
+                            <button class="btn btn-danger w-100" onclick="hapustagihanpeserta('${row.id_siswa}', '${row.nama_siswa}','${row.kode_jenis_transaksi}','${row.id_tahun_ajaran}')">
                                 <i class="fa fa-trash-o"></i></button>
                         </div>`
                 }
@@ -102,7 +102,7 @@ $("#proses_tagihan").on("click", function() {
 $("#kotak_pencarian_tagihan").on("keyup change", debounce(function() {
    $("#datatables_tagihan").DataTable().ajax.reload();
 }, 500));
-function hapustagihanpeserta(id_siswa, nama_siswa){
+function hapustagihanpeserta(id_siswa, nama_siswa, kode_jenis_transaksi, id_tahun_ajaran){
     Swal.fire({
         html: '<div class="mt-3 text-center"><dotlottie-player src="https://lottie.host/53a48ece-27d3-4b85-9150-8005e7c27aa4/usrEqiqrei.json" background="transparent" speed="1" style="width:150px;height:150px;margin:0 auto" direction="1" playMode="normal" loop autoplay></dotlottie-player><div><h4>Konfirmasi Penghapusan Data Tegihan '+nama_siswa+'</h4><p class="text-muted mx-4 mb-0">Apakah anda yakin ingin menghapus informasi tagihan peserta <strong>'+nama_siswa+'</strong> dengan ID <strong>'+id_siswa+'</strong> ? Informasi peserta yang terkait dengan siswa yang dihapus tidak akan hilang, tetapi tidak akan dimunculin secara visual pada aplikasi ini termasuk LAPORAN',
         showCancelButton: true,
@@ -123,6 +123,8 @@ function hapustagihanpeserta(id_siswa, nama_siswa){
                         _token: response.csrf_token,
                         id_siswa: id_siswa,
                         nama_siswa: nama_siswa,
+                        kode_jenis_transaksi: kode_jenis_transaksi,
+                        id_tahun_ajaran: id_tahun_ajaran
                     },
                     success: function(response) {
                         $("#datatables_tagihan").DataTable().ajax.reload();
@@ -136,7 +138,7 @@ function hapustagihanpeserta(id_siswa, nama_siswa){
         }
     });
 }
-function editdaftartagihan(id_siswa){
+function editdaftartagihan(id_siswa, kode_jenis_transaksi, id_tahun_ajaran){
     $.get('/generate-csrf-token', function(response){
         $.ajax({
             url: baseurlapi + '/spp/editdaftartagihan_non_bulanan',
@@ -147,6 +149,8 @@ function editdaftartagihan(id_siswa){
             data: {
                 _token: response.csrf_token,
                 id_siswa: id_siswa,
+                kode_jenis_transaksi: kode_jenis_transaksi,
+                id_tahun_ajaran: id_tahun_ajaran
             },
             success: function(response) {
                 $("#nama_siswa_tagihan").html(response.data.nama_siswa);
@@ -154,6 +158,8 @@ function editdaftartagihan(id_siswa){
                 kuantiti.set(response.data.qty);
                 sisa_nominal.set(response.data.sisa_nominal)
                 nominal.set(response.data.nominal);
+                $("#tahunajaran").val(response.data.id_tahun_ajaran)
+                $("#kode_jenis_transaksi").val(response.data.kode_jenis_transaksi)
                 $("#form_edit_tagihan").modal("show");
                 $("#datatables_tagihan").DataTable().ajax.reload();
             },
@@ -188,6 +194,7 @@ function simpan_tagihan_siswa_update(){
                         qty: kuantiti.getNumber(),
                         sisa_nominal: sisa_nominal.getNumber(),
                         nominal: nominal.getNumber(),
+                        id_tahun_ajaran: $("#tahunajaran").val(),
                     },
                     success: function(response) {
                         createToast('Informasi', 'top-right', response.message, 'success', 3000);

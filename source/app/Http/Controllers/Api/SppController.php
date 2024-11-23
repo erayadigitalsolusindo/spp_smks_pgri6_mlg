@@ -159,7 +159,10 @@ class SppController extends Controller
     public function editdaftartagihan_non_bulanan(Request $req){
         try {
             $data = TagihanNonBulanan::join('siswa_buku_induk', 'siswa_buku_induk.id', '=', 'siswa_tagihan_dinamis.id_siswa')
-            ->where('siswa_buku_induk.id', $req->id_siswa)->first();
+            ->where('siswa_buku_induk.id', $req->id_siswa)
+            ->where('kode_jenis_transaksi', $req->kode_jenis_transaksi)
+            ->where('siswa_tagihan_dinamis.id_tahun_ajaran', $req->id_tahun_ajaran)
+            ->first();
             $dynamicAttributes = [
                 'data' => $data,
             ];
@@ -202,11 +205,15 @@ class SppController extends Controller
         }
     }
     public function updatetagihan_non_bulanan(Request $req) {
+        Log::info($req->input());
         try {
-            TagihanNonBulanan::where('id_siswa', $req->id_siswa)->update([
-                'qty' => $req->qty,
-                'sisa_nominal' => $req->sisa_nominal,
-                'nominal' => $req->nominal,
+            TagihanNonBulanan::where('id_siswa', $req->input('id_siswa'))
+            ->where('kode_jenis_transaksi', $req->input('kode_jenis_transaksi'))
+            ->where('id_tahun_ajaran', $req->input('id_tahun_ajaran'))
+            ->update([
+                'qty' => $req->input('qty'),
+                'sisa_nominal' => $req->input('sisa_nominal'),
+                'nominal' => $req->input('nominal'),
             ]);
             return ResponseHelper::success("Data tagihan siswa berhasil diperbarui");
         }catch(\Throwable $th) {
