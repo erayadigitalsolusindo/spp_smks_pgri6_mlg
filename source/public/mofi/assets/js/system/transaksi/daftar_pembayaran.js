@@ -37,9 +37,7 @@ function datatables_daftar_pembayaran() {
                 },
                 "data": function(d) {
                     d._token = response.csrf_token;
-                    d.parameter_pencarian = $("#kotak_pencarian_daftarpasien").val();
-                    d.start = 0;
-                    d.length = 200;
+                    d.parameter_pencarian = $("#kotak_pencarian_daftar_pembayaran").val();
                 },
                 "dataSrc": function(json) {
                     let detailData = json.data;
@@ -130,6 +128,9 @@ function datatables_daftar_pembayaran() {
         });
     });
 }
+$("#kotak_pencarian_daftar_pembayaran").on('keyup', debounce(function(){
+    $("#datatables_daftar_pembayaran").DataTable().ajax.reload();
+}, 300));
 function lihatDetailTransaksi(id_transaksi) {
     $.get('/generate-csrf-token', function(response) {
         $.ajax({

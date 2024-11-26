@@ -28,12 +28,12 @@ class TransaksiDetail extends Model
             $query->where('no_transaksi', 'LIKE', '%' . $parameterpencarian . '%')
                   ->orWhere('nama_siswa', 'LIKE', '%' . $parameterpencarian . '%');
         }
+        $jumlahdata = $query->count();
         $result = $query->take($perHalaman)
             ->skip($offset)
             ->orderBy('tanggal', 'DESC')
             ->groupBy('no_transaksi')
             ->get();
-        $jumlahdata = $query->count();
         return [
             'data' => $result,
             'total' => $jumlahdata

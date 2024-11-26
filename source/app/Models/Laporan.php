@@ -30,25 +30,20 @@ class Laporan extends Model
                 'users_pegawai.*',
                 'atr_kelas.*',
                 'transaksi_jenis_trx.jenis_transaksi',
-                
                 DB::raw('count(*) as jumlah_trx'),
                 DB::raw('DATE_FORMAT('.$prefix.'transaksi.tanggal, "%d-%m-%Y %H:%i:%s") as tanggal_transaksi')
             )
             ->groupBy('transaksi.no_transaksi');
-        // Tambahkan Filter Jika Parameter Pencarian Ada
         if (!empty($request->parameter_pencarian)) {
             $query->where(function($subQuery) use ($request) {
                 $subQuery->where('transaksi.no_transaksi', 'LIKE', '%' . $request->parameter_pencarian . '%')
-                        ->orWhere('transaksi.nama_siswa', 'LIKE', '%' . $request->parameter_pencarian . '%')
+                        ->orWhere('siswa_buku_induk.nama_siswa', 'LIKE', '%' . $request->parameter_pencarian . '%')
                         ->orWhere('transaksi.no_transaksi_transfer', 'LIKE', '%' . $request->parameter_pencarian . '%')
                         ->orWhere('transaksi.nis', 'LIKE', '%' . $request->parameter_pencarian . '%');
             });
         }
-        // Filter Berdasarkan Tanggal
         $query->whereBetween(DB::raw('DATE('.$prefix.'transaksi.tanggal)'), [$request->tanggal_awal, $request->tanggal_akhir]);
-        // Hitung Total Data
         $jumlahdata = $query->count();
-        // Ambil Data dengan Paginasi
         $result = $query->orderBy('transaksi.tanggal', 'DESC')
             ->offset($offset)
             ->limit($perHalaman)
@@ -101,7 +96,7 @@ class Laporan extends Model
         if (!empty($request->parameter_pencarian)) {
             $query->where(function($subQuery) use ($request) {
                 $subQuery->where('transaksi.no_transaksi', 'LIKE', '%' . $request->input('parameter_pencarian') . '%')
-                        ->orWhere('transaksi.nama_siswa', 'LIKE', '%' . $request->input('parameter_pencarian') . '%')
+                        ->orWhere('siswa_buku_induk.nama_siswa', 'LIKE', '%' . $request->input('parameter_pencarian') . '%')
                         ->orWhere('transaksi.no_transaksi_transfer', 'LIKE', '%' . $request->input('parameter_pencarian') . '%')
                         ->orWhere('transaksi.nis', 'LIKE', '%' . $request->input('parameter_pencarian') . '%');
             });
