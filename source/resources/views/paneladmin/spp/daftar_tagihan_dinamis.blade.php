@@ -31,7 +31,10 @@
                 @endforeach
               </select>
             </div>
-            <button class="btn btn-primary w-100 mt-2" id="proses_tagihan"><i class="fa fa-search"></i> Cek Tagihan</button>
+            <div class="d-flex justify-content-between gap-2 background_fixed_right_row">
+              <button class="btn btn-primary w-100 mt-2" id="proses_tagihan"><i class="fa fa-search"></i> Cek Tagihan Dengan 0</button>
+              <button class="btn btn-warning w-100 mt-2" id="proses_tagihan_tanpa_0"><i class="fa fa-search"></i> Cek Tagihan Tanpa 0</button>
+            </div>
             <div class="table">
               <table class="display" id="datatables_tagihan"></table>
             </div>

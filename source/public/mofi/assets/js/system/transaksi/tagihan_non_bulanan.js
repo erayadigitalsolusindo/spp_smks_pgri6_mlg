@@ -1,3 +1,4 @@
+let kondisinilai = 0;
 let kuantiti = new AutoNumeric('#kuantiti', {decimal: ',', digit: '.', allowDecimalPadding: false, minimumValue: '0',});
 let sisa_nominal = new AutoNumeric('#sisa_nominal', {decimal: ',', digit: '.', allowDecimalPadding: false, minimumValue: '0',});
 let nominal = new AutoNumeric('#nominal', {decimal: ',', digit: '.', allowDecimalPadding: false, minimumValue: '0',});
@@ -37,6 +38,7 @@ function tabel_datatagihan() {
                     d.parameter_pencarian = $("#kotak_pencarian_tagihan").val();
                     d.tahun_ajaran_terpilih = $("#filter_tahun_ajaran_tagihan").val();
                     d.jenis_tagihan_terpilih = $("#filter_jenis_tagihan").val();
+                    d.kondisinilai = kondisinilai;
                 }
             },
             infoCallback: function(settings) {
@@ -98,6 +100,11 @@ function tabel_datatagihan() {
     });
 }
 $("#proses_tagihan").on("click", function() {
+    kondisinilai = 0;
+    $("#datatables_tagihan").DataTable().ajax.reload();
+});
+$("#proses_tagihan_tanpa_0").on("click", function() {
+    kondisinilai = 1;
     $("#datatables_tagihan").DataTable().ajax.reload();
 });
 $("#kotak_pencarian_tagihan").on("keyup change", debounce(function() {

@@ -101,6 +101,7 @@ class TagihanNonBulanan extends Model
         $kelas_terpilih = $req->kelas_terpilih;
         $tahun_ajaran_terpilih = $req->tahun_ajaran_terpilih;
         $jenis_tagihan_terpilih = $req->jenis_tagihan_terpilih;
+        $kondisinilai = $req->kondisinilai;
         $query = DB::table((new self())->getTable())
         ->join('siswa_buku_induk', 'siswa_buku_induk.id', '=', 'siswa_tagihan_dinamis.id_siswa')
         ->join('transaksi_jenis_trx', 'transaksi_jenis_trx.kode', '=', 'siswa_tagihan_dinamis.kode_jenis_transaksi')
@@ -115,6 +116,9 @@ class TagihanNonBulanan extends Model
             })->where('siswa_tagihan_dinamis.id_tahun_ajaran','LIKE','%' . $tahun_ajaran_terpilih. '%');
             if (!empty($jenis_tagihan_terpilih)) {
                 $query->where('siswa_tagihan_dinamis.kode_jenis_transaksi', $jenis_tagihan_terpilih);
+            }
+            if ($kondisinilai == 1) {
+                $query->where('siswa_tagihan_dinamis.sisa_nominal', '<>', 0);
             }
         }
         $jumlahdata = $query->count();

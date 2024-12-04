@@ -68,4 +68,4 @@ sudo docker image ls
 
 # Deploy to swarm
 sudo docker stack deploy -c docker-compose.yaml $DOCKER_SWARM_STACK_NAME --with-registry-auth --detach=false
-#sudo docker stack remove artha_medica
+#sudo docker stack remove spp_smks_pgri6_mlg
