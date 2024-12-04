@@ -7,10 +7,15 @@ const nominal_tagihan = new AutoNumeric('#nominal_tagihan', {
 $(document).ready(function () {
     onloadselect2();
     datatables_form_tagihan = $('#datatables_form_tagihan').DataTable({
-        dom: 'lfrtip',
         searching: false,
         lengthChange: false,
         ordering: false,
+        scrollCollapse: true,
+        bFilter: false,
+        bInfo: false,
+        paging: false,
+        scrollX: true,
+        keys:true,
         language: {
             "paginate": {
                 "first": '<i class="fa fa-angle-double-left"></i>',
@@ -19,12 +24,15 @@ $(document).ready(function () {
                 "previous": '<i class="fa fa-angle-left"></i>',
             },
         },
-        scrollCollapse: true,
-        bFilter: false,
-        bInfo: false,
-        paging: false,
-        scrollY: "600px",
-        scrollX: true,
+    }).on('key-focus', function ( e, datatable, cell, originalEvent ) {
+        $('input', cell.node()).focus();
+    }).on("focus", "td input", function(){
+        $(this).select();
+    }) 
+    datatables_form_tagihan.on('key', function(e, dt, code) {
+        if (code === 13) {
+            datatables_form_tagihan.keys.move('down');
+        }
     });
 });
 function onloadselect2(){
@@ -195,6 +203,8 @@ function tambah_konfirmasi_tagihan(nis, nama, pembayaran, id, id_tahun_ajaran, t
                 digitGroupSeparator: '.',
                 decimalCharacter: ',',
                 decimalPlaces: 0,
+                modifyValueOnUpDownArrow: false,
+                modifyValueOnWheel: false,
             });
         });
     }, 0);

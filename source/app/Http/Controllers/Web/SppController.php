@@ -52,6 +52,7 @@ class SppController extends Controller
             'Beranda' => route('admin.beranda'),
             'Daftar Tagihan Non Bulanan' => route('spp.daftar_tagihan_dinamis'),
         ]);
+        $data['informasi_jenis_transaksi'] = JenisTransaksi::where('jenis', 1)->get();
         $data['informasi_kelas'] = Kelas::all();
         $data['informasi_tahun_ajaran'] = TahunAjaran::all();
         return view('paneladmin.spp.daftar_tagihan_dinamis', ['data' => $data]);

@@ -1,4 +1,4 @@
-let datatables_form_tagihan;
+let datatables_form_tagihan, var_id_siswa, var_nama_siswa, var_nis;
 const nominal_tagihan = new AutoNumeric('#nominal_tagihan', {
     digitGroupSeparator: '.',
     decimalCharacter: ',',
@@ -12,10 +12,15 @@ const berapa_kali_tagihan = new AutoNumeric('#berapa_kali_tagihan', {
 $(document).ready(function () {
     onloadselect2();
     datatables_form_tagihan = $('#datatables_form_tagihan').DataTable({
-        dom: 'lfrtip',
         searching: false,
         lengthChange: false,
         ordering: false,
+        scrollCollapse: true,
+        bFilter: false,
+        bInfo: false,
+        paging: false,
+        scrollX: true,
+        keys:true,
         language: {
             "paginate": {
                 "first": '<i class="fa fa-angle-double-left"></i>',
@@ -23,13 +28,16 @@ $(document).ready(function () {
                 "next": '<i class="fa fa-angle-right"></i>',
                 "previous": '<i class="fa fa-angle-left"></i>',
             },
-        },
-        scrollCollapse: true,
-        bFilter: false,
-        bInfo: false,
-        paging: false,
-        scrollY: "600px",
-        scrollX: true,
+        }
+    }).on('key-focus', function ( e, datatable, cell, originalEvent ) {
+        $('input', cell.node()).focus();
+    }).on("focus", "td input", function(){
+        $(this).select();
+    }) 
+    datatables_form_tagihan.on('key', function(e, dt, code) {
+        if (code === 13) {
+            datatables_form_tagihan.keys.move('down');
+        }
     });
 });
 function onloadselect2(){
@@ -102,11 +110,10 @@ function onloadselect2(){
         }); 
     });
 }
-$('#select_siswa_transaksi_spp').on('select2:select', function (e) {
-    let selectedData = e.params.data.data;
+function tambah_siswa_keranjang(nis, nama, id_siswa){
     Swal.fire({
         title: 'Konfirmasi Siswa Ini Masuk Keranjang',
-        text: 'Apakah anda ingin menambahkan tagihan untuk siswa ini dengan info '+selectedData.nis+' - '+selectedData.nama_siswa+' ?',
+        text: 'Apakah anda ingin menambahkan tagihan untuk siswa ini dengan info '+nis+' - '+nama+' ?',
         icon: 'warning',
         showCancelButton: true,
         confirmButtonText: 'Tambahkan Siswa',
@@ -121,7 +128,7 @@ $('#select_siswa_transaksi_spp').on('select2:select', function (e) {
                     dataType: 'json',
                     data: {
                         _token : response.csrf_token,
-                        id_siswa : selectedData.id_siswa,
+                        id_siswa : id_siswa,
                     },
                     success: function(response) {
                         tambah_konfirmasi_tagihan(response.data[0].nis, response.data[0].nama_siswa, response.data[0].id, response.data[0].id_tahun_ajaran, response.data[0].tahun_ajaran);
@@ -134,6 +141,13 @@ $('#select_siswa_transaksi_spp').on('select2:select', function (e) {
             });
         }
     });
+}
+$('#select_siswa_transaksi_spp').on('select2:select', function (e) {
+    let selectedData = e.params.data.data;
+    var_nis = selectedData.nis;
+    var_nama_siswa = selectedData.nama_siswa;
+    var_id_siswa = selectedData.id_siswa;
+    tambah_siswa_keranjang(selectedData.nis, selectedData.nama_siswa, selectedData.id_siswa);
 });
 $('#daftar_kelas_form_tagihan').on('select2:select', function (e) {
     let selectedData = e.params.data.data;
@@ -190,11 +204,15 @@ function tambah_konfirmasi_tagihan(nis, nama, id, id_tahun_ajaran, tahun_ajaran)
             digitGroupSeparator: '.',
             decimalCharacter: ',',
             decimalPlaces: 0,
+            modifyValueOnUpDownArrow: false,
+            modifyValueOnWheel: false,
         });
         new AutoNumeric(`#nom_${uniqueId}`, {
             digitGroupSeparator: '.',
             decimalCharacter: ',',
             decimalPlaces: 0,
+            modifyValueOnUpDownArrow: false,
+            modifyValueOnWheel: false,
         });
     }, 0);
 }
@@ -310,3 +328,6 @@ function simpan_tagihan(){
         }
     });
 }
+$("#tambah_ke_daftar").on('click', function(){
+    tambah_siswa_keranjang(var_nis, var_nama_siswa, var_id_siswa);
+})

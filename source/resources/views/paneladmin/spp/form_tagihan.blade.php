@@ -83,6 +83,7 @@
 @section('css_load')
 @component('komponen.css.datatables')
 @endcomponent
+<link href="https://cdn.datatables.net/keytable/2.12.1/css/keyTable.bootstrap5.css" rel="stylesheet">
 <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
 <style>
 .select2-container--default .select2-selection--single .select2-selection__arrow {
@@ -99,6 +100,7 @@
 @section('js_load')
 @component('komponen.js.datatables')
 @endcomponent
+<script src="https://cdn.datatables.net/keytable/2.12.1/js/dataTables.keyTable.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/autonumeric/4.8.1/autoNumeric.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 <script src="{{asset('mofi/assets/js/system/globalfn.js')}}"></script>

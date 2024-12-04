@@ -18,6 +18,12 @@
               </select>
               <button class="btn"> ATAU </button>
               <input type="text" class="form-control" id="kotak_pencarian_tagihan" placeholder="Cari data berdasarkan nama kelas yang tersedia">
+              <select class="form-control" id="filter_jenis_tagihan">
+                <option value="">Pilih Jenis Tagihan</option>
+                @foreach ($data['informasi_jenis_transaksi'] as $item)
+                  <option value="{{$item->kode}}">{{$item->jenis_transaksi}}</option>
+                @endforeach
+              </select>
               <select class="form-control" id="filter_tahun_ajaran_tagihan">
                 <option value="">Pilih Tahun Ajaran</option>
                 @foreach ($data['informasi_tahun_ajaran'] as $item)

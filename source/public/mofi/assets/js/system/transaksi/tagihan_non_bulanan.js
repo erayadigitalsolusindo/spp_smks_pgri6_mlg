@@ -36,6 +36,7 @@ function tabel_datatagihan() {
                     d.kelas_terpilih = $("#filter_tingkat_kelas_tagihan").val();
                     d.parameter_pencarian = $("#kotak_pencarian_tagihan").val();
                     d.tahun_ajaran_terpilih = $("#filter_tahun_ajaran_tagihan").val();
+                    d.jenis_tagihan_terpilih = $("#filter_jenis_tagihan").val();
                 }
             },
             infoCallback: function(settings) {

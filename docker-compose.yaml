@@ -2,7 +2,7 @@
 #version: '3.8'
 
 services:
-  web_servic:
+  web_service:
     image: spp_smks_pgri6_mlg:1.0.0
     ports:
       - target: 8080

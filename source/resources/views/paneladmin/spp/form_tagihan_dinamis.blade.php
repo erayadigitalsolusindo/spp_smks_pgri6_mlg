@@ -38,7 +38,10 @@
             <li>Untuk tagihan non bulanan tentukan berapa kali dalam 1 tahun ajaran.</li>
             <li>Sistem akan memproses 1 jenis tagihan pada tiap kelas. selain itu akan direfresh ke tabel kosong</li>
           </ul>
-          <button class="btn btn-primary w-100" onclick="tentukan_tagihan()" id="simpan_tagihan_form_tagihan">Ubah Qty & Nominal Tagihan</button>
+          <div class="d-flex justify-content-between gap-2 background_fixed_right_row">
+            <button class="btn btn-primary w-100" onclick="tentukan_tagihan()" id="simpan_tagihan_form_tagihan">Ubah Qty & Nominal Tagihan</button>
+            <button class="btn btn-warning w-100" id="tambah_ke_daftar"> Tambah Ke Daftar</button>
+        </div>
         </div>
       </div>
     </div>
@@ -75,6 +78,7 @@
 @section('css_load')
 @component('komponen.css.datatables')
 @endcomponent
+<link href="https://cdn.datatables.net/keytable/2.12.1/css/keyTable.bootstrap5.css" rel="stylesheet">
 <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
 <style>
 .select2-container--default .select2-selection--single .select2-selection__arrow {
@@ -91,6 +95,7 @@
 @section('js_load')
 @component('komponen.js.datatables')
 @endcomponent
+<script src="https://cdn.datatables.net/keytable/2.12.1/js/dataTables.keyTable.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/autonumeric/4.8.1/autoNumeric.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 <script src="{{asset('mofi/assets/js/system/globalfn.js')}}"></script>
