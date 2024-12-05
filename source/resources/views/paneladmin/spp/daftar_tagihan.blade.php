@@ -126,6 +126,7 @@
 @section('css_load')
 @component('komponen.css.datatables')
 @endcomponent
+<link href="https://cdn.datatables.net/keytable/2.12.1/css/keyTable.bootstrap5.css" rel="stylesheet">
 <style>
 #datatables_permission_tersedia tbody td,
 #datatables_role tbody td {
@@ -137,6 +138,7 @@
 @section('js_load')
 @component('komponen.js.datatables')
 @endcomponent
+<script src="https://cdn.datatables.net/keytable/2.12.1/js/dataTables.keyTable.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/autonumeric/4.8.1/autoNumeric.min.js"></script>
 <script src="{{asset('mofi/assets/js/system/transaksi/tagihan.js')}}"></script>
 @endsection

@@ -1,27 +1,28 @@
-let tagihan_juli = new AutoNumeric('#tagihan_juli', {decimal: ',', digit: '.', allowDecimalPadding: false, minimumValue: '0',});
-let tagihan_agustus = new AutoNumeric('#tagihan_agustus', {decimal: ',', digit: '.', allowDecimalPadding: false, minimumValue: '0',});
-let tagihan_september = new AutoNumeric('#tagihan_september', {decimal: ',', digit: '.', allowDecimalPadding: false, minimumValue: '0',});
-let tagihan_oktober = new AutoNumeric('#tagihan_oktober', {decimal: ',', digit: '.', allowDecimalPadding: false, minimumValue: '0',});
-let tagihan_november = new AutoNumeric('#tagihan_november', {decimal: ',', digit: '.', allowDecimalPadding: false, minimumValue: '0',});
-let tagihan_desember = new AutoNumeric('#tagihan_desember', {decimal: ',', digit: '.', allowDecimalPadding: false, minimumValue: '0',});
-let tagihan_januari = new AutoNumeric('#tagihan_januari', {decimal: ',', digit: '.', allowDecimalPadding: false, minimumValue: '0',});
-let tagihan_februari = new AutoNumeric('#tagihan_febuari', {decimal: ',', digit: '.', allowDecimalPadding: false, minimumValue: '0',});
-let tagihan_maret = new AutoNumeric('#tagihan_maret', {decimal: ',', digit: '.', allowDecimalPadding: false, minimumValue: '0',});
-let tagihan_april = new AutoNumeric('#tagihan_april', {decimal: ',', digit: '.', allowDecimalPadding: false, minimumValue: '0',});
-let tagihan_mei = new AutoNumeric('#tagihan_mei', {decimal: ',', digit: '.', allowDecimalPadding: false, minimumValue: '0',});
-let tagihan_juni = new AutoNumeric('#tagihan_juni', {decimal: ',', digit: '.', allowDecimalPadding: false, minimumValue: '0',});
-let juli = new AutoNumeric('#juli', {decimal: ',', digit: '.', allowDecimalPadding: false, minimumValue: '0',});
-let agustus = new AutoNumeric('#agustus', {decimal: ',', digit: '.', allowDecimalPadding: false, minimumValue: '0',});
-let september = new AutoNumeric('#september', {decimal: ',', digit: '.', allowDecimalPadding: false, minimumValue: '0',});
-let oktober = new AutoNumeric('#oktober', {decimal: ',', digit: '.', allowDecimalPadding: false, minimumValue: '0',});
-let november = new AutoNumeric('#november', {decimal: ',', digit: '.', allowDecimalPadding: false, minimumValue: '0',});
-let desember = new AutoNumeric('#desember', {decimal: ',', digit: '.', allowDecimalPadding: false, minimumValue: '0',});
-let januari = new AutoNumeric('#januari', {decimal: ',', digit: '.', allowDecimalPadding: false, minimumValue: '0',});
-let februari = new AutoNumeric('#febuari', {decimal: ',', digit: '.', allowDecimalPadding: false, minimumValue: '0',});
-let maret = new AutoNumeric('#maret', {decimal: ',', digit: '.', allowDecimalPadding: false, minimumValue: '0',});
-let april = new AutoNumeric('#april', {decimal: ',', digit: '.', allowDecimalPadding: false, minimumValue: '0',});
-let mei = new AutoNumeric('#mei', {decimal: ',', digit: '.', allowDecimalPadding: false, minimumValue: '0',});
-let juni = new AutoNumeric('#juni', {decimal: ',', digit: '.', allowDecimalPadding: false, minimumValue: '0',});
+let tagihan_juli = new AutoNumeric('#tagihan_juli', {decimal: ',', digit: '.', allowDecimalPadding: false, minimumValue: '0', modifyValueOnUpDownArrow: false, modifyValueOnWheel: false});
+let tagihan_agustus = new AutoNumeric('#tagihan_agustus', {decimal: ',', digit: '.', allowDecimalPadding: false, minimumValue: '0', modifyValueOnUpDownArrow: false, modifyValueOnWheel: false});
+let tagihan_september = new AutoNumeric('#tagihan_september', {decimal: ',', digit: '.', allowDecimalPadding: false, minimumValue: '0', modifyValueOnUpDownArrow: false, modifyValueOnWheel: false});
+let tagihan_oktober = new AutoNumeric('#tagihan_oktober', {decimal: ',', digit: '.', allowDecimalPadding: false, minimumValue: '0', modifyValueOnUpDownArrow: false, modifyValueOnWheel: false});
+let tagihan_november = new AutoNumeric('#tagihan_november', {decimal: ',', digit: '.', allowDecimalPadding: false, minimumValue: '0', modifyValueOnUpDownArrow: false, modifyValueOnWheel: false});
+let tagihan_desember = new AutoNumeric('#tagihan_desember', {decimal: ',', digit: '.', allowDecimalPadding: false, minimumValue: '0', modifyValueOnUpDownArrow: false, modifyValueOnWheel: false});
+let tagihan_januari = new AutoNumeric('#tagihan_januari', {decimal: ',', digit: '.', allowDecimalPadding: false, minimumValue: '0', modifyValueOnUpDownArrow: false, modifyValueOnWheel: false});
+let tagihan_februari = new AutoNumeric('#tagihan_febuari', {decimal: ',', digit: '.', allowDecimalPadding: false, minimumValue: '0', modifyValueOnUpDownArrow: false, modifyValueOnWheel: false});
+let tagihan_maret = new AutoNumeric('#tagihan_maret', {decimal: ',', digit: '.', allowDecimalPadding: false, minimumValue: '0', modifyValueOnUpDownArrow: false, modifyValueOnWheel: false});
+let tagihan_april = new AutoNumeric('#tagihan_april', {decimal: ',', digit: '.', allowDecimalPadding: false, minimumValue: '0', modifyValueOnUpDownArrow: false, modifyValueOnWheel: false});
+let tagihan_mei = new AutoNumeric('#tagihan_mei', {decimal: ',', digit: '.', allowDecimalPadding: false, minimumValue: '0', modifyValueOnUpDownArrow: false, modifyValueOnWheel: false});
+let tagihan_juni = new AutoNumeric('#tagihan_juni', {decimal: ',', digit: '.', allowDecimalPadding: false, minimumValue: '0', modifyValueOnUpDownArrow: false, modifyValueOnWheel: false});
+let juli = new AutoNumeric('#juli', {decimal: ',', digit: '.', allowDecimalPadding: false, minimumValue: '0', modifyValueOnUpDownArrow: false, modifyValueOnWheel: false});
+let agustus = new AutoNumeric('#agustus', {decimal: ',', digit: '.', allowDecimalPadding: false, minimumValue: '0', modifyValueOnUpDownArrow: false, modifyValueOnWheel: false});
+let september = new AutoNumeric('#september', {decimal: ',', digit: '.', allowDecimalPadding: false, minimumValue: '0', modifyValueOnUpDownArrow: false, modifyValueOnWheel: false});
+let oktober = new AutoNumeric('#oktober', {decimal: ',', digit: '.', allowDecimalPadding: false, minimumValue: '0', modifyValueOnUpDownArrow: false, modifyValueOnWheel: false});
+let november = new AutoNumeric('#november', {decimal: ',', digit: '.', allowDecimalPadding: false, minimumValue: '0', modifyValueOnUpDownArrow: false, modifyValueOnWheel: false});
+let desember = new AutoNumeric('#desember', {decimal: ',', digit: '.', allowDecimalPadding: false, minimumValue: '0', modifyValueOnUpDownArrow: false, modifyValueOnWheel: false});
+let januari = new AutoNumeric('#januari', {decimal: ',', digit: '.', allowDecimalPadding: false, minimumValue: '0', modifyValueOnUpDownArrow: false, modifyValueOnWheel: false});
+let februari = new AutoNumeric('#febuari', {decimal: ',', digit: '.', allowDecimalPadding: false, minimumValue: '0', modifyValueOnUpDownArrow: false, modifyValueOnWheel: false});
+let maret = new AutoNumeric('#maret', {decimal: ',', digit: '.', allowDecimalPadding: false, minimumValue: '0', modifyValueOnUpDownArrow: false, modifyValueOnWheel: false});
+let april = new AutoNumeric('#april', {decimal: ',', digit: '.', allowDecimalPadding: false, minimumValue: '0', modifyValueOnUpDownArrow: false, modifyValueOnWheel: false});
+let mei = new AutoNumeric('#mei', {decimal: ',', digit: '.', allowDecimalPadding: false, minimumValue: '0', modifyValueOnUpDownArrow: false, modifyValueOnWheel: false});
+let juni = new AutoNumeric('#juni', {decimal: ',', digit: '.', allowDecimalPadding: false, minimumValue: '0', modifyValueOnUpDownArrow: false, modifyValueOnWheel: false});
+let datatables_tagihan_siswa;
 
 $(document).ready(function() {
     setTimeout(function() {
@@ -31,11 +32,12 @@ $(document).ready(function() {
 function tabel_datatagihan() {
     $.get('/generate-csrf-token', function(response) {
         $("#datatables_tagihan").DataTable({
-            dom: 'lfrtip',
             searching: false,
             lengthChange: false,
             ordering: false,
             pagingType: "full_numbers",
+            scrollX: true,
+            serverSide: true,
             language: {
                 paginate: {
                     first: '<i class="fa fa-angle-double-left"></i>',
@@ -44,8 +46,6 @@ function tabel_datatagihan() {
                     previous: '<i class="fa fa-angle-left"></i>',
                 }
             },
-            scrollX: true,
-            serverSide: true,
             ajax: {
                 url: baseurlapi + '/spp/daftar_tagihan',
                 type: "GET",
@@ -75,6 +75,17 @@ function tabel_datatagihan() {
             columns: [
                 { title: "No", className: "text-center", render: (data, type, row, meta) => meta.row + meta.settings._iDisplayStart + 1 },
                 { 
+                    title: "Aksi", 
+                    className: "dtfc-fixed-right_header text-center", 
+                    render: (data, type, row) => `
+                        <div class="d-flex justify-content-between gap-2 background_fixed_right_row">
+                            <button class="btn btn-primary w-100" onclick="editdaftartagihan('${row.id_siswa}')">
+                                <i class="fa fa-edit"></i></button>
+                            <button class="btn btn-danger w-100" onclick="hapustagihanpeserta('${row.id_siswa}', '${row.nama_bank}')">
+                                <i class="fa fa-trash-o"></i></button>
+                        </div>`
+                },
+                { 
                     title: "Informasi Informasi Siswa",  
                     render: function(data, type, row, meta) {
                         if (type === 'display') {
@@ -89,18 +100,7 @@ function tabel_datatagihan() {
                         className: "text-center", 
                         render: (data, type, row) => `<div class="text-center">${row[month] === 0 ? '<span class="text-danger">LUNAS</span>' : new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR' }).format(row[month])}</div>`
                     }
-                ]),
-                { 
-                    title: "Aksi", 
-                    className: "dtfc-fixed-right_header text-center", 
-                    render: (data, type, row) => `
-                        <div class="d-flex justify-content-between gap-2 background_fixed_right_row">
-                            <button class="btn btn-primary w-100" onclick="editdaftartagihan('${row.id_siswa}')">
-                                <i class="fa fa-edit"></i></button>
-                            <button class="btn btn-danger w-100" onclick="hapustagihanpeserta('${row.id_siswa}', '${row.nama_bank}')">
-                                <i class="fa fa-trash-o"></i></button>
-                        </div>`
-                }
+                ])
             ]
         });
     });
@@ -251,3 +251,32 @@ function simpan_tagihan_siswa_update(){
         }
     });
 }   
+datatables_tagihan_siswa = $('#datatables_tagihan_siswa').DataTable({
+    searching: false,
+    lengthChange: false,
+    ordering: false,
+    scrollCollapse: true,
+    bFilter: false,
+    bInfo: false,
+    paging: false,
+    scrollX: true,
+    keys:true,
+}).on('key-focus', function ( e, datatable, cell, originalEvent ) {
+    $('input', cell.node()).focus();
+}).on("focus", "td input", function(){
+    $(this).select();
+}) 
+datatables_tagihan_siswa.on('key', function (e, dt, code) {
+    var scrollArea = $('.dataTables_scrollBody');
+    if (code === 13) {
+        datatables_tagihan_siswa.keys.move('down');
+    } else if (code === 37) { // Panah kiri
+        scrollArea.animate({
+            scrollLeft: scrollArea.scrollLeft() - 200 // Scroll ke kiri
+        }, 300);
+    } else if (code === 39) { // Panah kanan
+        scrollArea.animate({
+            scrollLeft: scrollArea.scrollLeft() + 200 // Scroll ke kanan
+        }, 300);
+    }
+});
