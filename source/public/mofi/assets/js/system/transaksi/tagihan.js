@@ -255,11 +255,9 @@ datatables_tagihan_siswa = $('#datatables_tagihan_siswa').DataTable({
     searching: false,
     lengthChange: false,
     ordering: false,
-    scrollCollapse: true,
     bFilter: false,
     bInfo: false,
     paging: false,
-    scrollX: true,
     keys:true,
 }).on('key-focus', function ( e, datatable, cell, originalEvent ) {
     $('input', cell.node()).focus();
@@ -270,13 +268,37 @@ datatables_tagihan_siswa.on('key', function (e, dt, code) {
     var scrollArea = $('.dataTables_scrollBody');
     if (code === 13) {
         datatables_tagihan_siswa.keys.move('down');
-    } else if (code === 37) { // Panah kiri
+    } else if (code === 37) {   
         scrollArea.animate({
-            scrollLeft: scrollArea.scrollLeft() - 200 // Scroll ke kiri
+            scrollLeft: scrollArea.scrollLeft() - 200
         }, 300);
-    } else if (code === 39) { // Panah kanan
+    } else if (code === 39) {
         scrollArea.animate({
-            scrollLeft: scrollArea.scrollLeft() + 200 // Scroll ke kanan
+            scrollLeft: scrollArea.scrollLeft() + 200
         }, 300);
     }
 });
+let copiedText = "";
+datatables_tagihan_siswa.on('key-focus', function (e, datatable, cell) {
+    const inputElement = $('input', cell.node());
+    inputElement.on('copy', function (e) {
+        e.preventDefault();  
+        const autoNumericInstance = AutoNumeric.getAutoNumericElement(this);
+        copiedText = autoNumericInstance.getNumericString();
+        e.originalEvent.clipboardData.setData('text/plain', copiedText);
+    });
+    inputElement.on('paste', function (e) {
+        e.preventDefault();
+        let pastedValue;
+        if (copiedText !== "" || copiedText !== null || copiedText !== undefined) {
+            pastedValue = copiedText;
+        } else {
+            pastedValue = (e.originalEvent.clipboardData || window.clipboardData).getData('text/plain');
+        }
+        const formattedValue = pastedValue.replace(/[^0-9.-]/g, '');
+        const autoNumericInstance = AutoNumeric.getAutoNumericElement(this);
+        autoNumericInstance.set(formattedValue);
+    });
+});
+
+    

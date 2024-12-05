@@ -42,7 +42,7 @@
               <button type="button btn-danger" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
           </div>
           <div class="modal-body">
-            <div class="table">
+            <div class="table table-responsive">
               <table class="display" id="datatables_tagihan_siswa">
                 <thead>
                   <tr>
