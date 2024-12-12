@@ -25,10 +25,8 @@ $(document).ready(function() {
     onloaddatatables();
     getSelectedMonths();
     onloadselect2();
-    isedit = false;
     $('#select_metode_pembayaran_transaksi_spp').trigger('change');
     if (transaksi_detail > -1) {
-        isedit = true;
         loadDetailTransaksi(transaksi_detail);
     }
 });
@@ -53,6 +51,7 @@ $('#select_metode_pembayaran_transaksi_spp').change(function() {
     }
 });
 function loadDetailTransaksi(id_transaksi) {
+    isedit = true;
     $.get('/generate-csrf-token', function(response) {
         $.ajax({
             url: baseurlapi + '/spp/detail_transaksi_id',
@@ -63,6 +62,7 @@ function loadDetailTransaksi(id_transaksi) {
                 id_transaksi: id_transaksi
             },
             success: function(response) {
+                $("#tanggal_transaksi_spp").val(moment(response.data[0].tanggal).format('DD-MM-YYYY'));
                 let nominalPembayaran = {
                     digitGroupSeparator: ',',
                     decimalCharacter: '.',
@@ -470,7 +470,6 @@ $("#btnKonfirmasiTransaksiSPP").on("click", function(event) {
                     success: function(response){
                         if (response.rc == 200) {
                             createToast('Informasi', 'top-right', response.message, 'success', 3000);
-                            isedit = false;
                             Swal.fire({
                                 title: 'Konfirmasi Aksi Selanjutnya',
                                 text: 'Transaksi sebelumnya berhasil disimpan, Apakah anda ingin melakukan transaksi pembayaran SPP untuk siswa yang lainnya?',
@@ -482,7 +481,12 @@ $("#btnKonfirmasiTransaksiSPP").on("click", function(event) {
                                 cancelButtonText: 'Daftar Pembayaran',
                             }).then((result) => {
                                 if (result.isConfirmed) {
-                                    clear_form();
+                                    if (isedit) {
+                                        window.location.href = baseurl + '/spp/transaksi_pembayaran';
+                                    }else{
+                                        isedit = false;
+                                        clear_form();
+                                    }
                                 }else{
                                     window.location.href = baseurl + '/spp/daftar_pembayaran';
                                 }

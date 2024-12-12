@@ -89,7 +89,7 @@
                 </div>
                 <div class="row" id="keranjang_pembayaran">
                   <div class="d-flex justify-content-between align-items-center">
-                    <span class="text-start" style="font-size: 5vw; color: red;">
+                    <span class="text-start" style="font-size: 3vw; color: red;">
                         <strong>IDR</strong>
                     </span>
                     <input type="text" value="0" class="form-control text-end" id="nominal_bayar_konfirmasi" name="nominal_bayar_konfirmasi" placeholder="0.00" readonly>
@@ -193,7 +193,7 @@
                 </div>
                 <div id="keranjang_pembayaran_nominal" class="pembayaran_tunai">
                     <div class="d-flex justify-content-between align-items-center">
-                    <span class="text-start" style="font-size: 5vw; color: red;">
+                    <span class="text-start" style="font-size: 3vw; color: red;">
                         <strong>BYR</strong>
                     </span>
                     <input type="text" value="0" class="form-control text-end" id="nominal_bayar_konfirmasi_nominal" name="nominal_bayar_konfirmasi_nominal" placeholder="0.00">
@@ -201,7 +201,7 @@
                 </div>
                 <div id="keranjang_pembayaran_kembalian" class="pembayaran_tunai">
                     <div class="d-flex justify-content-between align-items-center">
-                    <span class="text-start" style="font-size: 5vw; color: red;">
+                    <span class="text-start" style="font-size: 3vw; color: red;">
                         <strong>KMB</strong>
                     </span>
                     <input type="text" value="0" class="form-control text-end" id="nominal_bayar_kembalian_nominal" name="nominal_bayar_kembalian_nominal" placeholder="0.00" readonly>
@@ -236,7 +236,7 @@
 #nominal_bayar_kembalian_nominal{
     text-align: right;
     font-family: 'DS-Digital', sans-serif;
-    font-size: 5vw;
+    font-size: 3vw;
     color: red;
     padding: 0; 
     line-height: 1;
@@ -246,7 +246,7 @@
 #nominal_bayar_konfirmasi_nominal::placeholder,
 #nominal_bayar_kembalian_nominal::placeholder {
     font-family: 'DS-Digital', sans-serif;
-    font-size: 5vw;
+    font-size: 3vw;
     color: red;
 }
 #nominal_pembayaran_transaksi_spp,  
