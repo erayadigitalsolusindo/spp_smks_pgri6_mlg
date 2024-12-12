@@ -482,7 +482,7 @@ $("#btnKonfirmasiTransaksiSPP").on("click", function(event) {
                                 cancelButtonText: 'Daftar Pembayaran',
                             }).then((result) => {
                                 if (result.isConfirmed) {
-                                    window.location.href = baseurl + '/spp/transaksi_pembayaran';
+                                    clear_form();
                                 }else{
                                     window.location.href = baseurl + '/spp/daftar_pembayaran';
                                 }
@@ -497,6 +497,25 @@ $("#btnKonfirmasiTransaksiSPP").on("click", function(event) {
         }
     });
 });
+function clear_form(){
+    $("#nomor_induk_siswa_temp").html('');
+    $("#nama_peserta_temp").html('');
+    $("#nama_siswa_temp").html('');
+    $("#jenis_kelamin_temp").html('');
+    $("#alamat_temp").html('');
+    $("#no_telepon_temp").html('');
+    $("#email_temp").html('');
+    $("#kelas_temp").html('');
+    $("#tahun_ajaran_temp").html('');
+    $("#kode_tahun_ajaran_temp").html('');
+    $("#select_siswa_transaksi_spp").val(null).trigger('change'); 
+    nominal_pembayaran_transaksi_spp.set(0)
+    nominal_bayar_konfirmasi.set(0)
+    nominal_bayar_konfirmasi_nominal.set(0)
+    nominal_bayar_kembalian_nominal.set(0)
+    table_datatables_transaksi_spp.clear().draw();
+    
+}
 $("#btnLihatInformasiSiswa").on("click", function(event) {
     $("#kartu_informasi_peserta").toggle();
 });
