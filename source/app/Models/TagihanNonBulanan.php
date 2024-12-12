@@ -107,19 +107,15 @@ class TagihanNonBulanan extends Model
         ->join('transaksi_jenis_trx', 'transaksi_jenis_trx.kode', '=', 'siswa_tagihan_dinamis.kode_jenis_transaksi')
         ->join('atr_kelas', 'atr_kelas.id', '=', 'siswa_buku_induk.id_kelas')
         ->select('transaksi_jenis_trx.*','siswa_buku_induk.id as id_siswa', 'siswa_tagihan_dinamis.*', 'siswa_buku_induk.nis', 'siswa_buku_induk.nama_siswa', 'atr_kelas.tingkat_kelas');
-        if (!empty($kelas_terpilih)) {
-            $query->where('atr_kelas.id', $kelas_terpilih);
-        }else{
-            $query->where(function($q) use ($parameterpencarian) {
-                $q->where('siswa_buku_induk.nis', 'LIKE', '%' . $parameterpencarian . '%')
-                  ->orWhere('siswa_buku_induk.nama_siswa', 'LIKE', '%' . $parameterpencarian . '%');
-            })->where('siswa_tagihan_dinamis.id_tahun_ajaran','LIKE','%' . $tahun_ajaran_terpilih. '%');
-            if (!empty($jenis_tagihan_terpilih)) {
-                $query->where('siswa_tagihan_dinamis.kode_jenis_transaksi', $jenis_tagihan_terpilih);
-            }
-            if ($kondisinilai == 1) {
-                $query->where('siswa_tagihan_dinamis.sisa_nominal', '<>', 0);
-            }
+        $query->where(function($q) use ($parameterpencarian) {
+            $q->where('siswa_buku_induk.nis', 'LIKE', '%' . $parameterpencarian . '%')
+              ->orWhere('siswa_buku_induk.nama_siswa', 'LIKE', '%' . $parameterpencarian . '%');
+        })->where('siswa_tagihan_dinamis.id_tahun_ajaran','LIKE','%' . $tahun_ajaran_terpilih. '%')->Where('atr_kelas.id','LIKE', $kelas_terpilih);
+        if (!empty($jenis_tagihan_terpilih)) {
+            $query->where('siswa_tagihan_dinamis.kode_jenis_transaksi', $jenis_tagihan_terpilih);
+        }
+        if ($kondisinilai == 1) {
+            $query->where('siswa_tagihan_dinamis.sisa_nominal', '<>', 0);
         }
         $jumlahdata = $query->count();
         $result = $query->take($perHalaman)
